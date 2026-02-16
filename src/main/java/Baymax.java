@@ -5,6 +5,7 @@ public class Baymax {
     public static void main(String[] args) {
         String  openingMessage = " ____________________________________________________________\n" +
                 " Hello! I'm Baymax\n" +
+                " It's been so long since I last saw you!!\n" +
                 " What can I do for you?\n" +
                 "____________________________________________________________\n";
         System.out.println(openingMessage);
@@ -25,6 +26,7 @@ public class Baymax {
         String closingMessage = """
                 ____________________________________________________________
                 Bye. Hope to see you again soon!
+                I must recharge now.
                 ____________________________________________________________
                 """;
         System.out.println(closingMessage);
