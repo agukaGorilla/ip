@@ -1,6 +1,6 @@
-/*Handles Printing and related Logic*/
+/*Handles Printing on CLI and related Logic*/
 
-public class Print {
+public class Ui {
 
     public static final String horizontalLine = "____________________________________________________________\n";
 
@@ -16,18 +16,18 @@ public class Print {
 
     //Echoes the Input message
     public static String echo(String message) {
-        return Print.horizontalLine + "added : " + message + "\n" +Print.horizontalLine + "\n";
+        return Ui.horizontalLine + "added : " + message + "\n" + Ui.horizontalLine + "\n";
     }
 
     //Prints the Input Array
     public static void listInput() {
         int index = 1;
-        System.out.print(Print.horizontalLine);
+        System.out.print(Ui.horizontalLine);
         for (String currMessage : Baymax.inputList) {
             System.out.println(index + ". " + currMessage);
             index++;
         }
-        System.out.print(Print.horizontalLine + "\n");
+        System.out.print(Ui.horizontalLine + "\n");
     }
 
     public static String closingMessage() {

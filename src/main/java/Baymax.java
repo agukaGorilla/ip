@@ -17,21 +17,21 @@ public class Baymax {
                 break;
             } else if (Objects.equals(currInput, "list")) {
                 //Lists all Elements in inputList
-                Print.listInput();
+                Ui.listInput();
             } else {
                 //Stores Input in Array and echoes confirmation Message
                 inputList.add(currInput);
-                System.out.println(Print.echo(currInput));
+                System.out.println(Ui.echo(currInput));
             }
         }
     }
 
     public static void main(String[] args) {
 
-        System.out.println(Print.openingMessage());
+        System.out.println(Ui.openingMessage());
 
         Baymax.readInput();
 
-        System.out.println(Print.closingMessage());
+        System.out.println(Ui.closingMessage());
     }
 }
