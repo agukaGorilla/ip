@@ -12,12 +12,21 @@ public class Baymax {
         while (true) {
 
             Task currTask = new Task(sc.nextLine());
+            String[] currCommand = currTask.description.split(" ");
 
             if (Objects.equals(currTask.description, "bye")) {
                 break;
             } else if (Objects.equals(currTask.description, "list")) {
                 //Lists all Elements in inputList
                 Ui.listInput();
+            } else if (currCommand.length > 1) {
+
+                //It is a Mark or Unmark Activity
+                if (Objects.equals(currCommand[0], "mark")) {
+                    Commands.markTask(Integer.parseInt(currCommand[1]));
+                } else if(Objects.equals(currCommand[0], "unmark")) {
+                    Commands.unmarkTask(Integer.parseInt(currCommand[1]));
+                }
             } else {
                 //Stores Input in Array and echoes confirmation Message
                 inputList.add(currTask);
