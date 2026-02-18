@@ -13,6 +13,14 @@ public class Ui {
                 ____________________________________________________________
                 """;
     }
+    public static String closingMessage() {
+        return """
+                ____________________________________________________________
+                Bye. Hope to see you soon again!
+                I must recharge now.
+                ____________________________________________________________
+                """;
+    }
 
     //Confirms the Input message is added
     public static String addedInputMessage(String message) {
@@ -31,12 +39,16 @@ public class Ui {
         System.out.print(Ui.horizontalLine + "\n");
     }
 
-    public static String closingMessage() {
-        return """
-                ____________________________________________________________
-                Bye. Hope to see you soon again!
-                I must recharge now.
-                ____________________________________________________________
-                """;
+    //Print the Marked Message
+    public static void printMarked(String taskDescription) {
+        System.out.println( Ui.horizontalLine + "Gotcha! You have finished the following task!");
+        System.out.println("[X] " + taskDescription + "\n" + Ui.horizontalLine + "\n");
+
+    }
+
+    //Print the Unmarked Message
+    public static void printUnmarked(String taskDescription) {
+        System.out.println( Ui.horizontalLine + "Aight. I have unmarked the task. Get on it soon...");
+        System.out.println("[ ] " + taskDescription + "\n" + Ui.horizontalLine + "\n");
     }
 }
