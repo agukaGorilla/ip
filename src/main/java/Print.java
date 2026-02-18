@@ -20,7 +20,7 @@ public class Print {
     }
 
     //Prints the Input Array
-    public static void printInput() {
+    public static void listInput() {
         int index = 1;
         System.out.print(Print.horizontalLine);
         for (String currMessage : Baymax.inputList) {

@@ -10,21 +10,21 @@ public class Baymax {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
+
             String currInput = sc.nextLine();
+
             if (Objects.equals(currInput, "bye")) {
                 break;
             } else if (Objects.equals(currInput, "list")) {
-                Print.printInput();
+                //Lists all Elements in inputList
+                Print.listInput();
             } else {
-                //Stores Input in Array and sends back Message
+                //Stores Input in Array and echoes confirmation Message
                 inputList.add(currInput);
                 System.out.println(Print.echo(currInput));
             }
         }
     }
-
-
-
 
     public static void main(String[] args) {
 
