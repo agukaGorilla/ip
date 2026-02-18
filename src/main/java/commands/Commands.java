@@ -1,4 +1,12 @@
 package commands;
 
-public abstract class Commands {
+public class Commands {
+
+    public static void markTask() {
+        //To DO
+    }
+
+    public static void unmarkTask() {
+        //To DO
+    }
 }
