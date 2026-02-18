@@ -1,3 +1,5 @@
+/*Class for creating Tasks as Objects*/
+
 public class Task {
     public String description;
     public boolean isDone;
