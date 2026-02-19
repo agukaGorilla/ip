@@ -8,14 +8,17 @@ public class Baymax {
 
     public static void main(String[] args) {
 
-        System.out.println(Ui.openingMessage());
+        //Opening Message
+        Ui.openingMessage();
 
+        //Handles all th commands
         try {
             Parser.handleInput();
         } catch (BaymaxException e) {
             Ui.showError(e.getMessage());
         }
 
-        System.out.println(Ui.closingMessage());
+        //Closing
+        Ui.closingMessage();
     }
 }

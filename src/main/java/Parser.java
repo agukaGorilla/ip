@@ -10,13 +10,16 @@ public class Parser {
             String currInput = sc.nextLine();
             String[] currCommand = currInput.split(" ");
 
+            //If the command is to leave chat
             if (Objects.equals(currInput, "bye")) {
                 break;
             }
+            //If the command is to List all Tasks
             else if (Objects.equals(currInput, "list")) {
                 //Lists all Elements in inputList
                 Ui.listInput();
             }
+
 
             //If the command is mark
             else if (Objects.equals(currCommand[0], "mark")) {
@@ -43,6 +46,8 @@ public class Parser {
                 int index = Integer.parseInt(currCommand[1]) - 1;
                 Commands.deleteTask(index);
             }
+
+
             //Creating each task based on type of Task
             else {
                 String[] currDescription = currInput.split(" ", 2);

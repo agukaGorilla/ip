@@ -4,30 +4,30 @@ public class Ui {
 
     public static final String horizontalLine = "____________________________________________________________\n";
 
-    public static String openingMessage() {
-        return """
+    public static void openingMessage() {
+        System.out.print("""
                  ____________________________________________________________
                  Hello! I'm Baymax
                  It's been so long since I last saw you!!
                  What can I do for you?
                 ____________________________________________________________
-                """;
+                """);
     }
-    public static String closingMessage() {
-        return """
+    public static void closingMessage() {
+        System.out.print("""
                 ____________________________________________________________
                 Bye. Hope to see you soon again!
                 I must recharge now.
                 ____________________________________________________________
-                """;
+                """);
     }
 
     //Confirms the Input message is added
-    public static String addedInputMessage(String message, Task currTask) {
-        return Ui.horizontalLine + "Fire!! I have added this task : \n"
+    public static void addedInputMessage(String message, Task currTask) {
+        System.out.println(Ui.horizontalLine + "Fire!! I have added this task : \n"
                 + currTask.getStatusIcon() + message + "\n"
                 + "Now you have " + Baymax.inputList.size() + " tasks in the list.\n"
-                + Ui.horizontalLine + "\n";
+                + Ui.horizontalLine);
     }
 
     //Prints the Input Array

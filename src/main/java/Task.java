@@ -9,6 +9,7 @@ public class Task {
         this.isDone = false;
     }
 
+    //Returns the status of checkbox
     public String getStatusIcon() {
         String mark = (isDone ? "X" : " ");
 
