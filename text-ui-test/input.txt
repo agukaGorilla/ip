@@ -1,0 +1,17 @@
+todo read book
+deadline return book /by Sunday
+todo borrow another book
+list
+deadline write summary /by Monday
+mark 1
+list
+event discuss book /from 4pm Tuesday /to 6pm
+mark 2 
+list
+unmark 1
+mark 4
+list
+deadline return book /by Thursday
+mark 3
+list
+bye
