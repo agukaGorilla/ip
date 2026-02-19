@@ -1,3 +1,5 @@
+/*Handles all the message entered, parsed and carries out the valid operation*/
+
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -61,7 +63,7 @@ public class Parser {
                                 "Please write a valid command.");
                     }
                     ToDo todoTask = new ToDo(currDescription[1]);
-                    Baymax.inputList.add(todoTask);
+                    TaskData.inputList.add(todoTask);
                 } else if (Objects.equals(currDescription[0], "deadline")) {
 
                     if (currDescription.length < 2) {
@@ -74,7 +76,7 @@ public class Parser {
                     }
                     Deadline deadlineTask = new Deadline(descSplit[0], descSplit[1]);
 
-                    Baymax.inputList.add(deadlineTask);
+                    TaskData.inputList.add(deadlineTask);
                 } else if (Objects.equals(currDescription[0], "event")) {
 
                     if (currDescription.length < 2) {
@@ -96,7 +98,7 @@ public class Parser {
                     }
                     Event eventTask = new Event(descSplit[0], times[0], times[1]);
 
-                    Baymax.inputList.add(eventTask);
+                    TaskData.inputList.add(eventTask);
                 }
                 else {
                     throw new BaymaxException("I do not know what that means! \n" +

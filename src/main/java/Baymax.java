@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class Baymax {
 
-    public static ArrayList<Task> inputList = new ArrayList<>();
-
     public static void main(String[] args) {
 
         //Opening Message
