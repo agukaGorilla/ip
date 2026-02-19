@@ -13,7 +13,7 @@ public class Baymax {
         try {
             Parser.handleInput();
         } catch (BaymaxException e) {
-            throw new RuntimeException(e);
+            Ui.showError(e.getMessage());
         }
 
         System.out.println(Ui.closingMessage());

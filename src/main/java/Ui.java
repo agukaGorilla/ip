@@ -54,4 +54,11 @@ public class Ui {
         System.out.println( Ui.horizontalLine + "Aight. I have unmarked the task. Get on it soon...");
         System.out.println("[ ] " + taskDescription + "\n" + Ui.horizontalLine + "\n");
     }
+
+    //Print the exception error message
+    public static void showError(String errorMessage) {
+        System.out.print(Ui.horizontalLine);
+        System.out.println("Ohh NOO!! " + errorMessage);
+        System.out.println(Ui.horizontalLine);
+    }
 }
