@@ -4,6 +4,11 @@ public class Deadline extends Task{
 
     public Deadline(String description, String date) {
         super(description);
-        this.date = date;
+        this.date = "(by : " + date + ")";
+
+        //Changing the description
+        this.description = description + " " + this.date;
+
+        System.out.println(Ui.addedInputMessage(this.description, "[D]"));
     }
 }

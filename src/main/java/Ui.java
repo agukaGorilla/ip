@@ -23,8 +23,11 @@ public class Ui {
     }
 
     //Confirms the Input message is added
-    public static String addedInputMessage(String message) {
-        return Ui.horizontalLine + "added : " + message + "\n" + Ui.horizontalLine + "\n";
+    public static String addedInputMessage(String message, String type) {
+        return Ui.horizontalLine + "Fire!! I have added this task : \n"
+                + type + "[ ] " + message + "\n"
+                + "Now you have " + Baymax.inputList.size() + " tasks in the list.\n"
+                + Ui.horizontalLine + "\n";
     }
 
     //Prints the Input Array
@@ -33,7 +36,7 @@ public class Ui {
         System.out.print(Ui.horizontalLine);
         System.out.println("Here are the tasks in your list :\n");
         for (Task currTask : Baymax.inputList) {
-            System.out.println(index + ". [" + currTask.getStatusIcon() +"] "+ currTask.description);
+            System.out.println(index + ". " + currTask.getStatusIcon(currTask) + currTask.description);
             index++;
         }
         System.out.print(Ui.horizontalLine + "\n");
