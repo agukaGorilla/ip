@@ -36,6 +36,10 @@ public class Parser {
             }
             //If the command is to delete
             else if (Objects.equals(currCommand[0], "delete")) {
+
+                if (currCommand.length < 2) {
+                    throw new BaymaxException("Enter the task number to be deleted.");
+                }
                 int index = Integer.parseInt(currCommand[1]) - 1;
                 Commands.deleteTask(index);
             }

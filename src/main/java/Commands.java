@@ -17,7 +17,12 @@ public class Commands {
     }
 
     //Deletes a task based on number given
-    public static void deleteTask(int index) {
+    public static void deleteTask(int index) throws BaymaxException {
+
+        //Throws exception if list is empty
+        if (Baymax.inputList.isEmpty()) {
+            throw new BaymaxException("The list is empty. There is no deletion that can be done");
+        }
 
         Task currTask = Baymax.inputList.get(index);
         Baymax.inputList.remove(index);
