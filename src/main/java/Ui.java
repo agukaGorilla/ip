@@ -61,4 +61,12 @@ public class Ui {
         System.out.println("Ohh NOO!! " + errorMessage);
         System.out.println(Ui.horizontalLine);
     }
+
+    //Print the task Deleted message
+    public static void printDeletedTask(Task currTask, String message) {
+        System.out.println( Ui.horizontalLine + "As you wish!! I have deleted this task from inputList \n"
+                + currTask.getStatusIcon() + message + "\n"
+                + "Now you have " + Baymax.inputList.size() + " tasks in the list.\n"
+                + Ui.horizontalLine + "\n");
+    }
 }

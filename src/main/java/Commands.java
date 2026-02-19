@@ -18,6 +18,10 @@ public class Commands {
 
     //Deletes a task based on number given
     public static void deleteTask(int index) {
+
+        Task currTask = Baymax.inputList.get(index);
         Baymax.inputList.remove(index);
+
+        Ui.printDeletedTask(currTask, currTask.description);
     }
 }
