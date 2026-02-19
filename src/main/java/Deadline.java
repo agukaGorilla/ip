@@ -9,6 +9,6 @@ public class Deadline extends Task{
         //Changing the description
         this.description = description + " " + this.date;
 
-        System.out.println(Ui.addedInputMessage(this.description, "[D]"));
+        System.out.println(Ui.addedInputMessage(this.description, this));
     }
 }

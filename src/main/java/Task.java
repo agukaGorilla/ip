@@ -9,16 +9,16 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getStatusIcon(Task currTask) {
+    public String getStatusIcon() {
         String mark = (isDone ? "X" : " ");
 
-        if (currTask instanceof ToDo) {
+        if (this instanceof ToDo) {
             return "[T][" + mark + "] ";
         }
-        else if (currTask instanceof Deadline) {
+        else if (this instanceof Deadline) {
             return "[D][" + mark + "] ";
         }
-        else if(currTask instanceof Event) {
+        else if(this instanceof Event) {
             return "[E][" + mark + "] ";
         }
         else {

@@ -11,6 +11,6 @@ public class Event extends Task{
         //Changing the Task description
         this.description = this.description + " " + this.time;
 
-        System.out.println(Ui.addedInputMessage(this.description, "[E]"));
+        System.out.println(Ui.addedInputMessage(this.description, this));
     }
 }
