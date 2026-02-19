@@ -63,7 +63,7 @@ public class Parser {
                                 "Please write a valid command.");
                     }
                     ToDo todoTask = new ToDo(currDescription[1]);
-                    TaskData.inputList.add(todoTask);
+                    TaskData.addTask(todoTask);
                 } else if (Objects.equals(currDescription[0], "deadline")) {
 
                     if (currDescription.length < 2) {
@@ -76,7 +76,7 @@ public class Parser {
                     }
                     Deadline deadlineTask = new Deadline(descSplit[0], descSplit[1]);
 
-                    TaskData.inputList.add(deadlineTask);
+                    TaskData.addTask(deadlineTask);
                 } else if (Objects.equals(currDescription[0], "event")) {
 
                     if (currDescription.length < 2) {
@@ -98,7 +98,7 @@ public class Parser {
                     }
                     Event eventTask = new Event(descSplit[0], times[0], times[1]);
 
-                    TaskData.inputList.add(eventTask);
+                    TaskData.addTask(eventTask);
                 }
                 else {
                     throw new BaymaxException("I do not know what that means! \n" +

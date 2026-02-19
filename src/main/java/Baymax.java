@@ -9,7 +9,7 @@ public class Baymax {
         //Opening Message
         Ui.openingMessage();
 
-        //Handles all th commands
+        //Handles all the commands
         try {
             Parser.handleInput();
         } catch (BaymaxException e) {

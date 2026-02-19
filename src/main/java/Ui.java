@@ -20,7 +20,7 @@ public class Ui {
     public static void addedInputMessage(String message, Task currTask) {
         System.out.println(Ui.horizontalLine + "Fire!! I have added this task : \n"
                 + currTask.getStatusIcon() + message + "\n"
-                + "Now you have " + TaskData.inputList.size() + " tasks in the list.\n"
+                + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.horizontalLine);
     }
 
@@ -29,7 +29,8 @@ public class Ui {
         int index = 1;
         System.out.print(Ui.horizontalLine);
         System.out.println("Here are the tasks in your list :\n");
-        for (Task currTask : TaskData.inputList) {
+        for (int i = 0; i < TaskData.getTotalTasks(); i++) {
+            Task currTask = TaskData.getTask(i);
             System.out.println(index + ". " + currTask.getStatusIcon() + currTask.description);
             index++;
         }
@@ -60,7 +61,7 @@ public class Ui {
     public static void printDeletedTask(Task currTask, String message) {
         System.out.println( Ui.horizontalLine + "As you wish!! I have deleted this task from inputList \n"
                 + currTask.getStatusIcon() + message + "\n"
-                + "Now you have " + TaskData.inputList.size() + " tasks in the list.\n"
+                + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.horizontalLine + "\n");
     }
 }

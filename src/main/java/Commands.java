@@ -6,16 +6,16 @@ public class Commands {
     public static void markTask(int num) throws BaymaxException {
 
         //Throws exception if list is empty
-        if (TaskData.inputList.isEmpty()) {
+        if (TaskData.hasNoTasks()) {
             throw new BaymaxException("The list is empty. There is no task that can be marked");
         }
         //If index to be marked is greater than Array List size
-        else if (TaskData.inputList.size() < num) {
+        else if (TaskData.getTotalTasks() < num) {
             throw new BaymaxException("There is no Task with number you mentioned. \n" +
                     "Please enter a smaller and valid Task number");
         }
 
-        Task currTask = TaskData.inputList.get(num - 1);
+        Task currTask = TaskData.getTask(num - 1);
         currTask.isDone = true;
         Ui.printMarked(currTask.description);
     }
@@ -24,17 +24,17 @@ public class Commands {
     public static void unmarkTask(int num) throws BaymaxException {
 
         //Throws exception if list is empty
-        if (TaskData.inputList.isEmpty()) {
+        if (TaskData.hasNoTasks()) {
             throw new BaymaxException("The list is empty. There is no task that can be unmarked");
         }
         //If index to be marked is greater than Array List size
-        else if (TaskData.inputList.size() < num) {
+        else if (TaskData.getTotalTasks() < num) {
             throw new BaymaxException("There is no Task with number you mentioned. \n" +
                     "Please enter a smaller and valid Task number");
         }
 
-        Task currTask = TaskData.inputList.get(num - 1);
-        TaskData.inputList.get(num - 1).isDone = false;
+        Task currTask = TaskData.getTask(num - 1);
+        TaskData.getTask(num - 1).isDone = false;
         Ui.printUnmarked(currTask.description);
     }
 
@@ -42,12 +42,12 @@ public class Commands {
     public static void deleteTask(int index) throws BaymaxException {
 
         //Throws exception if list is empty
-        if (TaskData.inputList.isEmpty()) {
+        if (TaskData.hasNoTasks()) {
             throw new BaymaxException("The list is empty. There is no deletion that can be done");
         }
 
-        Task currTask = TaskData.inputList.get(index);
-        TaskData.inputList.remove(index);
+        Task currTask = TaskData.getTask(index);
+        TaskData.removeTask(index);
 
         Ui.printDeletedTask(currTask, currTask.description);
     }
