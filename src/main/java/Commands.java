@@ -9,6 +9,11 @@ public class Commands {
         if (Baymax.inputList.isEmpty()) {
             throw new BaymaxException("The list is empty. There is no task that can be marked");
         }
+        //If index to be marked is greater than Array List size
+        else if (Baymax.inputList.size() < num) {
+            throw new BaymaxException("There is no Task with number you mentioned. \n" +
+                    "Please enter a smaller and valid Task number");
+        }
 
         Task currTask = Baymax.inputList.get(num - 1);
         currTask.isDone = true;
@@ -21,6 +26,11 @@ public class Commands {
         //Throws exception if list is empty
         if (Baymax.inputList.isEmpty()) {
             throw new BaymaxException("The list is empty. There is no task that can be unmarked");
+        }
+        //If index to be marked is greater than Array List size
+        else if (Baymax.inputList.size() < num) {
+            throw new BaymaxException("There is no Task with number you mentioned. \n" +
+                    "Please enter a smaller and valid Task number");
         }
 
         Task currTask = Baymax.inputList.get(num - 1);
