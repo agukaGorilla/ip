@@ -84,7 +84,7 @@ public class Parser {
                     Baymax.inputList.add(eventTask);
                 }
                 else {
-                    throw new BaymaxException("OOPSIES!! I do not know what that means! \n" +
+                    throw new BaymaxException("I do not know what that means! \n" +
                             "Try telling me something I understand!");
                 }
             }
