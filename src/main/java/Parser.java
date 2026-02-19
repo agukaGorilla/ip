@@ -80,12 +80,21 @@ public class Parser {
                     if (currDescription.length < 2) {
                         throw new BaymaxException("The description of event cannot be empty.");
                     }
+
                     String[] descSplit = currDescription[1].split("/from");
+                    //Throws exception if invalid /to
                     if (descSplit.length < 2) {
-                        throw new BaymaxException("You have not entered the time of the event (or)\n" +
+                        throw new BaymaxException("You have not entered the start time of the event (or)\n" +
                                 "Did not format the message correctly. Please write a valid command");
                     }
-                    Event eventTask = new Event(descSplit[0], descSplit[1]);
+
+                    String[] times = descSplit[1].split("/to");
+                    //Throws and exception if "/to" does not exist
+                    if (times.length < 2) {
+                        throw new BaymaxException("You have not entered the end time of the event (or)\n" +
+                                "Did not format the message correctly. Please write a valid command");
+                    }
+                    Event eventTask = new Event(descSplit[0], times[0], times[1]);
 
                     Baymax.inputList.add(eventTask);
                 }
