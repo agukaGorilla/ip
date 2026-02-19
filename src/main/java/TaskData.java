@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class TaskData {
 
-    private static ArrayList<Task> inputList = new ArrayList<>();
+    private static final ArrayList<Task> inputList = new ArrayList<>();
 
     //Adds task to the list
     public static void addTask(Task currTask) {
