@@ -10,7 +10,11 @@ public class Baymax {
 
         System.out.println(Ui.openingMessage());
 
-        Parser.handleInput();
+        try {
+            Parser.handleInput();
+        } catch (BaymaxException e) {
+            throw new RuntimeException(e);
+        }
 
         System.out.println(Ui.closingMessage());
     }
