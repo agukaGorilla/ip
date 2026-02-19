@@ -25,7 +25,8 @@ public class Parser {
             else if (Objects.equals(currCommand[0], "mark")) {
 
                 if (currCommand.length < 2) {
-                    throw new BaymaxException("Please provide a task number to mark.");
+                    throw new BaymaxException("You have not provided the Task Number that you want to mark. \n" +
+                            "Please provide a task number to mark.");
                 }
                 Commands.markTask(Integer.parseInt(currCommand[1]));
             }
@@ -33,7 +34,8 @@ public class Parser {
             else if (Objects.equals(currCommand[0], "unmark")) {
 
                 if (currCommand.length < 2) {
-                    throw new BaymaxException("Please provide a task number to unmark.");
+                    throw new BaymaxException("You have not provided the Task Number that you want to unmark. \n" +
+                            "Please provide a task number to unmark.");
                 }
                 Commands.unmarkTask(Integer.parseInt(currCommand[1]));
             }
@@ -41,7 +43,8 @@ public class Parser {
             else if (Objects.equals(currCommand[0], "delete")) {
 
                 if (currCommand.length < 2) {
-                    throw new BaymaxException("Enter the task number to be deleted.");
+                    throw new BaymaxException("You have not provided the Task Number that you want to delete. \n" +
+                            "Please provide a task number to delete.");
                 }
                 int index = Integer.parseInt(currCommand[1]) - 1;
                 Commands.deleteTask(index);
@@ -54,7 +57,8 @@ public class Parser {
 
                 if (Objects.equals(currDescription[0], "todo")) {
                     if (currDescription.length < 2) {
-                        throw new BaymaxException("The description of a todo cannot be empty.");
+                        throw new BaymaxException("The description of a todo cannot be empty.\n" +
+                                "Please write a valid command.");
                     }
                     ToDo todoTask = new ToDo(currDescription[1]);
                     Baymax.inputList.add(todoTask);
@@ -65,7 +69,8 @@ public class Parser {
                     }
                     String[] descSplit = currDescription[1].split("/by");
                     if (descSplit.length < 2) {
-                        throw new BaymaxException("Enter a valid deadline date for the task");
+                        throw new BaymaxException("You have not entered a deadline for the event (or)\n" +
+                                "Did not format the message correctly. Please write a valid command");
                     }
                     Deadline deadlineTask = new Deadline(descSplit[0], descSplit[1]);
 
@@ -77,7 +82,8 @@ public class Parser {
                     }
                     String[] descSplit = currDescription[1].split("/from");
                     if (descSplit.length < 2) {
-                        throw new BaymaxException("Enter a valid start time of the Event.");
+                        throw new BaymaxException("You have not entered the time of the event (or)\n" +
+                                "Did not format the message correctly. Please write a valid command");
                     }
                     Event eventTask = new Event(descSplit[0], descSplit[1]);
 

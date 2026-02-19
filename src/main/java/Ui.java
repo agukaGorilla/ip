@@ -2,24 +2,18 @@
 
 public class Ui {
 
-    public static final String horizontalLine = "____________________________________________________________\n";
+    public static final String horizontalLine = "____________________________________________________________________\n";
 
     public static void openingMessage() {
-        System.out.print("""
-                 ____________________________________________________________
+        System.out.print(Ui.horizontalLine + """
                  Hello! I'm Baymax
                  It's been so long since I last saw you!!
-                 What can I do for you?
-                ____________________________________________________________
-                """);
+                 What can I do for you? \n""" + Ui.horizontalLine);
     }
     public static void closingMessage() {
-        System.out.print("""
-                ____________________________________________________________
+        System.out.print(Ui.horizontalLine + """
                 Bye. Hope to see you soon again!
-                I must recharge now.
-                ____________________________________________________________
-                """);
+                I must recharge now. \n""" + Ui.horizontalLine);
     }
 
     //Confirms the Input message is added
