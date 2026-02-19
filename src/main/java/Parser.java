@@ -33,26 +33,32 @@ public class Parser {
                 String[] currDescription = currInput.split(" ", 2);
 
                 if (Objects.equals(currDescription[0], "todo")) {
-                    if (currCommand.length < 2) {
+                    if (currDescription.length < 2) {
                         throw new BaymaxException("The description of a todo cannot be empty.");
                     }
                     ToDo todoTask = new ToDo(currDescription[1]);
                     Baymax.inputList.add(todoTask);
                 } else if (Objects.equals(currDescription[0], "deadline")) {
 
-                    if (currCommand.length < 2) {
+                    if (currDescription.length < 2) {
                         throw new BaymaxException("The description of deadline cannot be empty.");
                     }
                     String[] descSplit = currDescription[1].split("/by");
+                    if (descSplit.length < 2) {
+                        throw new BaymaxException("Enter a valid deadline date for the task");
+                    }
                     Deadline deadlineTask = new Deadline(descSplit[0], descSplit[1]);
 
                     Baymax.inputList.add(deadlineTask);
                 } else if (Objects.equals(currDescription[0], "event")) {
 
-                    if (currCommand.length < 2) {
+                    if (currDescription.length < 2) {
                         throw new BaymaxException("The description of event cannot be empty.");
                     }
                     String[] descSplit = currDescription[1].split("/from");
+                    if (descSplit.length < 2) {
+                        throw new BaymaxException("Enter a valid start time of the Event.");
+                    }
                     Event eventTask = new Event(descSplit[0], descSplit[1]);
 
                     Baymax.inputList.add(eventTask);
