@@ -11,11 +11,12 @@ public class Event extends Task{
             throw new BaymaxException("Enter a valid '/to' End time. ");
         }
 
-        this.time = "(from : " + times[0] + "to : " + times[1] + ")";
-
         //Changing the Task description
+        /*Since super() has to be the first line, I am making this change here*/
+        this.time = "(from : " + times[0] + "to : " + times[1] + ")";
         this.description = this.description + " " + this.time;
 
+        //Prints Message
         Ui.addedInputMessage(this.description, this);
     }
 }

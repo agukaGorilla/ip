@@ -4,11 +4,13 @@ public class Deadline extends Task{
 
     public Deadline(String description, String date) {
         super(description);
-        this.date = "(by : " + date + ")";
 
         //Changing the description
+        /*Since super() has to be the first line, I am making this change here*/
+        this.date = "(by : " + date + ")";
         this.description = description + " " + this.date;
 
+        //Prints Message
         Ui.addedInputMessage(this.description, this);
     }
 }
