@@ -12,21 +12,32 @@ public class Parser {
 
             if (Objects.equals(currInput, "bye")) {
                 break;
-            } else if (Objects.equals(currInput, "list")) {
+            }
+            else if (Objects.equals(currInput, "list")) {
                 //Lists all Elements in inputList
                 Ui.listInput();
-            } else if (Objects.equals(currCommand[0], "mark")) {
+            }
+
+            //If the command is mark
+            else if (Objects.equals(currCommand[0], "mark")) {
 
                 if (currCommand.length < 2) {
                     throw new BaymaxException("Please provide a task number to mark.");
                 }
                 Commands.markTask(Integer.parseInt(currCommand[1]));
-            } else if (Objects.equals(currCommand[0], "unmark")) {
+            }
+            //If the command is unmark
+            else if (Objects.equals(currCommand[0], "unmark")) {
 
                 if (currCommand.length < 2) {
                     throw new BaymaxException("Please provide a task number to unmark.");
                 }
                 Commands.unmarkTask(Integer.parseInt(currCommand[1]));
+            }
+            //If the command is to delete
+            else if (Objects.equals(currCommand[0], "delete")) {
+                int index = Integer.parseInt(currCommand[1]) - 1;
+                Commands.deleteTask(index);
             }
             //Creating each task based on type of Task
             else {
