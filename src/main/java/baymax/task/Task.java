@@ -3,7 +3,7 @@
 package baymax.task;
 
 public class Task {
-    private String description;
+    public String description;
     public boolean isDone;
 
     public Task(String description) {

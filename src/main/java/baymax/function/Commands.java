@@ -1,5 +1,12 @@
 /*Class to manage all the Commands and operations done on List*/
 
+package baymax.function;
+
+import baymax.*;
+import baymax.task.*;
+import baymax.data.TaskData;
+import baymax.ui.Ui;
+
 public class Commands {
 
     //Marks Task as Done

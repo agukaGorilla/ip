@@ -1,5 +1,8 @@
 /*A class just to handle Input Output Data*/
 
+package baymax.data;
+
+import baymax.task.*;
 import java.util.ArrayList;
 
 public class TaskData {

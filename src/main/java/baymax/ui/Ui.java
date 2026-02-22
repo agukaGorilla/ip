@@ -2,6 +2,9 @@
 
 package baymax.ui;
 
+import baymax.task.Task;
+import baymax.data.TaskData;
+
 public class Ui {
 
     private static final String horizontalLine = "____________________________________________________________________\n";

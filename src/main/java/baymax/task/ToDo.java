@@ -1,5 +1,7 @@
 package baymax.task;
 
+import baymax.ui.Ui;
+
 public class ToDo extends Task{
 
     public ToDo (String description) {
