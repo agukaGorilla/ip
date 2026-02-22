@@ -1,3 +1,5 @@
+package baymax.task;
+
 public class Deadline extends Task{
 
     public String date;

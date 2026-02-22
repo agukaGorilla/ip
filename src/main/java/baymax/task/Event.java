@@ -1,3 +1,5 @@
+package baymax.task;
+
 public class Event extends Task{
 
     public String time;
