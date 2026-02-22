@@ -5,7 +5,6 @@ package baymax.function;
 import baymax.*;
 import baymax.task.*;
 import baymax.ui.Ui;
-import baymax.data.TaskData;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -64,14 +63,17 @@ public class Parser {
             else {
                 String[] currDescription = currInput.split(" ", 2);
 
+                //ToDo
                 if (Objects.equals(currDescription[0], "todo")) {
                     if (currDescription.length < 2) {
                         throw new BaymaxException("The description of a todo cannot be empty.\n" +
                                 "Please write a valid command.");
                     }
                     ToDo todoTask = new ToDo(currDescription[1]);
-                    TaskData.addTask(todoTask);
-                } else if (Objects.equals(currDescription[0], "deadline")) {
+                    Commands.addTask(todoTask);
+                }
+                //Deadline
+                else if (Objects.equals(currDescription[0], "deadline")) {
 
                     if (currDescription.length < 2) {
                         throw new BaymaxException("The description of deadline cannot be empty.");
@@ -83,8 +85,10 @@ public class Parser {
                     }
                     Deadline deadlineTask = new Deadline(descSplit[0], descSplit[1]);
 
-                    TaskData.addTask(deadlineTask);
-                } else if (Objects.equals(currDescription[0], "event")) {
+                    Commands.addTask(deadlineTask);
+                }
+                //Event
+                else if (Objects.equals(currDescription[0], "event")) {
 
                     if (currDescription.length < 2) {
                         throw new BaymaxException("The description of event cannot be empty.");
@@ -105,7 +109,7 @@ public class Parser {
                     }
                     Event eventTask = new Event(descSplit[0], times[0], times[1]);
 
-                    TaskData.addTask(eventTask);
+                    Commands.addTask(eventTask);
                 }
                 else {
                     throw new BaymaxException("I do not know what that means! \n" +

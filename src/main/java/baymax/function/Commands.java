@@ -9,6 +9,10 @@ import baymax.ui.Ui;
 
 public class Commands {
 
+    public static void addTask(Task currTask) {
+        TaskData.addTask(currTask);
+    }
+
     //Marks Task as Done
     public static void markTask(int num) throws BaymaxException {
 
@@ -54,7 +58,7 @@ public class Commands {
         }
 
         Task currTask = TaskData.getTask(index);
-        TaskData.removeTask(index);
+        TaskData.deleteTask(index);
 
         Ui.printDeletedTask(currTask, currTask.description);
     }
