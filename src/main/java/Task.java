@@ -1,7 +1,7 @@
 /*Class for creating Tasks as Objects*/
 
 public class Task {
-    public String description;
+    private String description;
     public boolean isDone;
 
     public Task(String description) {
