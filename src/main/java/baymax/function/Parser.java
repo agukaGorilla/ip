@@ -1,5 +1,12 @@
 /*Handles all the message entered, parsed and carries out the valid operation*/
 
+package baymax.function;
+
+import baymax.*;
+import baymax.task.*;
+import baymax.ui.Ui;
+import baymax.data.TaskData;
+
 import java.util.Objects;
 import java.util.Scanner;
 

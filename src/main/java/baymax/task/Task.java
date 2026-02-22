@@ -1,5 +1,7 @@
 /*Class for creating Tasks as Objects*/
 
+package baymax.task;
+
 public class Task {
     public String description;
     public boolean isDone;

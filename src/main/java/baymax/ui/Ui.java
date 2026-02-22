@@ -1,8 +1,13 @@
 /*Handles Printing on CLI and related Logic*/
 
+package baymax.ui;
+
+import baymax.task.Task;
+import baymax.data.TaskData;
+
 public class Ui {
 
-    public static final String horizontalLine = "____________________________________________________________________\n";
+    private static final String horizontalLine = "____________________________________________________________________\n";
 
     public static void openingMessage() {
         System.out.print(Ui.horizontalLine + """
