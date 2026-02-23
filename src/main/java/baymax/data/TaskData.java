@@ -1,5 +1,9 @@
 /*A class just to handle Input Output Data*/
 
+/*
+* Only this class has access to the ArrayList<Task> inputList
+* */
+
 package baymax.data;
 
 import baymax.task.*;
@@ -17,6 +21,16 @@ public class TaskData {
     //Removes a task with Index Number
     public static void deleteTask(int index) {
         TaskData.inputList.remove(index);
+    }
+
+    //Marks task
+    public static void markTask(int num) {
+        TaskData.inputList.get(num).isDone = true;
+    }
+
+    //Unmarks Task
+    public static void unmarkTask(int num) {
+        TaskData.inputList.get(num).isDone = false;
     }
 
     //Gets a task with index number
