@@ -9,7 +9,7 @@ import java.io.IOException;
 * This class writes data in the text file
 * Only have to access the TaskData class
 * */
-public class WriteFileClass {
+public class StoreData {
 
     public static void writeToFile() {
 

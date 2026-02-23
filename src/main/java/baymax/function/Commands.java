@@ -16,7 +16,8 @@ public class Commands {
         /*
         * Any change in list, rewrite the list
         * */
-        WriteFileClass.writeToFile();
+        
+        StoreData.writeToFile();
     }
 
     //Marks Task as Done
@@ -39,7 +40,7 @@ public class Commands {
         /*
          * Any change in list, rewrite the list
          * */
-        WriteFileClass.writeToFile();
+        StoreData.writeToFile();
     }
 
     //Unmarks a task previously marked as done
@@ -62,7 +63,7 @@ public class Commands {
         /*
          * Any change in list, rewrite the list
          * */
-        WriteFileClass.writeToFile();
+        StoreData.writeToFile();
     }
 
     //Deletes a task based on number given
@@ -81,7 +82,7 @@ public class Commands {
         /*
          * Any change in list, rewrite the list
          * */
-        WriteFileClass.writeToFile();
+        StoreData.writeToFile();
     }
 
 }
