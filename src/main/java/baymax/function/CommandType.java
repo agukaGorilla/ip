@@ -1,4 +1,5 @@
 package baymax.function;
 
-public class CommandType {
+public enum CommandType {
+    BYE, LIST, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, UNKNOWN
 }

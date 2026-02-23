@@ -6,74 +6,69 @@ import baymax.*;
 import baymax.task.*;
 import baymax.ui.Ui;
 
-import java.util.Objects;
-import java.util.Scanner;
-
 public class Parser {
 
     public static boolean handleInput(String currInput) throws BaymaxException {
 
         String[] commandParts = currInput.split(" ", 2);
 
-        //If the command is to leave chat
-        if (Objects.equals(currInput, "bye")) {
-            return true;
-        }
-        //If the command is to List all Tasks
-        else if (Objects.equals(currInput, "list")) {
-            //Lists all Elements in inputList
-            Ui.listInput();
-        }
+        CommandType command;
 
+        /*
+         * Converting command to enums
+         * If any command is unknown converts to enum UNKNOWN
+         * */
 
-        //If the command is mark
-        else if (Objects.equals(commandParts[0], "mark")) {
-
-            if (commandParts.length < 2) {
-                throw new BaymaxException("You have not provided the Task Number that you want to mark. \n" +
-                        "Please provide a task number to mark.");
-            }
-            Commands.markTask(Integer.parseInt(commandParts[1]));
+        try {
+            command = CommandType.valueOf(commandParts[0].toUpperCase().trim());
+        } catch (IllegalArgumentException e) {
+            command = CommandType.UNKNOWN;
         }
 
-        //If the command is unmark
-        else if (Objects.equals(commandParts[0], "unmark")) {
+        switch (command) {
 
-            if (commandParts.length < 2) {
-                throw new BaymaxException("You have not provided the Task Number that you want to unmark. \n" +
-                        "Please provide a task number to unmark.");
-            }
-            Commands.unmarkTask(Integer.parseInt(commandParts[1]));
-        }
+            case BYE :
+                return true;
 
-        //If the command is to delete
-        else if (Objects.equals(commandParts[0], "delete")) {
+            case LIST :
+                Ui.listInput();
+                break;
 
-            if (commandParts.length < 2) {
-                throw new BaymaxException("You have not provided the Task Number that you want to delete. \n" +
-                        "Please provide a task number to delete.");
-            }
-            int index = Integer.parseInt(commandParts[1]) - 1;
-            Commands.deleteTask(index);
-        }
+            case MARK :
+                if (commandParts.length < 2) {
+                    throw new BaymaxException("You have not provided the Task Number that you want to mark. \n" +
+                            "Please provide a task number to mark.");
+                }
+                Commands.markTask(Integer.parseInt(commandParts[1]));
+                break;
 
+            case UNMARK :
+                if (commandParts.length < 2) {
+                    throw new BaymaxException("You have not provided the Task Number that you want to unmark. \n" +
+                            "Please provide a task number to unmark.");
+                }
+                Commands.unmarkTask(Integer.parseInt(commandParts[1]));
+                break;
 
-        //Creating each task based on type of Task
-        else {
-            //ToDo Tasks
-            if (Objects.equals(commandParts[0], "todo")) {
+            case DELETE :
+                if (commandParts.length < 2) {
+                    throw new BaymaxException("You have not provided the Task Number that you want to delete. \n" +
+                            "Please provide a task number to delete.");
+                }
+                int index = Integer.parseInt(commandParts[1]) - 1;
+                Commands.deleteTask(index);
+                break;
 
+            case TODO :
                 if (commandParts.length < 2) {
                     throw new BaymaxException("The description of a todo cannot be empty.\n" +
                             "Please write a valid command.");
                 }
                 ToDo todoTask = new ToDo(commandParts[1]);
                 Commands.addTask(todoTask);
-            }
+                break;
 
-            //Deadline Tasks
-            else if (Objects.equals(commandParts[0], "deadline")) {
-
+            case DEADLINE :
                 if (commandParts.length < 2) {
                     throw new BaymaxException("The description of deadline cannot be empty.");
                 }
@@ -85,10 +80,9 @@ public class Parser {
                 Deadline deadlineTask = new Deadline(inputParts[0], inputParts[1]);
 
                 Commands.addTask(deadlineTask);
-            }
-            //Event Tasks
-            else if (Objects.equals(commandParts[0], "event")) {
+                break;
 
+            case EVENT :
                 if (commandParts.length < 2) {
                     throw new BaymaxException("The description of event cannot be empty.");
                 }
@@ -109,11 +103,11 @@ public class Parser {
                 Event eventTask = new Event(descSplit[0], times[0], times[1]);
 
                 Commands.addTask(eventTask);
-            }
-            else {
+                break;
+
+            case UNKNOWN :
                 throw new BaymaxException("I do not know what that means! \n" +
                         "Try telling me something I understand!");
-            }
         }
 
         return false;
