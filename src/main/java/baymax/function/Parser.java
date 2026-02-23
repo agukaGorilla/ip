@@ -4,19 +4,19 @@ package baymax.function;
 
 import baymax.BaymaxException;
 import baymax.task.*;
-import baymax.ui.Ui;
+
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Parser {
+
+    private static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     
     public static boolean handleInput(String currInput) throws BaymaxException {
 
         String[] commandParts = currInput.split(" ", 2);
         CommandType command;
-
-        /*
-         * Converting command to enums
-         * If any command is unknown converts to enum UNKNOWN
-         * */
 
         try {
             command = CommandType.valueOf(commandParts[0].toUpperCase().trim());
@@ -30,7 +30,7 @@ public class Parser {
                 return Commands.closeProgram();
 
             case LIST :
-                Ui.listInput();
+                Commands.listTasks();
                 break;
 
             case MARK :
@@ -76,7 +76,15 @@ public class Parser {
                     throw new BaymaxException("You have not entered a deadline for the event (or)\n" +
                             "Did not format the message correctly. Please write a valid command");
                 }
-                Deadline deadlineTask = new Deadline(inputParts[0], inputParts[1]);
+
+                LocalDateTime dateTime;
+                try {
+                    dateTime = LocalDateTime.parse(inputParts[1].trim(), dateTimeFormat);
+                } catch (DateTimeException e) {
+                    throw new BaymaxException(
+                            "Please enter the due date in this exact format: yyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
+                }
+                Deadline deadlineTask = new Deadline(inputParts[0], dateTime);
 
                 Commands.addTask(deadlineTask);
                 break;

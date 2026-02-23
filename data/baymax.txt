@@ -1,7 +1,2 @@
-[D][X] submit  (by :  tonight)
-[E][X] meeting  (from :  now to :  then)
-[T][ ] new
-[D][ ] week 3  (by :  tomorrow)
-[E][X] hah lol
-[T][ ] eat food
-[D][X] finish homework   [Due on  Feb 12 20 , at  6:00 pm]
+T|0|banana
+D|1|  [Due on  Feb 12 25 , at  6:00 pm]|2025-02-12 1800

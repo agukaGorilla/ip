@@ -10,6 +10,7 @@ import baymax.task.Deadline;
 import baymax.task.Event;
 import baymax.task.Task;
 import baymax.task.ToDo;
+import com.sun.nio.sctp.AbstractNotificationHandler;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -42,7 +43,28 @@ public class StoreData {
             FileWriter fw = new FileWriter(f);
             for (int i = 0; i < TaskData.getTotalTasks(); i++) {
                 Task currTask = TaskData.getTask(i);
-                fw.write(currTask.getStatusIcon() + currTask.getDescription() + System.lineSeparator());
+
+                TaskType currType = TaskType.valueOf(String.valueOf(currTask.getStatusIcon().charAt(1)).toUpperCase());
+                int num = (currTask.getIsDone()? 1 : 0);
+                String toWrite;
+
+                switch (currType) {
+                    case T :
+                        toWrite = String.format("%s|%d|%s", currType, num, currTask.getDescription());
+                        break;
+                    case D:
+                        Deadline d = (Deadline) currTask;
+                        toWrite = String.format("%s|%d|%s|%s",
+                                currType, num, currTask.getDescription(), d.getDateTime());
+                        break;
+                    case E:
+                        toWrite = String.format("%s|%d|%s", currType, num, currTask.getDescription());
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + currType);
+                }
+
+                fw.write(toWrite + System.lineSeparator());
             }
             fw.close();
         } catch (IOException e) {
@@ -56,6 +78,7 @@ public class StoreData {
     * */
     public static void readFromFile() {
 
+        /*
         try {
             File f = new File("./data/baymax.txt");
             if (!f.exists()) {
@@ -94,7 +117,7 @@ public class StoreData {
             }
         } catch (IOException | BaymaxException e) {
             System.out.println("Something went wrong :(  : " + e.getMessage());
-        }
+        }*/
     }
 
 }

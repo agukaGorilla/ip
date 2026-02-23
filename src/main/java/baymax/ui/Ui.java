@@ -8,13 +8,18 @@ import baymax.BaymaxException;
 import baymax.function.Parser;
 import baymax.task.Task;
 import baymax.data.TaskData;
+import baymax.task.ToDo;
 
 
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Ui {
 
-    private static final String horizontalLine = "____________________________________________________________________\n";
+    private static final String horizontalLine =
+            "____________________________________________________________________\n";
+
+    private DateTimeFormatter deadlineDateFormat = DateTimeFormatter.ofPattern(" '[Due on ' MMM dd yy ', at ' h:mm a']'");
 
     //Read Input from user
     public static void readInput() {
@@ -56,7 +61,7 @@ public class Ui {
     }
 
     //Prints the Input Array
-    public static void listInput() {
+    public static void printTasks() {
         int index = 1;
         System.out.print(Ui.horizontalLine);
         System.out.println("Here are the tasks in your list :\n");
@@ -66,6 +71,15 @@ public class Ui {
             index++;
         }
         System.out.print(Ui.horizontalLine + "\n");
+    }
+
+    //Prints the task to user in the form readable
+    public static void printTaskUser(Task currTask) {
+        if (currTask instanceof ToDo) {
+            
+        } else if (currTask instanceof ) {
+            
+        }
     }
 
     //Print the Marked Message

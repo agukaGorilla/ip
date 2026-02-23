@@ -59,4 +59,21 @@ public class Task {
             return "[ ][ ] ";
         }
     }
+
+    //Returns the status of checkbox
+    public TaskType taskType() {
+
+        if (this instanceof ToDo) {
+            return TaskType.TODO;
+        }
+        else if (this instanceof Deadline) {
+            return TaskType.DEADLINE;
+        }
+        else if(this instanceof Event) {
+            return TaskType.EVENT;
+        }
+        else {
+            return TaskType.UNKNOWN;
+        }
+    }
 }
