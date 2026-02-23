@@ -9,7 +9,7 @@ public class ToDo extends Task{
         super(description);
 
         //Prints Message
-        Ui.addedInputMessage(description, this);
+        Ui.addedInputMessage(this);
     }
 
     //Constructors used while reading from file

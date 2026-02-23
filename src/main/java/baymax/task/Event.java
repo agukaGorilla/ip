@@ -14,11 +14,11 @@ public class Event extends Task{
         this.setDescription(this.getDescription() + " " + time);
 
         //Prints Message
-        Ui.addedInputMessage(this.getDescription(), this);
+        Ui.addedInputMessage(this);
     }
 
     public Event(String description, boolean isDone) {
         super(description, isDone);
     }
-    
+
 }

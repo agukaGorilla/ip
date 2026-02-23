@@ -52,9 +52,9 @@ public class Ui {
     }
 
     //Confirms the Input message is added
-    public static void addedInputMessage(String message, Task currTask) {
+    public static void addedInputMessage(Task currTask) {
         System.out.println(Ui.horizontalLine + "Fire!! I have added this task : \n"
-                + currTask.getStatusIcon() + message + "\n"
+                + Ui.getTaskUserFormat(currTask)+ "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.horizontalLine);
     }
@@ -117,9 +117,9 @@ public class Ui {
     }
 
     //Print the task Deleted message
-    public static void printDeletedTask(Task currTask, String message) {
+    public static void printDeletedTask(Task currTask) {
         System.out.println( Ui.horizontalLine + "As you wish!! I have deleted this task from inputList \n"
-                + currTask.getStatusIcon() + message + "\n"
+                + Ui.getTaskUserFormat(currTask) + "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.horizontalLine + "\n");
     }

@@ -31,7 +31,7 @@ public class Commands {
         Task currTask = TaskData.getTask(index);
         TaskData.deleteTask(index);
 
-        Ui.printDeletedTask(currTask, currTask.getDescription());
+        Ui.printDeletedTask(currTask);
 
         /*
          * Any change in list, rewrite the list

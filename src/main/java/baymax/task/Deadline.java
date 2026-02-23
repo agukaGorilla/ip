@@ -22,7 +22,7 @@ public class Deadline extends Task{
         this.dateTime = dateTime;
 
         //Prints Message
-        Ui.addedInputMessage(this.getDescription(), this);
+        Ui.addedInputMessage(this);
     }
 
     // Returns the date as a String
