@@ -1,5 +1,9 @@
 /*A class just to handle Input Output Data*/
 
+/*
+* Only this class has access to the ArrayList<Task> inputList
+* */
+
 package baymax.data;
 
 import baymax.task.*;

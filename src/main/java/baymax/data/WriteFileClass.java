@@ -1,5 +1,9 @@
 package baymax.data;
 
+import baymax.task.Task;
+
+import java.io.FileWriter;
+
 /*
 * This class writes data in the text file
 * Only have to access the TaskData class
@@ -10,7 +14,9 @@ public class WriteFileClass {
 
     }
 
-    public static void writeTask(String currDescription) {
+    public static void writeTask() {
+        //FileWriter fw = new FileWriter("./data/baymax.txt");
 
+        //for (Task currTask : TaskData.)
     }
 }

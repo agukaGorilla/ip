@@ -3,11 +3,36 @@
 package baymax.task;
 
 public class Task {
-    public String description;
-    public boolean isDone;
+    private String description;
+    private boolean isDone;
 
     public Task(String description) {
         this.description = description;
+        this.isDone = false;
+    }
+
+    //Getter for description
+    public String getDescription() {
+        return this.description;
+    }
+
+    //Setter for description
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    //getter for isDone
+    public boolean getIsDone() {
+        return this.isDone;
+    }
+
+    //setters for isDone : mark as done
+    public void markDone() {
+        this.isDone = true;
+    }
+
+    //setter for isDone : mark as undone
+    public void unmarkDone() {
         this.isDone = false;
     }
 

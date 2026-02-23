@@ -2,12 +2,32 @@
 
 package baymax.ui;
 
+import baymax.BaymaxException;
 import baymax.task.Task;
 import baymax.data.TaskData;
+import baymax.function.Parser;
+
+import java.util.Scanner;
 
 public class Ui {
 
     private static final String horizontalLine = "____________________________________________________________________\n";
+
+    //Read Input from user
+    public static void readInput() {
+
+        Scanner sc = new Scanner(System.in);
+        boolean isExit = false;
+
+        while (!isExit && sc.hasNextLine()) {
+            String currInput = sc.nextLine();
+            try {
+                isExit = Parser.handleInput(currInput);
+            } catch (BaymaxException e) {
+                Ui.showError(e.getMessage());
+            }
+        }
+    }
 
     public static void openingMessage() {
         System.out.print(Ui.horizontalLine + """
@@ -36,7 +56,7 @@ public class Ui {
         System.out.println("Here are the tasks in your list :\n");
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
-            System.out.println(index + ". " + currTask.getStatusIcon() + currTask.description);
+            System.out.println(index + ". " + currTask.getStatusIcon() + currTask.getDescription());
             index++;
         }
         System.out.print(Ui.horizontalLine + "\n");
