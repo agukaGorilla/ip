@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
-    private static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     
     public static boolean handleInput(String currInput) throws BaymaxException {
 
@@ -97,7 +97,7 @@ public class Parser {
                 String[] descSplit = commandParts[1].split("/from");
                 //Throws exception if invalid /to
                 if (descSplit.length < 2) {
-                    throw new BaymaxException("You have not entered the start time of the event (or)\n" +
+                    throw new BaymaxException("You have not entered the time of the event (or)\n" +
                             "Did not format the message correctly. Please write a valid command");
                 }
 
@@ -107,7 +107,18 @@ public class Parser {
                     throw new BaymaxException("You have not entered the end time of the event (or)\n" +
                             "Did not format the message correctly. Please write a valid command");
                 }
-                Event eventTask = new Event(descSplit[0], times[0], times[1]);
+
+                LocalDateTime time1;
+                LocalDateTime time2;
+
+                try {
+                    time1 = LocalDateTime.parse(times[0].trim(), dateTimeFormat);
+                    time2 = LocalDateTime.parse(times[1].trim(), dateTimeFormat);
+                } catch (DateTimeException e) {
+                    throw new BaymaxException(
+                            "Please enter the due date in this exact format: yyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
+                }
+                Event eventTask = new Event(descSplit[0], time1, time2);
 
                 Commands.addTask(eventTask);
                 break;

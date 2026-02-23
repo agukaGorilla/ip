@@ -3,9 +3,14 @@ package baymax.task;
 import baymax.*;
 import baymax.ui.Ui;
 
+import java.time.LocalDateTime;
+
 public class Event extends Task{
 
-    public Event(String description, String time1, String time2) throws BaymaxException {
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
+    public Event(String description, LocalDateTime time1, LocalDateTime time2) throws BaymaxException {
         super(description);
 
         //Changing the Task description
@@ -17,6 +22,7 @@ public class Event extends Task{
         Ui.addedInputMessage(this);
     }
 
+    //Constructor used while reading or writing files
     public Event(String description, boolean isDone) {
         super(description, isDone);
     }

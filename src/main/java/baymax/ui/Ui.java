@@ -75,25 +75,20 @@ public class Ui {
     //Prints the task to user in the form readable
     public static String getTaskUserFormat(Task currTask){
         TaskType currType = currTask.getTaskType();
-        String userString = "";
 
-        switch (currType) {
-            case TODO :
-                userString = currTask.getStatusIcon() + currTask.getDescription();
-                break;
-            case DEADLINE:
+        return switch (currType) {
+            case TODO -> currTask.getStatusIcon() + currTask.getDescription();
+            case DEADLINE -> {
                 Deadline d = (Deadline) currTask;
-                userString = currTask.getStatusIcon() + currTask.getDescription() + 
+                yield currTask.getStatusIcon() + currTask.getDescription() +
                         d.getDateTime().format(deadlineDateFormat);
-                break;
-            case EVENT:
+            }
+            case EVENT -> {
                 Event e = (Event) currTask;
-                userString = currTask.getStatusIcon() + currTask.getDescription()  /* + */
-                        /*Add datetime here*/;
-                break;
-        }
-        
-        return userString;
+                yield currTask.getStatusIcon() + currTask.getDescription();
+            }
+            default -> "";
+        };
     }
 
     //Print the Marked Message
