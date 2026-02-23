@@ -10,9 +10,9 @@ public class Deadline extends Task{
         //Changing the description
         /*Since super() has to be the first line, I am making this change here*/
         String date1 = "(by : " + date + ")";
-        this.description = description + " " + date1;
+        this.setDescription(description + " " + date1);
 
         //Prints Message
-        Ui.addedInputMessage(this.description, this);
+        Ui.addedInputMessage(this.getDescription(), this);
     }
 }

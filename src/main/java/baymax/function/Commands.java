@@ -34,7 +34,7 @@ public class Commands {
 
         Task currTask = TaskData.getTask(num - 1);
         currTask.markDone();
-        Ui.printMarked(currTask.description);
+        Ui.printMarked(currTask.getDescription());
 
         /*
          * Any change in list, rewrite the list
@@ -57,7 +57,7 @@ public class Commands {
 
         Task currTask = TaskData.getTask(num - 1);
         currTask.unmarkDone();
-        Ui.printUnmarked(currTask.description);
+        Ui.printUnmarked(currTask.getDescription());
 
         /*
          * Any change in list, rewrite the list
@@ -76,11 +76,12 @@ public class Commands {
         Task currTask = TaskData.getTask(index);
         TaskData.deleteTask(index);
 
-        Ui.printDeletedTask(currTask, currTask.description);
+        Ui.printDeletedTask(currTask, currTask.getDescription());
 
         /*
          * Any change in list, rewrite the list
          * */
         WriteFileClass.writeTask();
     }
+
 }

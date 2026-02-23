@@ -3,8 +3,8 @@
 package baymax.task;
 
 public class Task {
-    public String description;
-    public boolean isDone;
+    private String description;
+    private boolean isDone;
 
     public Task(String description) {
         this.description = description;
@@ -14,6 +14,11 @@ public class Task {
     //Getter for description
     public String getDescription() {
         return this.description;
+    }
+
+    //Setter for description
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     //getter for isDone
