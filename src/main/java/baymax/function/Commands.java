@@ -9,6 +9,12 @@ import baymax.ui.Ui;
 
 public class Commands {
 
+    //Command to stop running the program
+    public static boolean closeProgram() {
+        StoreData.writeToFile();
+        return true;
+    }
+
     //Adds new Task to the List
     public static void addTask(Task currTask) {
         TaskData.addTask(currTask);
@@ -16,7 +22,27 @@ public class Commands {
         /*
         * Any change in list, rewrite the list
         * */
-        WriteFileClass.writeTask();
+        
+        StoreData.writeToFile();
+    }
+
+    //Deletes a task based on number given
+    public static void deleteTask(int index) throws BaymaxException {
+
+        //Throws exception if list is empty
+        if (TaskData.hasNoTasks()) {
+            throw new BaymaxException("The list is empty. There is no deletion that can be done");
+        }
+
+        Task currTask = TaskData.getTask(index);
+        TaskData.deleteTask(index);
+
+        Ui.printDeletedTask(currTask, currTask.getDescription());
+
+        /*
+         * Any change in list, rewrite the list
+         * */
+        StoreData.writeToFile();
     }
 
     //Marks Task as Done
@@ -39,7 +65,7 @@ public class Commands {
         /*
          * Any change in list, rewrite the list
          * */
-        WriteFileClass.writeTask();
+        StoreData.writeToFile();
     }
 
     //Unmarks a task previously marked as done
@@ -62,26 +88,7 @@ public class Commands {
         /*
          * Any change in list, rewrite the list
          * */
-        WriteFileClass.writeTask();
-    }
-
-    //Deletes a task based on number given
-    public static void deleteTask(int index) throws BaymaxException {
-
-        //Throws exception if list is empty
-        if (TaskData.hasNoTasks()) {
-            throw new BaymaxException("The list is empty. There is no deletion that can be done");
-        }
-
-        Task currTask = TaskData.getTask(index);
-        TaskData.deleteTask(index);
-
-        Ui.printDeletedTask(currTask, currTask.getDescription());
-
-        /*
-         * Any change in list, rewrite the list
-         * */
-        WriteFileClass.writeTask();
+        StoreData.writeToFile();
     }
 
 }

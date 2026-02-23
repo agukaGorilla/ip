@@ -2,7 +2,7 @@
 
 package baymax.function;
 
-import baymax.*;
+import baymax.BaymaxException;
 import baymax.task.*;
 import baymax.ui.Ui;
 
@@ -27,7 +27,7 @@ public class Parser {
         switch (command) {
 
             case BYE :
-                return true;
+                return Commands.closeProgram();
 
             case LIST :
                 Ui.listInput();

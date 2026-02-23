@@ -1,10 +1,17 @@
-/*Class for creating Tasks as Objects*/
-
 package baymax.task;
+
+/*
+* The Tasks to be done by user are instances of this Class
+* */
 
 public class Task {
     private String description;
     private boolean isDone;
+
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
+    }
 
     public Task(String description) {
         this.description = description;

@@ -13,6 +13,11 @@ public class TaskData {
 
     private static final ArrayList<Task> inputList = new ArrayList<>();
 
+    //Loads Tasks from Hard drive into inputList
+    public static void loadTasks() {
+        StoreData.readFromFile();
+    }
+
     //Adds task to the list
     public static void addTask(Task currTask) {
         TaskData.inputList.add(currTask);
