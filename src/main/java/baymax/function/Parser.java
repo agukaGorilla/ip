@@ -15,7 +15,7 @@ public class Parser {
     
     public static boolean handleInput(String currInput) throws BaymaxException {
 
-        String[] commandParts = currInput.split(" ", 2);
+        String[] commandParts = currInput.trim().split(" ", 2);
         CommandType command;
 
         try {
