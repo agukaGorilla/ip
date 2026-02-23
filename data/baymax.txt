@@ -2,4 +2,6 @@
 [E][X] meeting  (from :  now to :  then)
 [T][ ] new
 [D][ ] week 3  (by :  tomorrow)
-[E][ ] hah lol
+[E][X] hah lol
+[T][ ] eat food
+[D][X] finish homework   [Due on  Feb 12 20 , at  6:00 pm]
