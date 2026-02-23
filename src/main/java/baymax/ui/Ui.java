@@ -17,8 +17,11 @@ public class Ui {
     private static final String horizontalLine =
             "____________________________________________________________________\n";
 
-    private static DateTimeFormatter deadlineDateFormat = 
-            DateTimeFormatter.ofPattern(" '[Due on ' MMM dd yy ', at ' h:mm a']'");
+    private static final DateTimeFormatter deadlineDateFormat =
+            DateTimeFormatter.ofPattern("'[Due on ' MMM dd yy ', at ' h:mm a']'");
+
+    private static final DateTimeFormatter eventTimeFormat =
+            DateTimeFormatter.ofPattern(" 'on' MMM dd yy 'at' h:mm a");
 
     //Read Input from user
     public static void readInput() {
@@ -75,20 +78,26 @@ public class Ui {
     //Prints the task to user in the form readable
     public static String getTaskUserFormat(Task currTask){
         TaskType currType = currTask.getTaskType();
+        String userString = "";
 
-        return switch (currType) {
-            case TODO -> currTask.getStatusIcon() + currTask.getDescription();
-            case DEADLINE -> {
+        switch (currType) {
+            case TODO :
+                userString = currTask.getStatusIcon() + currTask.getDescription() + "\n";
+                break;
+            case DEADLINE:
                 Deadline d = (Deadline) currTask;
-                yield currTask.getStatusIcon() + currTask.getDescription() +
-                        d.getDateTime().format(deadlineDateFormat);
-            }
-            case EVENT -> {
+                userString = currTask.getStatusIcon() + currTask.getDescription() +
+                        "\n" + d.getDateTime().format(deadlineDateFormat) + "\n";
+                break;
+            case EVENT:
                 Event e = (Event) currTask;
-                yield currTask.getStatusIcon() + currTask.getDescription();
-            }
-            default -> "";
-        };
+                userString = currTask.getStatusIcon() + currTask.getDescription() + " \n[Starts" +
+                        e.getStartTime().format(eventTimeFormat) + " and ends" +
+                        e.getEndTime().format(eventTimeFormat) + "]\n";
+                break;
+        }
+
+        return userString;
     }
 
     //Print the Marked Message

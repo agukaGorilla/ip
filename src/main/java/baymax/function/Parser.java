@@ -82,7 +82,7 @@ public class Parser {
                     dateTime = LocalDateTime.parse(inputParts[1].trim(), dateTimeFormat);
                 } catch (DateTimeException e) {
                     throw new BaymaxException(
-                            "Please enter the due date in this exact format: yyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
+                            "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
                 }
                 Deadline deadlineTask = new Deadline(inputParts[0], dateTime);
 
@@ -116,7 +116,7 @@ public class Parser {
                     time2 = LocalDateTime.parse(times[1].trim(), dateTimeFormat);
                 } catch (DateTimeException e) {
                     throw new BaymaxException(
-                            "Please enter the due date in this exact format: yyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
+                            "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
                 }
                 Event eventTask = new Event(descSplit[0], time1, time2);
 

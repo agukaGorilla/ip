@@ -12,11 +12,8 @@ public class Event extends Task{
 
     public Event(String description, LocalDateTime time1, LocalDateTime time2) throws BaymaxException {
         super(description);
-
-        //Changing the Task description
-        /*Since super() has to be the first line, I am making this change here*/
-        String time = "(from : " + time1 + " to : " + time2 + ")";
-        this.setDescription(this.getDescription() + " " + time);
+        this.startTime = time1;
+        this.endTime = time2;
 
         //Prints Message
         Ui.addedInputMessage(this);
@@ -25,6 +22,14 @@ public class Event extends Task{
     //Constructor used while reading or writing files
     public Event(String description, boolean isDone) {
         super(description, isDone);
+    }
+
+    //Getters
+    public LocalDateTime getStartTime() {
+        return this.startTime;
+    }
+    public LocalDateTime getEndTime() {
+        return this.endTime;
     }
 
 }
