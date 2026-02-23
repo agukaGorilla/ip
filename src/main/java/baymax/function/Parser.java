@@ -27,7 +27,7 @@ public class Parser {
         switch (command) {
 
             case BYE :
-                return true;
+                return Commands.closeProgram();
 
             case LIST :
                 Ui.listInput();

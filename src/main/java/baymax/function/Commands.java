@@ -9,6 +9,12 @@ import baymax.ui.Ui;
 
 public class Commands {
 
+    //Command to stop running the program
+    public static boolean closeProgram() {
+        StoreData.writeToFile();
+        return true;
+    }
+
     //Adds new Task to the List
     public static void addTask(Task currTask) {
         TaskData.addTask(currTask);
