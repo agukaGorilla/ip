@@ -2,7 +2,7 @@
 
 package baymax.function;
 
-import baymax.*;
+import baymax.BaymaxException;
 import baymax.task.*;
 import baymax.ui.Ui;
 

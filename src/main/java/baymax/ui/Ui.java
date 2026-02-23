@@ -19,7 +19,7 @@ public class Ui {
     //Read Input from user
     public static void readInput() {
 
-        //Load previous messages
+        //First Load previous messages
         TaskData.loadTasks();
 
         Scanner sc = new Scanner(System.in);

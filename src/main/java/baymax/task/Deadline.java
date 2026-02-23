@@ -4,6 +4,10 @@ import baymax.ui.Ui;
 
 public class Deadline extends Task{
 
+    public Deadline(String description, boolean isDone) {
+        super(description, isDone);
+    }
+
     public Deadline(String description, String date) {
         super(description);
 

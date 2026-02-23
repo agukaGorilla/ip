@@ -16,4 +16,8 @@ public class Event extends Task{
         //Prints Message
         Ui.addedInputMessage(this.getDescription(), this);
     }
+
+    public Event(String description, boolean isDone) {
+        super(description, isDone);
+    }
 }
