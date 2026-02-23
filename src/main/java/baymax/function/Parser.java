@@ -13,7 +13,7 @@ public class Parser {
 
     public static boolean handleInput(String currInput) throws BaymaxException {
 
-        String[] currCommand = currInput.split(" ");
+        String[] commandParts = currInput.split(" ", 2);
 
         //If the command is to leave chat
         if (Objects.equals(currInput, "bye")) {
@@ -27,73 +27,73 @@ public class Parser {
 
 
         //If the command is mark
-        else if (Objects.equals(currCommand[0], "mark")) {
+        else if (Objects.equals(commandParts[0], "mark")) {
 
-            if (currCommand.length < 2) {
+            if (commandParts.length < 2) {
                 throw new BaymaxException("You have not provided the Task Number that you want to mark. \n" +
                         "Please provide a task number to mark.");
             }
-            Commands.markTask(Integer.parseInt(currCommand[1]));
+            Commands.markTask(Integer.parseInt(commandParts[1]));
         }
 
         //If the command is unmark
-        else if (Objects.equals(currCommand[0], "unmark")) {
+        else if (Objects.equals(commandParts[0], "unmark")) {
 
-            if (currCommand.length < 2) {
+            if (commandParts.length < 2) {
                 throw new BaymaxException("You have not provided the Task Number that you want to unmark. \n" +
                         "Please provide a task number to unmark.");
             }
-            Commands.unmarkTask(Integer.parseInt(currCommand[1]));
+            Commands.unmarkTask(Integer.parseInt(commandParts[1]));
         }
 
         //If the command is to delete
-        else if (Objects.equals(currCommand[0], "delete")) {
+        else if (Objects.equals(commandParts[0], "delete")) {
 
-            if (currCommand.length < 2) {
+            if (commandParts.length < 2) {
                 throw new BaymaxException("You have not provided the Task Number that you want to delete. \n" +
                         "Please provide a task number to delete.");
             }
-            int index = Integer.parseInt(currCommand[1]) - 1;
+            int index = Integer.parseInt(commandParts[1]) - 1;
             Commands.deleteTask(index);
         }
 
 
         //Creating each task based on type of Task
         else {
-            String[] currDescription = currInput.split(" ", 2);
-
             //ToDo Tasks
-            if (Objects.equals(currDescription[0], "todo")) {
-                if (currDescription.length < 2) {
+            if (Objects.equals(commandParts[0], "todo")) {
+
+                if (commandParts.length < 2) {
                     throw new BaymaxException("The description of a todo cannot be empty.\n" +
                             "Please write a valid command.");
                 }
-                ToDo todoTask = new ToDo(currDescription[1]);
+                ToDo todoTask = new ToDo(commandParts[1]);
                 Commands.addTask(todoTask);
             }
-            //Deadline Tasks
-            else if (Objects.equals(currDescription[0], "deadline")) {
 
-                if (currDescription.length < 2) {
+            //Deadline Tasks
+            else if (Objects.equals(commandParts[0], "deadline")) {
+
+                if (commandParts.length < 2) {
                     throw new BaymaxException("The description of deadline cannot be empty.");
                 }
-                String[] descSplit = currDescription[1].split("/by");
-                if (descSplit.length < 2) {
+                String[] inputParts = commandParts[1].split("/by");
+                if (inputParts.length < 2) {
                     throw new BaymaxException("You have not entered a deadline for the event (or)\n" +
                             "Did not format the message correctly. Please write a valid command");
                 }
-                Deadline deadlineTask = new Deadline(descSplit[0], descSplit[1]);
+                Deadline deadlineTask = new Deadline(inputParts[0], inputParts[1]);
 
                 Commands.addTask(deadlineTask);
             }
             //Event Tasks
-            else if (Objects.equals(currDescription[0], "event")) {
+            else if (Objects.equals(commandParts[0], "event")) {
 
-                if (currDescription.length < 2) {
+                if (commandParts.length < 2) {
                     throw new BaymaxException("The description of event cannot be empty.");
                 }
 
-                String[] descSplit = currDescription[1].split("/from");
+                String[] descSplit = commandParts[1].split("/from");
                 //Throws exception if invalid /to
                 if (descSplit.length < 2) {
                     throw new BaymaxException("You have not entered the start time of the event (or)\n" +

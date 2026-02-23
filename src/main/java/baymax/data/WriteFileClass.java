@@ -14,9 +14,12 @@ public class WriteFileClass {
 
     }
 
+    private static void writeToFile(String textToAdd) {
+
+    }
+
     public static void writeTask() {
         //FileWriter fw = new FileWriter("./data/baymax.txt");
 
-        //for (Task currTask : TaskData.)
     }
 }
