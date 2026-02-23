@@ -97,16 +97,16 @@ public class Ui {
     }
 
     //Print the Marked Message
-    public static void printMarked(String taskDescription) {
+    public static void printMarked(Task currTask) {
         System.out.println( Ui.horizontalLine + "Gotcha! You have finished the following task!");
-        System.out.println("[X] " + taskDescription + "\n" + Ui.horizontalLine + "\n");
+        System.out.println(Ui.getTaskUserFormat(currTask) + "\n" + Ui.horizontalLine + "\n");
 
     }
 
     //Print the Unmarked Message
-    public static void printUnmarked(String taskDescription) {
+    public static void printUnmarked(Task currTask) {
         System.out.println( Ui.horizontalLine + "Aight. I have unmarked the task. Get on it soon...");
-        System.out.println("[ ] " + taskDescription + "\n" + Ui.horizontalLine + "\n");
+        System.out.println(Ui.getTaskUserFormat(currTask) + "\n" + Ui.horizontalLine + "\n");
     }
 
     //Print the exception error message

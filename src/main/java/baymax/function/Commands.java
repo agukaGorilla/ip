@@ -59,7 +59,7 @@ public class Commands {
 
         Task currTask = TaskData.getTask(num - 1);
         currTask.markDone();
-        Ui.printMarked(currTask.getDescription());
+        Ui.printMarked(currTask);
 
         /*
          * Any change in list, rewrite the list
@@ -82,7 +82,7 @@ public class Commands {
 
         Task currTask = TaskData.getTask(num - 1);
         currTask.unmarkDone();
-        Ui.printUnmarked(currTask.getDescription());
+        Ui.printUnmarked(currTask);
 
         /*
          * Any change in list, rewrite the list
