@@ -20,6 +20,25 @@ public class Commands {
         StoreData.writeToFile();
     }
 
+    //Deletes a task based on number given
+    public static void deleteTask(int index) throws BaymaxException {
+
+        //Throws exception if list is empty
+        if (TaskData.hasNoTasks()) {
+            throw new BaymaxException("The list is empty. There is no deletion that can be done");
+        }
+
+        Task currTask = TaskData.getTask(index);
+        TaskData.deleteTask(index);
+
+        Ui.printDeletedTask(currTask, currTask.getDescription());
+
+        /*
+         * Any change in list, rewrite the list
+         * */
+        StoreData.writeToFile();
+    }
+
     //Marks Task as Done
     public static void markTask(int num) throws BaymaxException {
 
@@ -59,25 +78,6 @@ public class Commands {
         Task currTask = TaskData.getTask(num - 1);
         currTask.unmarkDone();
         Ui.printUnmarked(currTask.getDescription());
-
-        /*
-         * Any change in list, rewrite the list
-         * */
-        StoreData.writeToFile();
-    }
-
-    //Deletes a task based on number given
-    public static void deleteTask(int index) throws BaymaxException {
-
-        //Throws exception if list is empty
-        if (TaskData.hasNoTasks()) {
-            throw new BaymaxException("The list is empty. There is no deletion that can be done");
-        }
-
-        Task currTask = TaskData.getTask(index);
-        TaskData.deleteTask(index);
-
-        Ui.printDeletedTask(currTask, currTask.getDescription());
 
         /*
          * Any change in list, rewrite the list

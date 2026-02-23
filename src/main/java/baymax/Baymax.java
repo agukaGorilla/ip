@@ -1,11 +1,6 @@
 package baymax;
 
 import baymax.ui.Ui;
-import baymax.function.Parser;
-
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class Baymax {
 
@@ -14,7 +9,10 @@ public class Baymax {
         //Opening Message
         Ui.openingMessage();
 
-        //Handles all the commands
+        /*
+        * Loads messages previously stored (and)
+        * Handles adding of new commands
+        * */
         Ui.readInput();
 
         //Closing

@@ -1,11 +1,14 @@
-/*Handles Printing on CLI and related Logic*/
-
 package baymax.ui;
 
+/*
+* Handles everything related to interaction with user
+* */
+
 import baymax.BaymaxException;
+import baymax.function.Parser;
 import baymax.task.Task;
 import baymax.data.TaskData;
-import baymax.function.Parser;
+
 
 import java.util.Scanner;
 
@@ -15,6 +18,9 @@ public class Ui {
 
     //Read Input from user
     public static void readInput() {
+
+        //Load previous messages
+        TaskData.loadTasks();
 
         Scanner sc = new Scanner(System.in);
         boolean isExit = false;

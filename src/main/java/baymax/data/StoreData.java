@@ -1,5 +1,10 @@
 package baymax.data;
 
+/*
+* This class handles storing the list of Tasks to the hard Disk
+* We write the list of tasks to another text file
+* */
+
 import baymax.task.Task;
 
 import java.io.FileWriter;
@@ -11,6 +16,9 @@ import java.io.IOException;
 * */
 public class StoreData {
 
+    /*
+    * Writes data from TaskData to a text file everytime any change is made to the list of Tasks
+    * */
     public static void writeToFile() {
 
         try {
@@ -23,6 +31,13 @@ public class StoreData {
         } catch (IOException e) {
             System.out.println("Something went wrong :( - " + e.getMessage());
         }
+
+    }
+
+    /*
+    * Reads data from the text file whenever we start the program
+    * */
+    public static void readFromFile() {
 
     }
 }
