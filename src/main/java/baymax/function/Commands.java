@@ -4,13 +4,19 @@ package baymax.function;
 
 import baymax.*;
 import baymax.task.*;
-import baymax.data.TaskData;
+import baymax.data.*;
 import baymax.ui.Ui;
 
 public class Commands {
 
+    //Adds new Task to the List
     public static void addTask(Task currTask) {
         TaskData.addTask(currTask);
+
+        /*
+        * Any change in list, rewrite the list
+        * */
+        WriteFileClass.writeTask();
     }
 
     //Marks Task as Done
@@ -29,6 +35,11 @@ public class Commands {
         Task currTask = TaskData.getTask(num - 1);
         currTask.isDone = true;
         Ui.printMarked(currTask.description);
+
+        /*
+         * Any change in list, rewrite the list
+         * */
+        WriteFileClass.writeTask();
     }
 
     //Unmarks a task previously marked as done
@@ -47,6 +58,11 @@ public class Commands {
         Task currTask = TaskData.getTask(num - 1);
         TaskData.getTask(num - 1).isDone = false;
         Ui.printUnmarked(currTask.description);
+
+        /*
+         * Any change in list, rewrite the list
+         * */
+        WriteFileClass.writeTask();
     }
 
     //Deletes a task based on number given
@@ -61,5 +77,10 @@ public class Commands {
         TaskData.deleteTask(index);
 
         Ui.printDeletedTask(currTask, currTask.description);
+
+        /*
+         * Any change in list, rewrite the list
+         * */
+        WriteFileClass.writeTask();
     }
 }
