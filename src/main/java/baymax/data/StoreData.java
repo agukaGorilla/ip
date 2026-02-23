@@ -32,7 +32,13 @@ public class StoreData {
     public static void writeToFile() {
 
         try {
-            FileWriter fw = new FileWriter("./data/baymax.txt");
+
+            File f = new File("./data/baymax.txt");
+            if (!f.getParentFile().exists()) {
+                f.getParentFile().mkdirs();
+            }
+
+            FileWriter fw = new FileWriter(f);
             for (int i = 0; i < TaskData.getTotalTasks(); i++) {
                 Task currTask = TaskData.getTask(i);
                 fw.write(currTask.getStatusIcon() + currTask.getDescription() + System.lineSeparator());
@@ -51,6 +57,10 @@ public class StoreData {
 
         try {
             File f = new File("./data/baymax.txt");
+            if (!f.exists()) {
+                return;
+            }
+
             Scanner sc = new Scanner(f);
 
             while (sc.hasNextLine()) {

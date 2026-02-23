@@ -10,7 +10,7 @@ public class Event extends Task{
 
         //Changing the Task description
         /*Since super() has to be the first line, I am making this change here*/
-        String time = "(from : " + time1 + "to : " + time2 + ")";
+        String time = "(from : " + time1 + " to : " + time2 + ")";
         this.setDescription(this.getDescription() + " " + time);
 
         //Prints Message
