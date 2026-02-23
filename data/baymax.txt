@@ -1,3 +1,6 @@
-[D][ ] submit  (by :  tonight)
+[D][X] submit  (by :  tonight)
 [E][X] meeting  (from :  now to :  then)
 [T][ ] new
+[D][ ] week 3  (by :  tomorrow)
+[ ][ ]
+heheh haha lol

@@ -5,6 +5,7 @@ package baymax.data;
 * We write the list of tasks to another text file
 * */
 
+import baymax.BaymaxException;
 import baymax.task.Deadline;
 import baymax.task.Event;
 import baymax.task.Task;
@@ -66,28 +67,32 @@ public class StoreData {
             while (sc.hasNextLine()) {
                 String curr = sc.nextLine();
 
-                String statusIcon = curr.substring(0, 6);
-                String taskDescription = curr.substring(7);
+                try {
+                    String statusIcon = curr.substring(0, 6);
+                    String taskDescription = curr.substring(7);
 
-                TaskType type = TaskType.valueOf(String.valueOf(statusIcon.charAt(1)).toUpperCase());
-                boolean isDone = (Objects.equals(String.valueOf(statusIcon.charAt(4)).toUpperCase(), "X"));
+                    TaskType type = TaskType.valueOf(String.valueOf(statusIcon.charAt(1)).toUpperCase());
+                    boolean isDone = (Objects.equals(String.valueOf(statusIcon.charAt(4)).toUpperCase(), "X"));
 
-                switch (type) {
+                    switch (type) {
 
-                    case T :
-                        TaskData.addTask(new ToDo(taskDescription, isDone));
-                        break;
+                        case T:
+                            TaskData.addTask(new ToDo(taskDescription, isDone));
+                            break;
 
-                    case D:
-                        TaskData.addTask(new Deadline(taskDescription, isDone));
-                        break;
+                        case D:
+                            TaskData.addTask(new Deadline(taskDescription, isDone));
+                            break;
 
-                    case E:
-                        TaskData.addTask(new Event(taskDescription, isDone));
+                        case E:
+                            TaskData.addTask(new Event(taskDescription, isDone));
+                    }
+                } catch (Exception e) {
+                    throw new BaymaxException("File corrupted :(. Couldn't load some previous tasks");
                 }
 
             }
-        } catch (IOException e) {
+        } catch (IOException | BaymaxException e) {
             System.out.println("Something went wrong :(  : " + e.getMessage());
         }
     }
