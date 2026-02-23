@@ -33,7 +33,7 @@ public class Commands {
         }
 
         Task currTask = TaskData.getTask(num - 1);
-        currTask.isDone = true;
+        TaskData.markTask(num - 1);
         Ui.printMarked(currTask.description);
 
         /*
@@ -56,7 +56,7 @@ public class Commands {
         }
 
         Task currTask = TaskData.getTask(num - 1);
-        TaskData.getTask(num - 1).isDone = false;
+        TaskData.unmarkTask(num - 1);
         Ui.printUnmarked(currTask.description);
 
         /*

@@ -11,6 +11,26 @@ public class Task {
         this.isDone = false;
     }
 
+    //Getter for description
+    public String getDescription() {
+        return this.description;
+    }
+
+    //getter for isDone
+    public boolean getIsDone() {
+        return this.isDone;
+    }
+
+    //setters for isDone : mark as done
+    public void markDone() {
+        this.isDone = true;
+    }
+
+    //setter for isDone : mark as undone
+    public void markUndone() {
+        this.isDone = false;
+    }
+
     //Returns the status of checkbox
     public String getStatusIcon() {
         String mark = (isDone ? "X" : " ");
