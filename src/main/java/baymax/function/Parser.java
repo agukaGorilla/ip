@@ -7,11 +7,10 @@ import baymax.task.*;
 import baymax.ui.Ui;
 
 public class Parser {
-
+    
     public static boolean handleInput(String currInput) throws BaymaxException {
 
         String[] commandParts = currInput.split(" ", 2);
-
         CommandType command;
 
         /*
