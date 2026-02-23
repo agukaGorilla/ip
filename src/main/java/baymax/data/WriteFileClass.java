@@ -3,6 +3,7 @@ package baymax.data;
 import baymax.task.Task;
 
 import java.io.FileWriter;
+import java.io.IOException;
 
 /*
 * This class writes data in the text file
@@ -10,16 +11,18 @@ import java.io.FileWriter;
 * */
 public class WriteFileClass {
 
-    private static void formatParser(String currDescription) {
+    public static void writeToFile() {
 
-    }
-
-    private static void writeToFile(String textToAdd) {
-
-    }
-
-    public static void writeTask() {
-        //FileWriter fw = new FileWriter("./data/baymax.txt");
+        try {
+            FileWriter fw = new FileWriter("./data/baymax.txt");
+            for (int i = 0; i < TaskData.getTotalTasks(); i++) {
+                Task currTask = TaskData.getTask(i);
+                fw.write(currTask.getStatusIcon() + currTask.getDescription() + System.lineSeparator());
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Something went wrong :( - " + e.getMessage());
+        }
 
     }
 }
