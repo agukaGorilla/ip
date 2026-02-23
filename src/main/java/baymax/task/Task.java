@@ -27,7 +27,7 @@ public class Task {
     }
 
     //setter for isDone : mark as undone
-    public void markUndone() {
+    public void unmarkDone() {
         this.isDone = false;
     }
 

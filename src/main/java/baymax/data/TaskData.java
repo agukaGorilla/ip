@@ -23,16 +23,6 @@ public class TaskData {
         TaskData.inputList.remove(index);
     }
 
-    //Marks task
-    public static void markTask(int num) {
-        TaskData.inputList.get(num).isDone = true;
-    }
-
-    //Unmarks Task
-    public static void unmarkTask(int num) {
-        TaskData.inputList.get(num).isDone = false;
-    }
-
     //Gets a task with index number
     public static Task getTask(int index) {
         return TaskData.inputList.get(index);
@@ -47,7 +37,5 @@ public class TaskData {
     public static boolean hasNoTasks() {
         return TaskData.inputList.isEmpty();
     }
-
-
 
 }
