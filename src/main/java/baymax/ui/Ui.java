@@ -6,10 +6,8 @@ package baymax.ui;
 
 import baymax.BaymaxException;
 import baymax.function.Parser;
-import baymax.task.Task;
+import baymax.task.*;
 import baymax.data.TaskData;
-import baymax.task.ToDo;
-
 
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -19,7 +17,8 @@ public class Ui {
     private static final String horizontalLine =
             "____________________________________________________________________\n";
 
-    private DateTimeFormatter deadlineDateFormat = DateTimeFormatter.ofPattern(" '[Due on ' MMM dd yy ', at ' h:mm a']'");
+    private static DateTimeFormatter deadlineDateFormat = 
+            DateTimeFormatter.ofPattern(" '[Due on ' MMM dd yy ', at ' h:mm a']'");
 
     //Read Input from user
     public static void readInput() {
@@ -67,19 +66,34 @@ public class Ui {
         System.out.println("Here are the tasks in your list :\n");
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
-            System.out.println(index + ". " + currTask.getStatusIcon() + currTask.getDescription());
+            System.out.println(index + ". " + Ui.getTaskUserFormat(currTask));
             index++;
         }
         System.out.print(Ui.horizontalLine + "\n");
     }
 
     //Prints the task to user in the form readable
-    public static void printTaskUser(Task currTask) {
-        if (currTask instanceof ToDo) {
-            
-        } else if (currTask instanceof ) {
-            
+    public static String getTaskUserFormat(Task currTask){
+        TaskType currType = currTask.getTaskType();
+        String userString = "";
+
+        switch (currType) {
+            case TODO :
+                userString = currTask.getStatusIcon() + currTask.getDescription();
+                break;
+            case DEADLINE:
+                Deadline d = (Deadline) currTask;
+                userString = currTask.getStatusIcon() + currTask.getDescription() + 
+                        d.getDateTime().format(deadlineDateFormat);
+                break;
+            case EVENT:
+                Event e = (Event) currTask;
+                userString = currTask.getStatusIcon() + currTask.getDescription()  /* + */
+                        /*Add datetime here*/;
+                break;
         }
+        
+        return userString;
     }
 
     //Print the Marked Message

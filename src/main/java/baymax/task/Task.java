@@ -61,7 +61,7 @@ public class Task {
     }
 
     //Returns the status of checkbox
-    public TaskType taskType() {
+    public TaskType getTaskType() {
 
         if (this instanceof ToDo) {
             return TaskType.TODO;
