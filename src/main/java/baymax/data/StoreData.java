@@ -55,11 +55,12 @@ public class StoreData {
 
             while (sc.hasNextLine()) {
                 String curr = sc.nextLine();
-                String[] lineParts = curr.split(" ", 2);
 
-                TaskType type = TaskType.valueOf(String.valueOf(lineParts[0].charAt(1)).toUpperCase());
-                String taskDescription = lineParts[1];
-                boolean isDone = (Objects.equals(String.valueOf(lineParts[0].charAt(4)).toUpperCase(), "X"));
+                String statusIcon = curr.substring(0, 6);
+                String taskDescription = curr.substring(7);
+
+                TaskType type = TaskType.valueOf(String.valueOf(statusIcon.charAt(1)).toUpperCase());
+                boolean isDone = (Objects.equals(String.valueOf(statusIcon.charAt(4)).toUpperCase(), "X"));
 
                 switch (type) {
 

@@ -1,3 +1,3 @@
 [D][ ] submit  (by :  tonight)
-[E][ ] meeting  (from :  now to :  then)
+[E][X] meeting  (from :  now to :  then)
 [T][ ] new
