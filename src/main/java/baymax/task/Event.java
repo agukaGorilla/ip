@@ -20,8 +20,10 @@ public class Event extends Task{
     }
 
     //Constructor used while reading or writing files
-    public Event(String description, boolean isDone) {
+    public Event(String description, boolean isDone, LocalDateTime startTime, LocalDateTime endTime) {
         super(description, isDone);
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     //Getters

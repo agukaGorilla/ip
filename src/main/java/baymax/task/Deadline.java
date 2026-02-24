@@ -12,8 +12,9 @@ public class Deadline extends Task{
     private LocalDateTime dateTime;
 
     // Constructor used when read from list file
-    public Deadline(String description, boolean isDone) {
+    public Deadline(String description, boolean isDone, LocalDateTime dateTime) {
         super(description, isDone);
+        this.dateTime = dateTime;
     }
 
     // Constructor used while input entered by user

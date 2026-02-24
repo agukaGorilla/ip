@@ -27,7 +27,6 @@ public class StoreData {
     public static void writeToFile() {
 
         try {
-
             File f = new File("./data/baymax.txt");
             if (!f.getParentFile().exists()) {
                 f.getParentFile().mkdirs();
@@ -70,9 +69,10 @@ public class StoreData {
                 }
                 fw.write(toWrite);
             }
-
             fw.close();
-        } catch (IOException e) {
+
+        }
+        catch (IOException e) {
             System.out.println("Something went wrong :( - " + e.getMessage());
         }
 
@@ -83,7 +83,7 @@ public class StoreData {
     * */
     public static void readFromFile() {
 
-        /*
+
         try {
             File f = new File("./data/baymax.txt");
             if (!f.exists()) {
@@ -93,36 +93,56 @@ public class StoreData {
             Scanner sc = new Scanner(f);
 
             while (sc.hasNextLine()) {
-                String curr = sc.nextLine();
+                String currLine = sc.nextLine();
+                String[] lineWords = currLine.split("\\|");
+
+                String taskType = lineWords[0].trim();
+
+                int num = Integer.parseInt(lineWords[1].trim());
+                boolean isDone = (num == 1 ? true : false);
+
+                String taskDescription = lineWords[2].trim();
 
                 try {
-                    String statusIcon = curr.substring(0, 6);
-                    String taskDescription = curr.substring(7);
+                    switch (taskType) {
+                        case "T" :
 
-                    TaskType type = TaskType.valueOf(String.valueOf(statusIcon.charAt(1)).toUpperCase());
-                    boolean isDone = (Objects.equals(String.valueOf(statusIcon.charAt(4)).toUpperCase(), "X"));
+                            ToDo todoTask = new ToDo(taskDescription, isDone);
+                            TaskData.addTask(todoTask);
 
-                    switch (type) {
-
-                        case T:
-                            TaskData.addTask(new ToDo(taskDescription, isDone));
                             break;
+                        case "D":
 
-                        case D:
-                            TaskData.addTask(new Deadline(taskDescription, isDone));
+                            String dTime = lineWords[3].trim();
+                            LocalDateTime time = LocalDateTime.parse(dTime, dateTimeFormat);
+
+                            Deadline dTask = new Deadline(taskDescription, isDone, time);
+                            TaskData.addTask(dTask);
+
                             break;
+                        case "E":
 
-                        case E:
-                            TaskData.addTask(new Event(taskDescription, isDone));
+                            String sTime = lineWords[3].trim();
+                            LocalDateTime time1 = LocalDateTime.parse(sTime, dateTimeFormat);
+
+                            String eTime = lineWords[4].trim();
+                            LocalDateTime time2 = LocalDateTime.parse(eTime, dateTimeFormat);
+
+                            Event eTask = new Event(taskDescription, isDone, time1, time2);
+                            TaskData.addTask(eTask);
+
+                            break;
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     throw new BaymaxException("File corrupted :(. Couldn't load some previous tasks");
                 }
 
             }
-        } catch (IOException | BaymaxException e) {
+        }
+        catch (IOException | BaymaxException e) {
             System.out.println("Something went wrong :(  : " + e.getMessage());
-        }*/
+        }
     }
 
 }

@@ -63,7 +63,9 @@ public class Parser {
                     throw new BaymaxException("The description of a todo cannot be empty.\n" +
                             "Please write a valid command.");
                 }
-                ToDo todoTask = new ToDo(commandParts[1]);
+
+                String replace = commandParts[1].replace("|", "-");
+                ToDo todoTask = new ToDo(replace);
                 Commands.addTask(todoTask);
                 break;
 
@@ -84,7 +86,9 @@ public class Parser {
                     throw new BaymaxException(
                             "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
                 }
-                Deadline deadlineTask = new Deadline(inputParts[0], dateTime);
+
+                String replace2 = commandParts[1].replace("|", "-");
+                Deadline deadlineTask = new Deadline(replace2, dateTime);
 
                 Commands.addTask(deadlineTask);
                 break;
@@ -118,7 +122,9 @@ public class Parser {
                     throw new BaymaxException(
                             "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
                 }
-                Event eventTask = new Event(descSplit[0], time1, time2);
+
+                String replace3 = commandParts[1].replace("|", "-");
+                Event eventTask = new Event(replace3, time1, time2);
 
                 Commands.addTask(eventTask);
                 break;
