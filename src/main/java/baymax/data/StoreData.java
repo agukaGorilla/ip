@@ -6,34 +6,27 @@ package baymax.data;
 * */
 
 import baymax.BaymaxException;
-import baymax.task.Deadline;
-import baymax.task.Event;
-import baymax.task.Task;
-import baymax.task.ToDo;
+import baymax.task.*;
+import com.sun.nio.sctp.AbstractNotificationHandler;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Scanner;
 
 
 public class StoreData {
 
-    /*
-    * Nested Enum
-    * */
-    private enum TaskType {
-        T, D, E
-    }
-
+    private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     /*
     * Writes data from TaskData to a text file everytime any change is made to the list of Tasks
     * */
     public static void writeToFile() {
 
         try {
-
             File f = new File("./data/baymax.txt");
             if (!f.getParentFile().exists()) {
                 f.getParentFile().mkdirs();
@@ -41,11 +34,45 @@ public class StoreData {
 
             FileWriter fw = new FileWriter(f);
             for (int i = 0; i < TaskData.getTotalTasks(); i++) {
+
                 Task currTask = TaskData.getTask(i);
-                fw.write(currTask.getStatusIcon() + currTask.getDescription() + System.lineSeparator());
+                TaskType taskType = currTask.getTaskType();
+                int num = (currTask.getIsDone()? 1 : 0);
+
+                String toWrite = "";
+
+                switch (taskType) {
+                    case TODO :
+                        toWrite = String.format(" T | %d | %s \n", num, currTask.getDescription());
+                        break;
+                    case DEADLINE:
+                        Deadline d = (Deadline) currTask;
+
+                        LocalDateTime dateTime = d.getDateTime();
+                        String dateString = dateTime.format(dateTimeFormat);
+
+                        toWrite = String.format(" D | %d | %s | %s \n", num, currTask.getDescription(), dateString);
+                        break;
+                    case EVENT:
+                        Event e = (Event) currTask;
+
+                        LocalDateTime startTime = e.getStartTime();
+                        String time1 = startTime.format(dateTimeFormat);
+
+                        LocalDateTime endTime = e.getEndTime();
+                        String time2 = startTime.format(dateTimeFormat);
+
+                        toWrite = String.format(" E | %d | %s | %s | %s \n", num, currTask.getDescription(),
+                                time1, time2);
+                        break;
+                    default:
+                }
+                fw.write(toWrite);
             }
             fw.close();
-        } catch (IOException e) {
+
+        }
+        catch (IOException e) {
             System.out.println("Something went wrong :( - " + e.getMessage());
         }
 
@@ -56,6 +83,7 @@ public class StoreData {
     * */
     public static void readFromFile() {
 
+
         try {
             File f = new File("./data/baymax.txt");
             if (!f.exists()) {
@@ -65,34 +93,54 @@ public class StoreData {
             Scanner sc = new Scanner(f);
 
             while (sc.hasNextLine()) {
-                String curr = sc.nextLine();
+                String currLine = sc.nextLine();
+                String[] lineWords = currLine.split("\\|");
+
+                String taskType = lineWords[0].trim();
+
+                int num = Integer.parseInt(lineWords[1].trim());
+                boolean isDone = (num == 1 ? true : false);
+
+                String taskDescription = lineWords[2].trim();
 
                 try {
-                    String statusIcon = curr.substring(0, 6);
-                    String taskDescription = curr.substring(7);
+                    switch (taskType) {
+                        case "T" :
 
-                    TaskType type = TaskType.valueOf(String.valueOf(statusIcon.charAt(1)).toUpperCase());
-                    boolean isDone = (Objects.equals(String.valueOf(statusIcon.charAt(4)).toUpperCase(), "X"));
+                            ToDo todoTask = new ToDo(taskDescription, isDone);
+                            TaskData.addTask(todoTask);
 
-                    switch (type) {
-
-                        case T:
-                            TaskData.addTask(new ToDo(taskDescription, isDone));
                             break;
+                        case "D":
 
-                        case D:
-                            TaskData.addTask(new Deadline(taskDescription, isDone));
+                            String dTime = lineWords[3].trim();
+                            LocalDateTime time = LocalDateTime.parse(dTime, dateTimeFormat);
+
+                            Deadline dTask = new Deadline(taskDescription, isDone, time);
+                            TaskData.addTask(dTask);
+
                             break;
+                        case "E":
 
-                        case E:
-                            TaskData.addTask(new Event(taskDescription, isDone));
+                            String sTime = lineWords[3].trim();
+                            LocalDateTime time1 = LocalDateTime.parse(sTime, dateTimeFormat);
+
+                            String eTime = lineWords[4].trim();
+                            LocalDateTime time2 = LocalDateTime.parse(eTime, dateTimeFormat);
+
+                            Event eTask = new Event(taskDescription, isDone, time1, time2);
+                            TaskData.addTask(eTask);
+
+                            break;
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     throw new BaymaxException("File corrupted :(. Couldn't load some previous tasks");
                 }
 
             }
-        } catch (IOException | BaymaxException e) {
+        }
+        catch (IOException | BaymaxException e) {
             System.out.println("Something went wrong :(  : " + e.getMessage());
         }
     }

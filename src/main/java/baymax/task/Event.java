@@ -3,21 +3,35 @@ package baymax.task;
 import baymax.*;
 import baymax.ui.Ui;
 
+import java.time.LocalDateTime;
+
 public class Event extends Task{
 
-    public Event(String description, String time1, String time2) throws BaymaxException {
-        super(description);
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
-        //Changing the Task description
-        /*Since super() has to be the first line, I am making this change here*/
-        String time = "(from : " + time1 + " to : " + time2 + ")";
-        this.setDescription(this.getDescription() + " " + time);
+    public Event(String description, LocalDateTime time1, LocalDateTime time2) throws BaymaxException {
+        super(description);
+        this.startTime = time1;
+        this.endTime = time2;
 
         //Prints Message
-        Ui.addedInputMessage(this.getDescription(), this);
+        Ui.addedInputMessage(this);
     }
 
-    public Event(String description, boolean isDone) {
+    //Constructor used while reading or writing files
+    public Event(String description, boolean isDone, LocalDateTime startTime, LocalDateTime endTime) {
         super(description, isDone);
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
+
+    //Getters
+    public LocalDateTime getStartTime() {
+        return this.startTime;
+    }
+    public LocalDateTime getEndTime() {
+        return this.endTime;
+    }
+
 }

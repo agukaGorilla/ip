@@ -1,5 +1,4 @@
-[D][X] submit  (by :  tonight)
-[E][X] meeting  (from :  now to :  then)
-[T][ ] new
-[D][ ] week 3  (by :  tomorrow)
-[E][ ] hah lol
+ T | 0 | banana 
+ D | 1 | apple | 2055-02-15 1800 
+ E | 0 | mango | 2025-02-26 1800 | 2025-02-26 1800 
+ T | 1 | pineapple 

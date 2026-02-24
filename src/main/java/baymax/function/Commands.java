@@ -9,12 +9,6 @@ import baymax.ui.Ui;
 
 public class Commands {
 
-    //Command to stop running the program
-    public static boolean closeProgram() {
-        StoreData.writeToFile();
-        return true;
-    }
-
     //Adds new Task to the List
     public static void addTask(Task currTask) {
         TaskData.addTask(currTask);
@@ -37,12 +31,17 @@ public class Commands {
         Task currTask = TaskData.getTask(index);
         TaskData.deleteTask(index);
 
-        Ui.printDeletedTask(currTask, currTask.getDescription());
+        Ui.printDeletedTask(currTask);
 
         /*
          * Any change in list, rewrite the list
          * */
         StoreData.writeToFile();
+    }
+
+    //List all tasks
+    public static void listTasks() {
+        Ui.printTasks();
     }
 
     //Marks Task as Done
@@ -60,7 +59,7 @@ public class Commands {
 
         Task currTask = TaskData.getTask(num - 1);
         currTask.markDone();
-        Ui.printMarked(currTask.getDescription());
+        Ui.printMarked(currTask);
 
         /*
          * Any change in list, rewrite the list
@@ -83,12 +82,18 @@ public class Commands {
 
         Task currTask = TaskData.getTask(num - 1);
         currTask.unmarkDone();
-        Ui.printUnmarked(currTask.getDescription());
+        Ui.printUnmarked(currTask);
 
         /*
          * Any change in list, rewrite the list
          * */
         StoreData.writeToFile();
+    }
+
+    //Command to stop running the program
+    public static boolean closeProgram() {
+        StoreData.writeToFile();
+        return true;
     }
 
 }

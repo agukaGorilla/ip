@@ -18,27 +18,26 @@ public class Task {
         this.isDone = false;
     }
 
-    //Getter for description
+    /*
+    * Getters and Setters for Task Description
+    * */
     public String getDescription() {
         return this.description;
     }
 
-    //Setter for description
     public void setDescription(String description) {
         this.description = description;
     }
 
-    //getter for isDone
+    /*
+    * Getters and Setters for isDone
+    * */
     public boolean getIsDone() {
         return this.isDone;
     }
-
-    //setters for isDone : mark as done
     public void markDone() {
         this.isDone = true;
     }
-
-    //setter for isDone : mark as undone
     public void unmarkDone() {
         this.isDone = false;
     }
@@ -58,6 +57,23 @@ public class Task {
         }
         else {
             return "[ ][ ] ";
+        }
+    }
+
+    //Returns the status of checkbox
+    public TaskType getTaskType() {
+
+        if (this instanceof ToDo) {
+            return TaskType.TODO;
+        }
+        else if (this instanceof Deadline) {
+            return TaskType.DEADLINE;
+        }
+        else if(this instanceof Event) {
+            return TaskType.EVENT;
+        }
+        else {
+            return TaskType.UNKNOWN;
         }
     }
 }

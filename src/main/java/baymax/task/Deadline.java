@@ -1,22 +1,34 @@
 package baymax.task;
 
+import baymax.BaymaxException;
 import baymax.ui.Ui;
+
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task{
 
-    public Deadline(String description, boolean isDone) {
+    private LocalDateTime dateTime;
+
+    // Constructor used when read from list file
+    public Deadline(String description, boolean isDone, LocalDateTime dateTime) {
         super(description, isDone);
+        this.dateTime = dateTime;
     }
 
-    public Deadline(String description, String date) {
+    // Constructor used while input entered by user
+    public Deadline(String description, LocalDateTime dateTime) throws BaymaxException {
         super(description);
-
-        //Changing the description
-        /*Since super() has to be the first line, I am making this change here*/
-        String date1 = "(by : " + date + ")";
-        this.setDescription(description + " " + date1);
+        this.dateTime = dateTime;
 
         //Prints Message
-        Ui.addedInputMessage(this.getDescription(), this);
+        Ui.addedInputMessage(this);
     }
+
+    // Returns the date as a String
+    public LocalDateTime getDateTime() {
+        return this.dateTime;
+    }
+
 }
