@@ -6,28 +6,21 @@ package baymax.data;
 * */
 
 import baymax.BaymaxException;
-import baymax.task.Deadline;
-import baymax.task.Event;
-import baymax.task.Task;
-import baymax.task.ToDo;
+import baymax.task.*;
 import com.sun.nio.sctp.AbstractNotificationHandler;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Scanner;
 
 
 public class StoreData {
 
-    /*
-    * Nested Enum
-    * */
-    private enum TaskType {
-        T, D, E
-    }
-
+    private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     /*
     * Writes data from TaskData to a text file everytime any change is made to the list of Tasks
     * */
@@ -42,30 +35,42 @@ public class StoreData {
 
             FileWriter fw = new FileWriter(f);
             for (int i = 0; i < TaskData.getTotalTasks(); i++) {
+
                 Task currTask = TaskData.getTask(i);
-
-                TaskType currType = TaskType.valueOf(String.valueOf(currTask.getStatusIcon().charAt(1)).toUpperCase());
+                TaskType taskType = currTask.getTaskType();
                 int num = (currTask.getIsDone()? 1 : 0);
-                String toWrite;
 
-                switch (currType) {
-                    case T :
-                        toWrite = String.format("%s|%d|%s", currType, num, currTask.getDescription());
+                String toWrite = "";
+
+                switch (taskType) {
+                    case TODO :
+                        toWrite = String.format(" T | %d | %s \n", num, currTask.getDescription());
                         break;
-                    case D:
+                    case DEADLINE:
                         Deadline d = (Deadline) currTask;
-                        toWrite = String.format("%s|%d|%s|%s",
-                                currType, num, currTask.getDescription(), d.getDateTime());
+
+                        LocalDateTime dateTime = d.getDateTime();
+                        String dateString = dateTime.format(dateTimeFormat);
+
+                        toWrite = String.format(" D | %d | %s | %s \n", num, currTask.getDescription(), dateString);
                         break;
-                    case E:
-                        toWrite = String.format("%s|%d|%s", currType, num, currTask.getDescription());
+                    case EVENT:
+                        Event e = (Event) currTask;
+
+                        LocalDateTime startTime = e.getStartTime();
+                        String time1 = startTime.format(dateTimeFormat);
+
+                        LocalDateTime endTime = e.getEndTime();
+                        String time2 = startTime.format(dateTimeFormat);
+
+                        toWrite = String.format(" E | %d | %s | %s | %s \n", num, currTask.getDescription(),
+                                time1, time2);
                         break;
                     default:
-                        throw new IllegalStateException("Unexpected value: " + currType);
                 }
-
-                fw.write(toWrite + System.lineSeparator());
+                fw.write(toWrite);
             }
+
             fw.close();
         } catch (IOException e) {
             System.out.println("Something went wrong :( - " + e.getMessage());
