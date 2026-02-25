@@ -9,6 +9,8 @@ import baymax.function.Parser;
 import baymax.task.*;
 import baymax.data.TaskData;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
@@ -22,6 +24,8 @@ public class Ui {
 
     private static final DateTimeFormatter eventTimeFormat =
             DateTimeFormatter.ofPattern(" 'on' MMM dd yy 'at' h:mm a");
+
+    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yy");
 
     //Read Input from user
     public static void readInput() {
@@ -73,6 +77,37 @@ public class Ui {
             index++;
         }
         System.out.print(Ui.horizontalLine + "\n");
+    }
+
+    //Prints task on given date
+    public static void printOnDate(LocalDate date) {
+        int index = 1;
+        System.out.println(Ui.horizontalLine + "Here are the tasks on " + date.format(dateFormat) + " :\n");
+        for (int i = 0; i < TaskData.getTotalTasks(); i++) {
+            Task currTask = TaskData.getTask(i);
+            TaskType type = currTask.getTaskType();
+
+            switch (type) {
+                case DEADLINE:
+                    Deadline d = (Deadline) currTask;
+                    if (d.getDateTime().toLocalDate().equals(date)) {
+                        System.out.println(index + ". " + Ui.getTaskUserFormat(currTask));
+                        index++;
+                    }
+                    break;
+                case EVENT:
+                    Event e = (Event) currTask;
+                    if (e.getStartTime().toLocalDate().equals(date)) {
+                        System.out.println(index + ". " + Ui.getTaskUserFormat(currTask));
+                        index++;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        System.out.println(Ui.horizontalLine + "\n");
     }
 
     //Prints the task to user in the form readable

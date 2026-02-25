@@ -7,6 +7,7 @@ import baymax.task.*;
 import baymax.data.*;
 import baymax.ui.Ui;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Commands {
@@ -97,8 +98,8 @@ public class Commands {
     }
 
     //print tasks on a given date
-    public static void printTasksDate(LocalDateTime date) {
-
+    public static void listTasksDate(LocalDate date) {
+        Ui.printOnDate(date);
     }
 
 }
