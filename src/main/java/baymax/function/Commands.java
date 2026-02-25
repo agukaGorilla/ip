@@ -7,16 +7,16 @@ import baymax.task.*;
 import baymax.data.*;
 import baymax.ui.Ui;
 
+import java.time.LocalDateTime;
+
 public class Commands {
 
     //Adds new Task to the List
     public static void addTask(Task currTask) {
         TaskData.addTask(currTask);
-
         /*
         * Any change in list, rewrite the list
         * */
-        
         StoreData.writeToFile();
     }
 
@@ -94,6 +94,11 @@ public class Commands {
     public static boolean closeProgram() {
         StoreData.writeToFile();
         return true;
+    }
+
+    //print tasks on a given date
+    public static void printTasksDate(LocalDateTime date) {
+
     }
 
 }

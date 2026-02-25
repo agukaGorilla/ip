@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 public class Parser {
 
     private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     public static boolean handleInput(String currInput) throws BaymaxException {
 
@@ -56,6 +57,23 @@ public class Parser {
                 }
                 int index = Integer.parseInt(commandParts[1]) - 1;
                 Commands.deleteTask(index);
+                break;
+
+            case SCHEDULE:
+                if (commandParts.length < 2) {
+                    throw new BaymaxException("You have not provided the the date for the tasks to list. \n" +
+                            "Please provide a valid date.");
+                }
+
+                LocalDateTime date;
+                try {
+                    date = LocalDateTime.parse(commandParts[1].trim(), dateFormat);
+                } catch (DateTimeException e) {
+                    throw new BaymaxException(
+                            "Please enter the due date in this exact format:\nyyyy-MM-dd (eg., 2026-02-22)");
+                }
+
+                Commands.printTasksDate(date);
                 break;
 
             case TODO :
