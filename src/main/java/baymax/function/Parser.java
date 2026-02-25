@@ -6,12 +6,14 @@ import baymax.BaymaxException;
 import baymax.task.*;
 
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
     private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     public static boolean handleInput(String currInput) throws BaymaxException {
 
@@ -58,6 +60,24 @@ public class Parser {
                 Commands.deleteTask(index);
                 break;
 
+            case SCHEDULE:
+                if (commandParts.length < 2) {
+                    throw new BaymaxException("You have not provided the the date for the tasks to list. \n" +
+                            "Please provide a valid date.");
+                }
+
+                LocalDate date;
+                try {
+                    date = LocalDate.parse(commandParts[1].trim(), dateFormat);
+                }
+                catch (DateTimeException e) {
+                    throw new BaymaxException(
+                            "Please enter the due date in this exact format:\nyyyy-MM-dd (eg., 2026-02-22)");
+                }
+
+                Commands.listTasksDate(date);
+                break;
+
             case TODO :
                 if (commandParts.length < 2) {
                     throw new BaymaxException("The description of a todo cannot be empty.\n" +
@@ -82,12 +102,13 @@ public class Parser {
                 LocalDateTime dateTime;
                 try {
                     dateTime = LocalDateTime.parse(inputParts[1].trim(), dateTimeFormat);
-                } catch (DateTimeException e) {
+                }
+                catch (DateTimeException e) {
                     throw new BaymaxException(
                             "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
                 }
 
-                String replace2 = commandParts[1].replace("|", "-");
+                String replace2 = inputParts[0].replace("|", "-");
                 Deadline deadlineTask = new Deadline(replace2, dateTime);
 
                 Commands.addTask(deadlineTask);
@@ -118,12 +139,13 @@ public class Parser {
                 try {
                     time1 = LocalDateTime.parse(times[0].trim(), dateTimeFormat);
                     time2 = LocalDateTime.parse(times[1].trim(), dateTimeFormat);
-                } catch (DateTimeException e) {
+                }
+                catch (DateTimeException e) {
                     throw new BaymaxException(
                             "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
                 }
 
-                String replace3 = commandParts[1].replace("|", "-");
+                String replace3 = descSplit[0].replace("|", "-");
                 Event eventTask = new Event(replace3, time1, time2);
 
                 Commands.addTask(eventTask);
