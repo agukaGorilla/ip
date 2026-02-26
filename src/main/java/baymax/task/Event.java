@@ -14,9 +14,6 @@ public class Event extends Task{
         super(description);
         this.startTime = time1;
         this.endTime = time2;
-
-        //Prints Message
-        Ui.addedInputMessage(this);
     }
 
     //Constructor used while reading or writing files

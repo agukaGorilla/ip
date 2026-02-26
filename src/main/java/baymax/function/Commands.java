@@ -18,6 +18,7 @@ public class Commands {
         /*
         * Any change in list, rewrite the list
         * */
+        Ui.addedInputMessage(currTask);
         StoreData.writeToFile();
     }
 

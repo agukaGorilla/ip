@@ -21,9 +21,7 @@ public class Deadline extends Task{
     public Deadline(String description, LocalDateTime dateTime) throws BaymaxException {
         super(description);
         this.dateTime = dateTime;
-
-        //Prints Message
-        Ui.addedInputMessage(this);
+        
     }
 
     // Returns the date as a String

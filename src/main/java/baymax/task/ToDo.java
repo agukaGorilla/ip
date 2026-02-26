@@ -7,9 +7,7 @@ public class ToDo extends Task{
     // Constructors used by users
     public ToDo (String description) {
         super(description);
-
-        //Prints Message
-        Ui.addedInputMessage(this);
+        
     }
 
     //Constructors used while reading from file
