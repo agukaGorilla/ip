@@ -29,7 +29,7 @@ public class Parser {
         switch (command) {
 
             case BYE :
-                return Commands.closeProgram();
+                return Commands.canCloseProgram();
 
             case LIST :
                 Commands.listTasks();
