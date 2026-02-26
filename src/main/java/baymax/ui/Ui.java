@@ -12,6 +12,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+/**
+ * Handles all interaction between user and the application.
+ * Responsible for reading user input and displaying all messages to user.
+ */
 public class Ui {
 
     private static final String horizontalLine =
@@ -24,8 +28,11 @@ public class Ui {
             DateTimeFormatter.ofPattern(" 'on' MMM dd yy 'at' h:mm a");
 
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yy");
-
-    //Read Input from user
+    
+    /**
+     * Reads user inputs and triggers parsing functions.
+     * Initially loads task to internal list from hard disk before starting input loop.
+     */
     public static void readInput() {
 
         //First Load previous messages
@@ -43,28 +50,41 @@ public class Ui {
             }
         }
     }
-
+    
+    /**
+     * Displays the welcome message to user.
+     */
     public static void openingMessage() {
         System.out.print(Ui.horizontalLine + """
                  Hello! I'm Baymax
                  It's been so long since I last saw you!!
                  What can I do for you? \n""" + Ui.horizontalLine);
     }
+    
+    /**
+     * Displays the closing message to user.
+     */
     public static void closingMessage() {
         System.out.print(Ui.horizontalLine + """
                 Bye. Hope to see you soon again!
                 I must recharge now. \n""" + Ui.horizontalLine);
     }
-
-    //Confirms the Input message is added
+    
+    /**
+     * Displays a confirmation message when a task is added.
+     *
+     * @param currTask The task that was added.
+     */
     public static void addedInputMessage(Task currTask) {
         System.out.println(Ui.horizontalLine + "Fire!! I have added this task : \n"
                 + Ui.getTaskUserFormat(currTask)+ "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.horizontalLine);
     }
-
-    //Prints the Input Array
+    
+    /**
+     * Prints all tasks in the list.
+     */
     public static void printTasks() {
         int index = 1;
         System.out.print(Ui.horizontalLine);
@@ -76,8 +96,12 @@ public class Ui {
         }
         System.out.print(Ui.horizontalLine + "\n");
     }
-
-    //Prints task on given date
+    
+    /**
+     * Prints all tasks that occur on a specific date.
+     *
+     * @param date The date to filter tasks by.
+     */
     public static void printOnDate(LocalDate date) {
         int index = 1;
         System.out.println(Ui.horizontalLine + "Here are the tasks on " + date.format(dateFormat) + " :\n");
@@ -107,8 +131,13 @@ public class Ui {
 
         System.out.println(Ui.horizontalLine + "\n");
     }
-
-    //Prints the task to user in the form readable
+    
+    /**
+     * Formats a task to human-readable string.
+     *
+     * @param currTask The task to format.
+     * @return A formatted string representing the task's status and details.
+     */
     public static String getTaskUserFormat(Task currTask){
         TaskType currType = currTask.getTaskType();
         String userString = "";
@@ -132,28 +161,44 @@ public class Ui {
 
         return userString;
     }
-
-    //Print the Marked Message
+    
+    /**
+     * Displays a message confirming a task has been marked as completed.
+     *
+     * @param currTask The task that was marked completed.
+     */
     public static void printMarked(Task currTask) {
         System.out.println( Ui.horizontalLine + "Gotcha! You have finished the following task!");
         System.out.println(Ui.getTaskUserFormat(currTask) + "\n" + Ui.horizontalLine + "\n");
 
     }
-
-    //Print the Unmarked Message
+    
+    /**
+     * Displays a message confirming a task has been unmarked (as incomplete).
+     *
+     * @param currTask The task that was unmarked.
+     */
     public static void printUnmarked(Task currTask) {
         System.out.println( Ui.horizontalLine + "Aight. I have unmarked the task. Get on it soon...");
         System.out.println(Ui.getTaskUserFormat(currTask) + "\n" + Ui.horizontalLine + "\n");
     }
-
-    //Print the exception error message
+    
+    /**
+     * Displays error message to user in standard form.
+     *
+     * @param errorMessage The details of the error message.
+     */
     public static void showError(String errorMessage) {
         System.out.print(Ui.horizontalLine);
         System.out.println("Ohh NOO!! " + errorMessage);
         System.out.println(Ui.horizontalLine);
     }
-
-    //Print the task Deleted message
+    
+    /**
+     * Displays a confirmation message when a task is deleted.
+     *
+     * @param currTask The task that was deleted.
+     */
     public static void printDeletedTask(Task currTask) {
         System.out.println( Ui.horizontalLine + "As you wish!! I have deleted this task from inputList \n"
                 + Ui.getTaskUserFormat(currTask) + "\n"
