@@ -10,9 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Parses user input and translates into executable commands.
- */
 public class Parser {
     
     private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
@@ -97,6 +94,15 @@ public class Parser {
             String replace = commandParts[1].replace("|", "-");
             ToDo todoTask = new ToDo(replace);
             Commands.addTask(todoTask);
+            break;
+        
+        case FIND:
+            if (commandParts.length < 2) {
+                throw new BaymaxException("You have not provided the search word/phrase. \n" +
+                        "Please provide a valid phrase (or) word to search the tasks.");
+            }
+            String searchWord = commandParts[1].trim();
+            Commands.searchTasks(searchWord);
             break;
         
         case DEADLINE:
