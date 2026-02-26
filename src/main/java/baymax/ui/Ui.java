@@ -199,7 +199,7 @@ public class Ui {
      *
      * @param currTask The task that was deleted.
      */
-    public static void printDeletedTask(Task currTask) {
+    public static void printDeletedMessage(Task currTask) {
         System.out.println( Ui.HORIZONTAL_LINE + "As you wish!! I have deleted this task from inputList \n"
                 + Ui.getTaskUserFormat(currTask) + "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"

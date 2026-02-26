@@ -1,15 +1,17 @@
 package baymax.data;
 
 import baymax.BaymaxException;
-import baymax.task.*;
-import com.sun.nio.sctp.AbstractNotificationHandler;
+import baymax.task.Task;
+import baymax.task.TaskType;
+import baymax.task.ToDo;
+import baymax.task.Deadline;
+import baymax.task.Event;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**

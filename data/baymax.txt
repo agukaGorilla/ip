@@ -7,3 +7,4 @@
  T | 0 | RA applications 
  D | 0 | week 3 | 2026-02-27 1700 
  T | 0 | lol 
+ T | 1 | another task haha 
