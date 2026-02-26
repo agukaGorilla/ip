@@ -10,11 +10,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Parses user input and translates into executable commands.
+ */
 public class Parser {
 
     private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
+    /**
+     * Parses user input into executable commands.
+     * Extracts command and data types.
+     * Calls the appropriate methods to trigger appropriate actions.
+     *
+     * @param currInput Input string types by user
+     * @return True if user issued the exit command ("bye"), false otherwise.
+     * @throws BaymaxException If input by user is invalid or in incorrect form.
+     */
     public static boolean handleInput(String currInput) throws BaymaxException {
 
         String[] commandParts = currInput.trim().split(" ", 2);

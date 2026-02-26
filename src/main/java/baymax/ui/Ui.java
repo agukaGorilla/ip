@@ -1,16 +1,14 @@
 package baymax.ui;
 
-/*
-* Handles everything related to interaction with user
-* */
-
 import baymax.BaymaxException;
 import baymax.function.Parser;
-import baymax.task.*;
+import baymax.task.Task;
+import baymax.task.Deadline;
+import baymax.task.Event;
+import baymax.task.TaskType;
 import baymax.data.TaskData;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
