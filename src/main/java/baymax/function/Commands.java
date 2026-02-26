@@ -1,27 +1,37 @@
-/*Class to manage all the Commands and operations done on List*/
-
 package baymax.function;
 
-import baymax.*;
-import baymax.task.*;
-import baymax.data.*;
+import baymax.BaymaxException;
+import baymax.task.Task;
+import baymax.data.StoreData;
+import baymax.data.TaskData;
 import baymax.ui.Ui;
 
 import java.time.LocalDate;
 
+/**
+* Manages all commands and operations.
+* */
 public class Commands {
 
-    //Adds new Task to the List
+    /**
+    * Adds a new task to the list and updates the changes.
+    *
+    * @param currTask The task to be added.
+    * */
     public static void addTask(Task currTask) {
         TaskData.addTask(currTask);
-        /*
-        * Any change in list, rewrite the list
-        * */
+        
+        // Any change in list, write to Hard Disk
         Ui.printAddedMessage(currTask);
         StoreData.writeToFile();
     }
 
-    //Deletes a task based on number given
+    /**
+    * Deletes a task from the list based on provided index.
+    *
+    * @param index 0-based index of the task to be deleted in the list.
+    * @throws BaymaxException If the list is empty.
+    * */
     public static void deleteTask(int index) throws BaymaxException {
 
         //Throws exception if list is empty
@@ -33,19 +43,24 @@ public class Commands {
         TaskData.deleteTask(index);
 
         Ui.printDeletedMessage(currTask);
-
-        /*
-         * Any change in list, rewrite the list
-         * */
+        
+        // Any change in list, write to Hard Disk
         StoreData.writeToFile();
     }
-
-    //List all tasks
+    
+    /**
+     * Prompts Ui to print all tasks in the list.
+     */
     public static void listTasks() {
         Ui.printTasks();
     }
-
-    //Marks Task as Done
+    
+    /**
+     * Marks a specific task as completed based on index number provided.
+     *
+     * @param num 1-based task number as provided by user.
+     * @throws BaymaxException If list is empty or index is invalid.
+     */
     public static void markTask(int num) throws BaymaxException {
 
         //Throws exception if list is empty
@@ -61,13 +76,16 @@ public class Commands {
         currTask.markDone();
         Ui.printMarked(currTask);
 
-        /*
-         * Any change in list, rewrite the list
-         * */
+        // Any change in list, write to Hard Disk
         StoreData.writeToFile();
     }
-
-    //Unmarks a task previously marked as done
+    
+    /**
+     * Unmarks a task as undone based on index number provided.
+     *
+     * @param num 1-based index of task as viewed by user.
+     * @throws BaymaxException If list is empty or index is invalid.
+     */
     public static void unmarkTask(int num) throws BaymaxException {
 
         //Throws exception if list is empty
@@ -82,20 +100,26 @@ public class Commands {
         Task currTask = TaskData.getTask(num - 1);
         currTask.unmarkDone();
         Ui.printUnmarked(currTask);
-
-        /*
-         * Any change in list, rewrite the list
-         * */
+        
+        // Any change in list, write to Hard Disk
         StoreData.writeToFile();
     }
-
-    //Command to stop running the program
-    public static boolean closeProgram() {
+    
+    /**
+     * Saves data to hard disk and signals the program to close.
+     *
+     * @return True to indicate program should exit.
+     */
+    public static boolean canCloseProgram() {
         StoreData.writeToFile();
         return true;
     }
-
-    //print tasks on a given date
+    
+    /**
+     * Prompts Ui to print the tasks on the given Date.
+     *
+     * @param date The date to filter tasks by.
+     */
     public static void listTasksDate(LocalDate date) {
         Ui.printOnDate(date);
     }

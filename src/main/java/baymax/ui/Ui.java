@@ -1,18 +1,21 @@
 package baymax.ui;
 
-/*
- * Handles everything related to interaction with user
- * */
-
 import baymax.BaymaxException;
 import baymax.function.Parser;
-import baymax.task.*;
+import baymax.task.Task;
+import baymax.task.Deadline;
+import baymax.task.Event;
+import baymax.task.TaskType;
 import baymax.data.TaskData;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+/**
+ * Handles all interaction between user and the application.
+ * Responsible for reading user input and displaying all messages to user.
+ */
 public class Ui {
     
     private static final String HORIZONTAL_LINE =
@@ -26,7 +29,10 @@ public class Ui {
     
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd yy");
     
-    //Read Input from user
+    /**
+     * Reads user inputs and triggers parsing functions.
+     * Initially loads task to internal list from hard disk before starting input loop.
+     */
     public static void readInput() {
         
         //First Load previous messages
@@ -45,28 +51,40 @@ public class Ui {
         }
     }
     
+    /**
+     * Displays the welcome message to user.
+     */
     public static void printOpeningMessage() {
         System.out.print(Ui.HORIZONTAL_LINE + """
-                Hello! I'm Baymax
-                It's been so long since I last saw you!!
-                What can I do for you? \n""" + Ui.HORIZONTAL_LINE);
+                 Hello! I'm Baymax
+                 It's been so long since I last saw you!!
+                 What can I do for you? \n""" + Ui.HORIZONTAL_LINE);
     }
     
+    /**
+     * Displays the closing message to user.
+     */
     public static void printClosingMessage() {
         System.out.print(Ui.HORIZONTAL_LINE + """
                 Bye. Hope to see you soon again!
                 I must recharge now. \n""" + Ui.HORIZONTAL_LINE);
     }
     
-    //Confirms the Input message is added
+    /**
+     * Displays a confirmation message when a task is added.
+     *
+     * @param currTask The task that was added.
+     */
     public static void printAddedMessage(Task currTask) {
         System.out.println(Ui.HORIZONTAL_LINE + "Fire!! I have added this task : \n"
-                + Ui.getTaskUserFormat(currTask) + "\n"
+                + Ui.getTaskUserFormat(currTask)+ "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.HORIZONTAL_LINE);
     }
     
-    //Prints the Input Array
+    /**
+     * Prints all tasks in the list.
+     */
     public static void printTasks() {
         int index = 1;
         System.out.print(Ui.HORIZONTAL_LINE);
@@ -79,7 +97,11 @@ public class Ui {
         System.out.print(Ui.HORIZONTAL_LINE + "\n");
     }
     
-    //Prints task on given date
+    /**
+     * Prints all tasks that occur on a specific date.
+     *
+     * @param date The date to filter tasks by.
+     */
     public static void printOnDate(LocalDate date) {
         int index = 1;
         System.out.println(Ui.HORIZONTAL_LINE + "Here are the tasks on " + date.format(DATE_FORMAT) + " :\n");
@@ -110,11 +132,16 @@ public class Ui {
         System.out.println(Ui.HORIZONTAL_LINE + "\n");
     }
     
-    //Prints the task to user in the form readable
-    public static String getTaskUserFormat(Task currTask) {
+    /**
+     * Formats a task to human-readable string.
+     *
+     * @param currTask The task to format.
+     * @return A formatted string representing the task's status and details.
+     */
+    public static String getTaskUserFormat(Task currTask){
         TaskType currType = currTask.getTaskType();
         String userString = "";
-        
+
         switch (currType) {
         case TODO:
             userString = currTask.getStatusIcon() + currTask.getDescription() + "\n";
@@ -135,29 +162,45 @@ public class Ui {
         return userString;
     }
     
-    //Print the Marked Message
+    /**
+     * Displays a message confirming a task has been marked as completed.
+     *
+     * @param currTask The task that was marked completed.
+     */
     public static void printMarked(Task currTask) {
         System.out.println(Ui.HORIZONTAL_LINE + "Gotcha! You have finished the following task!");
         System.out.println(Ui.getTaskUserFormat(currTask) + "\n" + Ui.HORIZONTAL_LINE + "\n");
         
     }
     
-    //Print the Unmarked Message
+    /**
+     * Displays a message confirming a task has been unmarked (as incomplete).
+     *
+     * @param currTask The task that was unmarked.
+     */
     public static void printUnmarked(Task currTask) {
         System.out.println(Ui.HORIZONTAL_LINE + "Aight. I have unmarked the task. Get on it soon...");
         System.out.println(Ui.getTaskUserFormat(currTask) + "\n" + Ui.HORIZONTAL_LINE + "\n");
     }
     
-    //Print the exception error message
+    /**
+     * Displays error message to user in standard form.
+     *
+     * @param errorMessage The details of the error message.
+     */
     public static void showError(String errorMessage) {
         System.out.print(Ui.HORIZONTAL_LINE);
         System.out.println("Ohh NOO!! " + errorMessage);
         System.out.println(Ui.HORIZONTAL_LINE);
     }
     
-    //Print the task Deleted message
-    public static void printDeletedMessage(Task currTask) {
-        System.out.println(Ui.HORIZONTAL_LINE + "As you wish!! I have deleted this task from inputList \n"
+    /**
+     * Displays a confirmation message when a task is deleted.
+     *
+     * @param currTask The task that was deleted.
+     */
+    public static void printDeletedTask(Task currTask) {
+        System.out.println( Ui.HORIZONTAL_LINE + "As you wish!! I have deleted this task from inputList \n"
                 + Ui.getTaskUserFormat(currTask) + "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.HORIZONTAL_LINE + "\n");
