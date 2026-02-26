@@ -1,10 +1,5 @@
 package baymax.data;
 
-/*
-* This class handles storing the list of Tasks to the hard Disk
-* We write the list of tasks to another text file
-* */
-
 import baymax.BaymaxException;
 import baymax.task.*;
 import com.sun.nio.sctp.AbstractNotificationHandler;
@@ -17,13 +12,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Scanner;
 
-
+/**
+ * Handles reading and writing of tasks to local hard drive.
+ */
 public class StoreData {
 
     private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    /*
-    * Writes data from TaskData to a text file everytime any change is made to the list of Tasks
-    * */
+    
+    /**
+     * Writes tasks from internal task list to text file.
+     * Parses and formats in storable format (delimiter).
+     */
     public static void writeToFile() {
 
         try {
@@ -77,10 +76,11 @@ public class StoreData {
         }
 
     }
-
-    /*
-    * Reads data from the text file whenever we start the program
-    * */
+    
+    /**
+     * Reads data from hard disk and stores it in sessions input list.
+     * Parses data from text file into executable and storable format.
+     */
     public static void readFromFile() {
 
 
