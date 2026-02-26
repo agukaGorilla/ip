@@ -1,9 +1,9 @@
-/*Handles all the message entered, parsed and carries out the valid operation*/
-
 package baymax.function;
 
 import baymax.BaymaxException;
-import baymax.task.*;
+import baymax.task.ToDo;
+import baymax.task.Deadline;
+import baymax.task.Event;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
