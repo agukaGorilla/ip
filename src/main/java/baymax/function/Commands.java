@@ -103,10 +103,25 @@ public class Commands {
         Ui.printOnDate(date);
     }
     
+    /**
+     * Triggers further actions to implement find command
+     * 'Find' command searches through the list of tasks.
+     * And it prints tasks which contain the given word/phrase in its description.
+     *
+     * @param searchWord The word to be searched.
+     */
     public static void searchTasks(String searchWord) {
         Ui.printSearchTasks(searchWord);
     }
     
+    /**
+     * Returns boolean representing the status of task description matching the search keyword.
+     * Tells whether the task contains the given keyword/phrase.
+     *
+     * @param currTask The task we are checking.
+     * @param searchPhrase The phrase we are finding.
+     * @return True if task description contain the phrase, false otherwise.
+     */
     public static boolean hasPhrase(Task currTask, String searchPhrase) {
         String currDesc = currTask.getDescription();
         return currDesc.contains(searchPhrase);

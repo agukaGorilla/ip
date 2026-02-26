@@ -111,6 +111,12 @@ public class Ui {
         System.out.println(Ui.horizontalLine + "\n");
     }
     
+    /**
+     * Prints tasks which contain given woerd/phrase in task description.
+     * Searches the task list for tasks which contain the given phrase in description.
+     *
+     * @param searchWord The search word.
+     */
     public static void printSearchTasks(String searchWord) {
         int index = 1;
         System.out.print(Ui.horizontalLine);
