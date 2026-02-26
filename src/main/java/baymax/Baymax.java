@@ -7,7 +7,7 @@ public class Baymax {
     public static void main(String[] args){
 
         //Opening Message
-        Ui.openingMessage();
+        Ui.printOpeningMessage();
 
         /*
         * Loads messages previously stored (and)
@@ -16,6 +16,6 @@ public class Baymax {
         Ui.readInput();
 
         //Closing
-        Ui.closingMessage();
+        Ui.printClosingMessage();
     }
 }

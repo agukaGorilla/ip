@@ -46,20 +46,20 @@ public class Ui {
         }
     }
 
-    public static void openingMessage() {
+    public static void printOpeningMessage() {
         System.out.print(Ui.horizontalLine + """
                  Hello! I'm Baymax
                  It's been so long since I last saw you!!
                  What can I do for you? \n""" + Ui.horizontalLine);
     }
-    public static void closingMessage() {
+    public static void printClosingMessage() {
         System.out.print(Ui.horizontalLine + """
                 Bye. Hope to see you soon again!
                 I must recharge now. \n""" + Ui.horizontalLine);
     }
 
     //Confirms the Input message is added
-    public static void addedInputMessage(Task currTask) {
+    public static void printAddedMessage(Task currTask) {
         System.out.println(Ui.horizontalLine + "Fire!! I have added this task : \n"
                 + Ui.getTaskUserFormat(currTask)+ "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
@@ -156,7 +156,7 @@ public class Ui {
     }
 
     //Print the task Deleted message
-    public static void printDeletedTask(Task currTask) {
+    public static void printDeletedMessage(Task currTask) {
         System.out.println( Ui.horizontalLine + "As you wish!! I have deleted this task from inputList \n"
                 + Ui.getTaskUserFormat(currTask) + "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"

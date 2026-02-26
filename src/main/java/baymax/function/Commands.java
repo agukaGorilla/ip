@@ -18,7 +18,7 @@ public class Commands {
         /*
         * Any change in list, rewrite the list
         * */
-        Ui.addedInputMessage(currTask);
+        Ui.printAddedMessage(currTask);
         StoreData.writeToFile();
     }
 
@@ -33,7 +33,7 @@ public class Commands {
         Task currTask = TaskData.getTask(index);
         TaskData.deleteTask(index);
 
-        Ui.printDeletedTask(currTask);
+        Ui.printDeletedMessage(currTask);
 
         /*
          * Any change in list, rewrite the list
