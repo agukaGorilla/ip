@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class TaskData {
 
-    private static final ArrayList<Task> inputList = new ArrayList<>();
+    private static final ArrayList<Task> allTasks = new ArrayList<>();
 
     //Loads Tasks from Hard drive into inputList
     public static void loadTasks() {
@@ -20,27 +20,27 @@ public class TaskData {
 
     //Adds task to the list
     public static void addTask(Task currTask) {
-        TaskData.inputList.add(currTask);
+        TaskData.allTasks.add(currTask);
     }
 
     //Removes a task with Index Number
     public static void deleteTask(int index) {
-        TaskData.inputList.remove(index);
+        TaskData.allTasks.remove(index);
     }
 
     //Gets a task with index number
     public static Task getTask(int index) {
-        return TaskData.inputList.get(index);
+        return TaskData.allTasks.get(index);
     }
 
     // Returns the total number of tasks
     public static int getTotalTasks() {
-        return TaskData.inputList.size();
+        return TaskData.allTasks.size();
     }
 
     //Boolean whether there are any tasks currently or not
     public static boolean hasNoTasks() {
-        return TaskData.inputList.isEmpty();
+        return TaskData.allTasks.isEmpty();
     }
 
 }
