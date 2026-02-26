@@ -12,8 +12,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
-    private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     public static boolean handleInput(String currInput) throws BaymaxException {
 
@@ -68,7 +68,7 @@ public class Parser {
 
                 LocalDate date;
                 try {
-                    date = LocalDate.parse(commandParts[1].trim(), dateFormat);
+                    date = LocalDate.parse(commandParts[1].trim(), DATE_FORMAT);
                 }
                 catch (DateTimeException e) {
                     throw new BaymaxException(
@@ -101,7 +101,7 @@ public class Parser {
 
                 LocalDateTime dateTime;
                 try {
-                    dateTime = LocalDateTime.parse(inputParts[1].trim(), dateTimeFormat);
+                    dateTime = LocalDateTime.parse(inputParts[1].trim(), DATE_TIME_FORMAT);
                 }
                 catch (DateTimeException e) {
                     throw new BaymaxException(
@@ -137,8 +137,8 @@ public class Parser {
                 LocalDateTime time2;
 
                 try {
-                    time1 = LocalDateTime.parse(times[0].trim(), dateTimeFormat);
-                    time2 = LocalDateTime.parse(times[1].trim(), dateTimeFormat);
+                    time1 = LocalDateTime.parse(times[0].trim(), DATE_TIME_FORMAT);
+                    time2 = LocalDateTime.parse(times[1].trim(), DATE_TIME_FORMAT);
                 }
                 catch (DateTimeException e) {
                     throw new BaymaxException(
