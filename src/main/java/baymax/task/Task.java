@@ -48,14 +48,11 @@ public class Task {
 
         if (this instanceof ToDo) {
             return "[T][" + mark + "] ";
-        }
-        else if (this instanceof Deadline) {
+        } else if (this instanceof Deadline) {
             return "[D][" + mark + "] ";
-        }
-        else if(this instanceof Event) {
+        } else if(this instanceof Event) {
             return "[E][" + mark + "] ";
-        }
-        else {
+        } else {
             return "[ ][ ] ";
         }
     }
@@ -65,14 +62,11 @@ public class Task {
 
         if (this instanceof ToDo) {
             return TaskType.TODO;
-        }
-        else if (this instanceof Deadline) {
+        } else if (this instanceof Deadline) {
             return TaskType.DEADLINE;
-        }
-        else if(this instanceof Event) {
+        } else if(this instanceof Event) {
             return TaskType.EVENT;
-        }
-        else {
+        } else {
             return TaskType.UNKNOWN;
         }
     }

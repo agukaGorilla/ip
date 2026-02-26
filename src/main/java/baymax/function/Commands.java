@@ -8,7 +8,6 @@ import baymax.data.*;
 import baymax.ui.Ui;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Commands {
 
@@ -52,9 +51,8 @@ public class Commands {
         //Throws exception if list is empty
         if (TaskData.hasNoTasks()) {
             throw new BaymaxException("The list is empty. There is no task that can be marked");
-        }
-        //If index to be marked is greater than Array List size
-        else if (TaskData.getTotalTasks() < num) {
+        } else if (TaskData.getTotalTasks() < num) {
+            //If index to be marked is greater than Array List size
             throw new BaymaxException("There is no Task with number you mentioned. \n" +
                     "Please enter a smaller and valid Task number");
         }
@@ -75,9 +73,8 @@ public class Commands {
         //Throws exception if list is empty
         if (TaskData.hasNoTasks()) {
             throw new BaymaxException("The list is empty. There is no task that can be unmarked");
-        }
-        //If index to be marked is greater than Array List size
-        else if (TaskData.getTotalTasks() < num) {
+        } else if (TaskData.getTotalTasks() < num) {
+            //If index to be marked is greater than Array List size
             throw new BaymaxException("There is no Task with number you mentioned. \n" +
                     "Please enter a smaller and valid Task number");
         }

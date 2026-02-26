@@ -1,7 +1,5 @@
 package baymax.task;
 
-import baymax.ui.Ui;
-
 public class ToDo extends Task{
 
     // Constructors used by users
