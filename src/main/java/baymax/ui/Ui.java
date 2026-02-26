@@ -5,6 +5,7 @@ package baymax.ui;
 * */
 
 import baymax.BaymaxException;
+import baymax.function.Commands;
 import baymax.function.Parser;
 import baymax.task.*;
 import baymax.data.TaskData;
@@ -108,6 +109,19 @@ public class Ui {
         }
 
         System.out.println(Ui.horizontalLine + "\n");
+    }
+    
+    public static void printSearchTasks(String searchWord) {
+        int index = 1;
+        System.out.print(Ui.horizontalLine);
+        System.out.printf("Here are the tasks which contain the phrase '%s' :\n%n", searchWord);
+        for (int i = 0; i < TaskData.getTotalTasks(); i++) {
+            Task currTask = TaskData.getTask(i);
+            if (Commands.hasPhrase(currTask, searchWord)) {
+                System.out.println(index + ". " + Ui.getTaskUserFormat(currTask));
+            }
+        }
+        System.out.print(Ui.horizontalLine + "\n");
     }
 
     //Prints the task to user in the form readable

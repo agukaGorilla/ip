@@ -102,5 +102,14 @@ public class Commands {
     public static void listTasksDate(LocalDate date) {
         Ui.printOnDate(date);
     }
+    
+    public static void searchTasks(String searchWord) {
+        Ui.printSearchTasks(searchWord);
+    }
+    
+    public static boolean hasPhrase(Task currTask, String searchPhrase) {
+        String currDesc = currTask.getDescription();
+        return currDesc.contains(searchPhrase);
+    }
 
 }

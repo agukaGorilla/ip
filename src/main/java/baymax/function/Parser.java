@@ -77,6 +77,15 @@ public class Parser {
 
                 Commands.listTasksDate(date);
                 break;
+                
+            case FIND:
+                if (commandParts.length < 2) {
+                    throw new BaymaxException("You have not provided the search word/phrase. \n" +
+                            "Please provide a valid phrase (or) word to search the tasks.");
+                }
+                String searchWord = commandParts[1].trim();
+                Commands.searchTasks(searchWord);
+                break;
 
             case TODO :
                 if (commandParts.length < 2) {
