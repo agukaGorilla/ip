@@ -9,7 +9,9 @@ import baymax.ui.UiBuffer;
 * */
 public class Baymax {
     
-    
+    public Baymax() {
+        TaskData.loadTasks();
+    }
     /**
     * Runs main entry function for Baymax.
     * Loads data from table, reads user input and closes the application.

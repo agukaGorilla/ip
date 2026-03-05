@@ -53,5 +53,13 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getBaymaxDialog(response, baymaxImage)
         );
         userInput.clear();
+        
+        // ------------------ NEW EXIT LOGIC ------------------
+        if (input.trim().equalsIgnoreCase("bye")) {
+            // Wait 1.5 seconds so the user can read the goodbye message
+            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
+            delay.setOnFinished(event -> javafx.application.Platform.exit());
+            delay.play();
+        }
     }
 }
