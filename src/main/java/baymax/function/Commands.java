@@ -112,6 +112,8 @@ public class Commands {
      */
     public static boolean canCloseProgram() {
         StoreData.writeToFile();
+        
+        Ui.printClosingMessage();
         return true;
     }
     
