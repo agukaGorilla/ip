@@ -1,35 +1,36 @@
 package baymax.task;
 
 /**
- * Represents generic type of tasks in task tracker.
- * Acts as a base class for specific task types.
+ * Represents a generic type of task in the task tracker.
+ * Acts as a base class for specific task types like ToDo, Deadline, and Event.
  */
 public class Task {
+    
+    private static final String DONE_MARKER = "X";
+    private static final String UNDONE_MARKER = " ";
+    
     private String description;
     private boolean isDone;
     
     /**
-     * Constructs a generic task with description and completion status.
-     * This is used by subclasses when reading from storage files.
+     * Constructs a generic task with a description and completion status.
+     * This is used by subclasses when reading tasks from storage files.
      *
      * @param description The description of the task.
-     * @param isDone True is completed, false otherwise.
+     * @param isDone True if completed, false otherwise.
      */
     public Task(String description, boolean isDone) {
-        assert description != null : "Task description cannot be null";
         this.description = description;
         this.isDone = isDone;
     }
     
     /**
      * Constructs a task with the task description provided.
-     * Marks as incomplete by default.
-     * This is used when new tasks are entered by user.
+     * Marks the task as incomplete by default.
      *
      * @param description The description of the task.
      */
     public Task(String description) {
-        assert description != null : "Task description cannot be null";
         this.description = description;
         this.isDone = false;
     }
@@ -49,14 +50,13 @@ public class Task {
      * @param description The new description of the task.
      */
     public void setDescription(String description) {
-        assert description != null : "Task description cannot be null";
         this.description = description;
     }
     
     /**
      * Returns the completion status of the task.
      *
-     * @return True is task is completed, false otherwise.
+     * @return True if the task is completed, false otherwise.
      */
     public boolean getIsDone() {
         return this.isDone;
@@ -77,33 +77,43 @@ public class Task {
     }
     
     /**
-     * Returns the Status icon of the task.
-     * The status icon shows the task type as letter, and completion status in user readable form.
+     * Returns the status icon of the task.
+     * Combines the specific task type letter and completion status in a readable format.
      *
-     * @return The status icon as a string.
+     * @return The formatted status icon string.
      */
     public String getStatusIcon() {
-        String mark = (isDone ? "X" : " ");
-
-        if (this instanceof ToDo) {
-            return "[T][" + mark + "] ";
-        } else if (this instanceof Deadline) {
-            return "[D][" + mark + "] ";
-        } else if(this instanceof Event) {
-            return "[E][" + mark + "] ";
-        } else {
-            assert false : "getStatusIcon called on an unknown or pure Task object";
-            return "[ ][ ] ";
+        String completionStatus = isDone ? DONE_MARKER : UNDONE_MARKER;
+        String typeLetter = getTypeLetter();
+        
+        return String.format("[%s][%s] ", typeLetter, completionStatus);
+    }
+    
+    /**
+     * Helper method to determine the single-letter identifier for the task type.
+     * * @return A one-character string representing the task type.
+     */
+    private String getTypeLetter() {
+        TaskType currentType = getTaskType();
+        
+        switch (currentType) {
+        case TODO:
+            return "T";
+        case DEADLINE:
+            return "D";
+        case EVENT:
+            return "E";
+        default:
+            return " ";
         }
     }
     
     /**
-     * Returns the subtype of the referenced task.
+     * Evaluates the subclass of the referenced task to return its enum representation.
      *
      * @return The TaskType enum representing the type of the referenced task.
      */
     public TaskType getTaskType() {
-
         if (this instanceof ToDo) {
             return TaskType.TODO;
         } else if (this instanceof Deadline) {
@@ -111,7 +121,6 @@ public class Task {
         } else if(this instanceof Event) {
             return TaskType.EVENT;
         } else {
-            assert false : "getTaskType called on an unknown or pure Task object";
             return TaskType.UNKNOWN;
         }
     }
