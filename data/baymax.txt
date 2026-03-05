@@ -1,10 +1,5 @@
  T | 1 | banana 
- D | 1 | apple | 2055-02-15 1800 
- E | 0 | mango | 2025-02-26 1800 | 2025-02-26 1800 
- T | 0 | banana-mango 
- D | 1 | submit | 2025-02-26 1435 
- E | 0 | meeting ro | 2026-02-26 1900 | 2026-02-26 1900 
- T | 0 | RA applications 
- D | 0 | week 3 | 2026-02-27 1700 
- T | 0 | lol 
- T | 1 | another task haha 
+ D | 1 | finish ip | 2026-12-12 1800 
+ E | 1 | meeting | 2026-12-12 1700 | 2026-12-12 1700 
+ T | 1 | many-apples 
+ T | 0 | banana pie 
