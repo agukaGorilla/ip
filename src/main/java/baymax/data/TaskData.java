@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Provides operation to manage input task list.
  */
 public class TaskData {
-
+    
     private static final ArrayList<Task> allTasks = new ArrayList<>();
     
     /**
