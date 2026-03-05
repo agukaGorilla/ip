@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Parses user input and translates into executable commands.
+ * Parses user input and translates it into executable commands.
  */
 public class Parser {
     
@@ -20,12 +20,11 @@ public class Parser {
     
     /**
      * Parses user input into executable commands.
-     * Extracts command and data types.
-     * Calls the appropriate methods to trigger appropriate actions.
+     * Extracts the command type and delegates the remaining input to specific handler methods.
      *
-     * @param currInput Input string types by user
-     * @return True if user issued the exit command ("bye"), false otherwise.
-     * @throws BaymaxException If input by user is invalid or in incorrect form.
+     * @param currInput Input string typed by the user.
+     * @return True if the user issued the exit command ("bye"), false otherwise.
+     * @throws BaymaxException If the input by the user is invalid, missing parameters, or in an incorrect form.
      */
     public static boolean handleInput(String currInput) throws BaymaxException {
         
@@ -78,6 +77,12 @@ public class Parser {
         return false;
     }
     
+    /**
+     * Extracts the task index from the user input and triggers the mark command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the user did not provide a task number.
+     */
     private static void prepareMark(String[] commandParts) throws BaymaxException {
         if (commandParts.length < 2) {
             throw new BaymaxException("You have not provided the Task Number that you want to mark. \n" +
@@ -86,6 +91,12 @@ public class Parser {
         Commands.markTask(Integer.parseInt(commandParts[1]));
     }
     
+    /**
+     * Extracts the task index from the user input and triggers the unmark command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the user did not provide a task number.
+     */
     private static void prepareUnmark(String[] commandParts) throws BaymaxException {
         if (commandParts.length < 2) {
             throw new BaymaxException("You have not provided the Task Number that you want to unmark. \n" +
@@ -94,6 +105,12 @@ public class Parser {
         Commands.unmarkTask(Integer.parseInt(commandParts[1]));
     }
     
+    /**
+     * Extracts the task index from the user input and triggers the delete command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the user did not provide a task number.
+     */
     private static void prepareDelete(String[] commandParts) throws BaymaxException {
         if (commandParts.length < 2) {
             throw new BaymaxException("You have not provided the Task Number that you want to delete. \n" +
@@ -103,6 +120,12 @@ public class Parser {
         Commands.deleteTask(index);
     }
     
+    /**
+     * Extracts the date from the user input and triggers the schedule viewing command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the date is missing or incorrectly formatted.
+     */
     private static void prepareSchedule(String[] commandParts) throws BaymaxException {
         if (commandParts.length < 2) {
             throw new BaymaxException("You have not provided the the date for the tasks to list. \n" +
@@ -120,6 +143,12 @@ public class Parser {
         Commands.listTasksDate(date);
     }
     
+    /**
+     * Extracts the description from the user input and triggers the creation of a ToDo task.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the description is empty.
+     */
     private static void prepareTodo(String[] commandParts) throws BaymaxException {
         if (commandParts.length < 2) {
             throw new BaymaxException("The description of a todo cannot be empty.\n" +
@@ -131,6 +160,12 @@ public class Parser {
         Commands.addTask(todoTask);
     }
     
+    /**
+     * Extracts the search keyword from the user input and triggers the find command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the search word is missing.
+     */
     private static void prepareFind(String[] commandParts) throws BaymaxException {
         if (commandParts.length < 2) {
             throw new BaymaxException("You have not provided the search word/phrase. \n" +
@@ -140,6 +175,12 @@ public class Parser {
         Commands.searchTasks(searchWord);
     }
     
+    /**
+     * Extracts the description and deadline from the user input and triggers the creation of a Deadline task.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the description is empty, the deadline is missing, or the date/time is improperly formatted.
+     */
     private static void prepareDeadline(String[] commandParts) throws BaymaxException {
         if (commandParts.length < 2) {
             throw new BaymaxException("The description of deadline cannot be empty.");
@@ -164,6 +205,12 @@ public class Parser {
         Commands.addTask(deadlineTask);
     }
     
+    /**
+     * Extracts the description, start time, and end time from the user input and triggers the creation of an Event task.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the description is empty, any of the times are missing, or the dates/times are improperly formatted.
+     */
     private static void prepareEvent(String[] commandParts) throws BaymaxException {
         if (commandParts.length < 2) {
             throw new BaymaxException("The description of event cannot be empty.");
