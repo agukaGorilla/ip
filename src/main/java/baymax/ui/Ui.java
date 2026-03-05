@@ -53,6 +53,8 @@ public class Ui {
                 Ui.showError(e.getMessage());
             }
         }
+        //Closing
+        Ui.printClosingMessage();
     }
     
     /**

@@ -11,7 +11,7 @@ public class UiBuffer {
      */
     public static void append(String text) {
         response.append(text).append("\n");
-        UiBuffer.append(text + "\n"); //To still see in terminal
+        System.out.println(text + "\n"); //To still see in terminal
     }
     
     /**

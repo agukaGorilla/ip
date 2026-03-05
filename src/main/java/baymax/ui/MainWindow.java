@@ -34,6 +34,10 @@ public class MainWindow extends AnchorPane {
     /** Injects the Baymax instance */
     public void setBaymax(Baymax d) {
         baymax = d;
+        
+        Ui.printOpeningMessage();
+        dialogContainer.getChildren().add(DialogBox.getBaymaxDialog(UiBuffer.getAndClear(), baymaxImage)
+        );
     }
     
     /**

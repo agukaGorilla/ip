@@ -23,7 +23,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setBaymax(baymax);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setBaymax(baymax);  // inject the baymax instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
