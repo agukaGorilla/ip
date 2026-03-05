@@ -3,4 +3,4 @@
  E | 0 | meeting | 2026-12-12 1700 | 2026-12-12 1700 
  T | 0 | many-apples 
  T | 1 | banana pie 
- T | 1 | apple 
+ T | 0 | apple 

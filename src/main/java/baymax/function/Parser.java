@@ -21,6 +21,7 @@ public class Parser {
     /**
      * Parses user input into executable commands.
      * Extracts the command type and delegates the remaining input to specific handler methods.
+     * Includes C-FriendlierSyntax extension for short command aliases.
      *
      * @param currInput Input string typed by the user.
      * @return True if the user issued the exit command ("bye"), false otherwise.
@@ -35,10 +36,25 @@ public class Parser {
         // ASSERTION 2 (Internal Invariant): The split command should always yield 1 or 2 parts
         assert commandParts.length > 0 && commandParts.length <= 2 : "Command array must have exactly 1 or 2 parts";
         
-        CommandType command;
+        String commandString = commandParts[0].toUpperCase().trim();
         
+        // EXTENSION C-FriendlierSyntax
+        switch (commandString) {
+        case "T": commandString = "TODO"; break;
+        case "D": commandString = "DEADLINE"; break;
+        case "E": commandString = "EVENT"; break;
+        case "L": commandString = "LIST"; break;
+        case "M": commandString = "MARK"; break;
+        case "UM": commandString = "UNMARK"; break;
+        case "DEL": commandString = "DELETE"; break;
+        case "F": commandString = "FIND"; break;
+        case "S": commandString = "SCHEDULE"; break;
+        case "Q": commandString = "BYE"; break; // Q for Quit
+        }
+        
+        CommandType command;
         try {
-            command = CommandType.valueOf(commandParts[0].toUpperCase().trim());
+            command = CommandType.valueOf(commandString);
         } catch (IllegalArgumentException e) {
             command = CommandType.UNKNOWN;
         }
