@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Parses user input and translates into executable commands.
+ * Parses user input and translates it into executable commands.
  */
 public class Parser {
     
@@ -20,12 +20,11 @@ public class Parser {
     
     /**
      * Parses user input into executable commands.
-     * Extracts command and data types.
-     * Calls the appropriate methods to trigger appropriate actions.
+     * Extracts the command type and delegates the remaining input to specific handler methods.
      *
-     * @param currInput Input string types by user
-     * @return True if user issued the exit command ("bye"), false otherwise.
-     * @throws BaymaxException If input by user is invalid or in incorrect form.
+     * @param currInput Input string typed by the user.
+     * @return True if the user issued the exit command ("bye"), false otherwise.
+     * @throws BaymaxException If the input by the user is invalid, missing parameters, or in an incorrect form.
      */
     public static boolean handleInput(String currInput) throws BaymaxException {
         // ASSERTION 1 (Precondition): The input passed to the parser should never be null
@@ -50,140 +49,210 @@ public class Parser {
         switch (command) {
         case BYE:
             return Commands.canCloseProgram();
-        
         case LIST:
             Commands.listTasks();
             break;
-        
         case MARK:
-            if (commandParts.length < 2) {
-                throw new BaymaxException("You have not provided the Task Number that you want to mark. \n" +
-                        "Please provide a task number to mark.");
-            }
-            Commands.markTask(Integer.parseInt(commandParts[1]));
+            prepareMark(commandParts);
             break;
-        
         case UNMARK:
-            if (commandParts.length < 2) {
-                throw new BaymaxException("You have not provided the Task Number that you want to unmark. \n" +
-                        "Please provide a task number to unmark.");
-            }
-            Commands.unmarkTask(Integer.parseInt(commandParts[1]));
+            prepareUnmark(commandParts);
             break;
-        
         case DELETE:
-            if (commandParts.length < 2) {
-                throw new BaymaxException("You have not provided the Task Number that you want to delete. \n" +
-                        "Please provide a task number to delete.");
-            }
-            int index = Integer.parseInt(commandParts[1]) - 1;
-            Commands.deleteTask(index);
+            prepareDelete(commandParts);
             break;
-        
         case SCHEDULE:
-            if (commandParts.length < 2) {
-                throw new BaymaxException("You have not provided the the date for the tasks to list. \n" +
-                        "Please provide a valid date.");
-            }
-            
-            LocalDate date;
-            try {
-                date = LocalDate.parse(commandParts[1].trim(), DATE_FORMAT);
-            } catch (DateTimeException e) {
-                throw new BaymaxException(
-                        "Please enter the due date in this exact format:\nyyyy-MM-dd (eg., 2026-02-22)");
-            }
-            
-            Commands.listTasksDate(date);
+            prepareSchedule(commandParts);
             break;
-        
         case TODO:
-            if (commandParts.length < 2) {
-                throw new BaymaxException("The description of a todo cannot be empty.\n" +
-                        "Please write a valid command.");
-            }
-            
-            String replace = commandParts[1].replace("|", "-");
-            ToDo todoTask = new ToDo(replace);
-            Commands.addTask(todoTask);
+            prepareTodo(commandParts);
             break;
-        
         case FIND:
-            if (commandParts.length < 2) {
-                throw new BaymaxException("You have not provided the search word/phrase. \n" +
-                        "Please provide a valid phrase (or) word to search the tasks.");
-            }
-            String searchWord = commandParts[1].trim();
-            Commands.searchTasks(searchWord);
+            prepareFind(commandParts);
             break;
-        
         case DEADLINE:
-            if (commandParts.length < 2) {
-                throw new BaymaxException("The description of deadline cannot be empty.");
-            }
-            String[] inputParts = commandParts[1].split("/by");
-            if (inputParts.length < 2) {
-                throw new BaymaxException("You have not entered a deadline for the event (or)\n" +
-                        "Did not format the message correctly. Please write a valid command");
-            }
-            
-            LocalDateTime dateTime;
-            try {
-                dateTime = LocalDateTime.parse(inputParts[1].trim(), DATE_TIME_FORMAT);
-            } catch (DateTimeException e) {
-                throw new BaymaxException(
-                        "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
-            }
-            
-            String replace2 = inputParts[0].replace("|", "-");
-            Deadline deadlineTask = new Deadline(replace2, dateTime);
-            
-            Commands.addTask(deadlineTask);
+            prepareDeadline(commandParts);
             break;
-        
         case EVENT:
-            if (commandParts.length < 2) {
-                throw new BaymaxException("The description of event cannot be empty.");
-            }
-            
-            String[] descSplit = commandParts[1].split("/from");
-            if (descSplit.length < 2) {
-                throw new BaymaxException("You have not entered the time of the event (or)\n" +
-                        "Did not format the message correctly. Please write a valid command");
-            }
-            
-            String[] times = descSplit[1].split("/to");
-            if (times.length < 2) {
-                throw new BaymaxException("You have not entered the end time of the event (or)\n" +
-                        "Did not format the message correctly. Please write a valid command");
-            }
-            
-            LocalDateTime time1;
-            LocalDateTime time2;
-            
-            try {
-                time1 = LocalDateTime.parse(times[0].trim(), DATE_TIME_FORMAT);
-                time2 = LocalDateTime.parse(times[1].trim(), DATE_TIME_FORMAT);
-            } catch (DateTimeException e) {
-                throw new BaymaxException(
-                        "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
-            }
-            
-            String replace3 = descSplit[0].replace("|", "-");
-            Event eventTask = new Event(replace3, time1, time2);
-            
-            Commands.addTask(eventTask);
+            prepareEvent(commandParts);
             break;
-        
         case UNKNOWN:
             throw new BaymaxException("I do not know what that means! \n" +
                     "Try telling me something I understand!");
-            
-            // ASSERTION 4 (Control-Flow Invariant): Catch unhandled enums
         default:
+            // ASSERTION 4 (Control-Flow Invariant): Catch unhandled enums
             assert false : "Execution should not reach here. Unhandled command type: " + command;
+            throw new BaymaxException("An unexpected command was encountered.");
         }
         
         return false;
+    }
+    
+    /**
+     * Extracts the task index from the user input and triggers the mark command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the user did not provide a task number.
+     */
+    private static void prepareMark(String[] commandParts) throws BaymaxException {
+        if (commandParts.length < 2) {
+            throw new BaymaxException("You have not provided the Task Number that you want to mark. \n" +
+                    "Please provide a task number to mark.");
+        }
+        Commands.markTask(Integer.parseInt(commandParts[1]));
+    }
+    
+    /**
+     * Extracts the task index from the user input and triggers the unmark command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the user did not provide a task number.
+     */
+    private static void prepareUnmark(String[] commandParts) throws BaymaxException {
+        if (commandParts.length < 2) {
+            throw new BaymaxException("You have not provided the Task Number that you want to unmark. \n" +
+                    "Please provide a task number to unmark.");
+        }
+        Commands.unmarkTask(Integer.parseInt(commandParts[1]));
+    }
+    
+    /**
+     * Extracts the task index from the user input and triggers the delete command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the user did not provide a task number.
+     */
+    private static void prepareDelete(String[] commandParts) throws BaymaxException {
+        if (commandParts.length < 2) {
+            throw new BaymaxException("You have not provided the Task Number that you want to delete. \n" +
+                    "Please provide a task number to delete.");
+        }
+        int index = Integer.parseInt(commandParts[1]) - 1;
+        Commands.deleteTask(index);
+    }
+    
+    /**
+     * Extracts the date from the user input and triggers the schedule viewing command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the date is missing or incorrectly formatted.
+     */
+    private static void prepareSchedule(String[] commandParts) throws BaymaxException {
+        if (commandParts.length < 2) {
+            throw new BaymaxException("You have not provided the the date for the tasks to list. \n" +
+                    "Please provide a valid date.");
+        }
+        
+        LocalDate date;
+        try {
+            date = LocalDate.parse(commandParts[1].trim(), DATE_FORMAT);
+        } catch (DateTimeException e) {
+            throw new BaymaxException(
+                    "Please enter the due date in this exact format:\nyyyy-MM-dd (eg., 2026-02-22)");
+        }
+        
+        Commands.listTasksDate(date);
+    }
+    
+    /**
+     * Extracts the description from the user input and triggers the creation of a ToDo task.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the description is empty.
+     */
+    private static void prepareTodo(String[] commandParts) throws BaymaxException {
+        if (commandParts.length < 2) {
+            throw new BaymaxException("The description of a todo cannot be empty.\n" +
+                    "Please write a valid command.");
+        }
+        
+        String replace = commandParts[1].replace("|", "-");
+        ToDo todoTask = new ToDo(replace);
+        Commands.addTask(todoTask);
+    }
+    
+    /**
+     * Extracts the search keyword from the user input and triggers the find command.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the search word is missing.
+     */
+    private static void prepareFind(String[] commandParts) throws BaymaxException {
+        if (commandParts.length < 2) {
+            throw new BaymaxException("You have not provided the search word/phrase. \n" +
+                    "Please provide a valid phrase (or) word to search the tasks.");
+        }
+        String searchWord = commandParts[1].trim();
+        Commands.searchTasks(searchWord);
+    }
+    
+    /**
+     * Extracts the description and deadline from the user input and triggers the creation of a Deadline task.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the description is empty, the deadline is missing, or the date/time is improperly formatted.
+     */
+    private static void prepareDeadline(String[] commandParts) throws BaymaxException {
+        if (commandParts.length < 2) {
+            throw new BaymaxException("The description of deadline cannot be empty.");
+        }
+        String[] inputParts = commandParts[1].split("/by");
+        if (inputParts.length < 2) {
+            throw new BaymaxException("You have not entered a deadline for the event (or)\n" +
+                    "Did not format the message correctly. Please write a valid command");
+        }
+        
+        LocalDateTime dateTime;
+        try {
+            dateTime = LocalDateTime.parse(inputParts[1].trim(), DATE_TIME_FORMAT);
+        } catch (DateTimeException e) {
+            throw new BaymaxException(
+                    "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
+        }
+        
+        String replace2 = inputParts[0].replace("|", "-");
+        Deadline deadlineTask = new Deadline(replace2, dateTime);
+        
+        Commands.addTask(deadlineTask);
+    }
+    
+    /**
+     * Extracts the description, start time, and end time from the user input and triggers the creation of an Event task.
+     *
+     * @param commandParts The user input split into command type and arguments.
+     * @throws BaymaxException If the description is empty, any of the times are missing, or the dates/times are improperly formatted.
+     */
+    private static void prepareEvent(String[] commandParts) throws BaymaxException {
+        if (commandParts.length < 2) {
+            throw new BaymaxException("The description of event cannot be empty.");
+        }
+        
+        String[] descSplit = commandParts[1].split("/from");
+        if (descSplit.length < 2) {
+            throw new BaymaxException("You have not entered the time of the event (or)\n" +
+                    "Did not format the message correctly. Please write a valid command");
+        }
+        
+        String[] times = descSplit[1].split("/to");
+        if (times.length < 2) {
+            throw new BaymaxException("You have not entered the end time of the event (or)\n" +
+                    "Did not format the message correctly. Please write a valid command");
+        }
+        
+        LocalDateTime time1;
+        LocalDateTime time2;
+        
+        try {
+            time1 = LocalDateTime.parse(times[0].trim(), DATE_TIME_FORMAT);
+            time2 = LocalDateTime.parse(times[1].trim(), DATE_TIME_FORMAT);
+        } catch (DateTimeException e) {
+            throw new BaymaxException(
+                    "Please enter the due date in this exact format:\nyyyy-MM-dd HHmm (eg., 2026-02-22 0500)");
+        }
+        
+        String replace3 = descSplit[0].replace("|", "-");
+        Event eventTask = new Event(replace3, time1, time2);
+        
+        Commands.addTask(eventTask);
     }
 }

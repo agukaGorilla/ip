@@ -19,39 +19,45 @@ import javafx.scene.layout.HBox;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
+    
+    private static final String FXML_PATH = "/view/DialogBox.fxml";
+    
     @FXML
     private Label dialog;
     @FXML
     private ImageView displayPicture;
     
     private DialogBox(String text, Image img) {
-        // ASSERTION (Precondition): Text and Image should exist before we try to build a UI component for them
         assert text != null : "Dialog text cannot be null";
         assert img != null : "Profile image cannot be null";
         
+        loadFxml();
+        
+        assert dialog != null : "Dialog label was not initialized by FXML";
+        assert displayPicture != null : "Display picture ImageView was not initialized by FXML";
+        
+        dialog.setText(text);
+        displayPicture.setImage(img);
+    }
+    
+    /**
+     * Loads the FXML layout for the dialog box component.
+     */
+    private void loadFxml() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource(FXML_PATH));
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        // ASSERTION (Postcondition): FXML should have successfully injected these UI nodes
-        assert dialog != null : "Dialog label was not initialized by FXML";
-        assert displayPicture != null : "Display picture ImageView was not initialized by FXML";
-        
-        dialog.setText(text);
-        displayPicture.setImage(img);
-        
     }
     
     /**
      * Flips the dialog box such that the ImageView is on the left and text on the right.
      */
     private void flip() {
-        // ASSERTION: We assume the HBox actually has children (the Label and ImageView) to flip
         assert !this.getChildren().isEmpty() : "DialogBox has no children to flip";
         
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
@@ -85,6 +91,7 @@ public class DialogBox extends HBox {
     public static DialogBox getBaymaxDialog(String text, Image img) {
         assert text != null : "Baymax dialog text cannot be null";
         assert img != null : "Baymax profile image cannot be null";
+        
         var db = new DialogBox(text, img);
         db.flip();
         return db;
