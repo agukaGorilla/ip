@@ -53,10 +53,26 @@ public class Ui {
     }
     
     /**
+     * Reads user input from GUI and triggers parsing function
+     *
+     * @param currInput The input given by user
+     */
+    public static void handleGuiInput(String currInput) {
+        try {
+            boolean isExit = Parser.handleInput(currInput);
+            if (isExit) {
+                javafx.application.Platform.exit(); //If user said "bye" forcefully exit
+            }
+        } catch (BaymaxException e) {
+            UiBuffer.append(e.getMessage());
+        }
+    }
+    
+    /**
      * Displays the welcome message to user.
      */
     public static void printOpeningMessage() {
-        System.out.print(Ui.HORIZONTAL_LINE + """
+        UiBuffer.append(Ui.HORIZONTAL_LINE + """
                  Hello! I'm Baymax
                  It's been so long since I last saw you!!
                  What can I do for you? \n""" + Ui.HORIZONTAL_LINE);
@@ -66,7 +82,7 @@ public class Ui {
      * Displays the closing message to user.
      */
     public static void printClosingMessage() {
-        System.out.print(Ui.HORIZONTAL_LINE + """
+        UiBuffer.append(Ui.HORIZONTAL_LINE + """
                 Bye. Hope to see you soon again!
                 I must recharge now. \n""" + Ui.HORIZONTAL_LINE);
     }
@@ -77,7 +93,7 @@ public class Ui {
      * @param currTask The task that was added.
      */
     public static void printAddedMessage(Task currTask) {
-        System.out.println(Ui.HORIZONTAL_LINE + "Fire!! I have added this task : \n"
+        UiBuffer.append(Ui.HORIZONTAL_LINE + "Fire!! I have added this task : \n"
                 + Ui.getTaskUserFormat(currTask)+ "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.HORIZONTAL_LINE);
@@ -88,14 +104,14 @@ public class Ui {
      */
     public static void printTasks() {
         int index = 1;
-        System.out.print(Ui.HORIZONTAL_LINE);
-        System.out.println("Here are the tasks in your list :\n");
+        UiBuffer.append(Ui.HORIZONTAL_LINE);
+        UiBuffer.append("Here are the tasks in your list :\n");
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
-            System.out.println(index + ". " + Ui.getTaskUserFormat(currTask));
+            UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
             index++;
         }
-        System.out.print(Ui.HORIZONTAL_LINE + "\n");
+        UiBuffer.append(Ui.HORIZONTAL_LINE + "\n");
     }
     
     /**
@@ -105,7 +121,7 @@ public class Ui {
      */
     public static void printOnDate(LocalDate date) {
         int index = 1;
-        System.out.println(Ui.HORIZONTAL_LINE + "Here are the tasks on " + date.format(DATE_FORMAT) + " :\n");
+        UiBuffer.append(Ui.HORIZONTAL_LINE + "Here are the tasks on " + date.format(DATE_FORMAT) + " :\n");
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
             TaskType type = currTask.getTaskType();
@@ -114,14 +130,14 @@ public class Ui {
             case DEADLINE:
                 Deadline d = (Deadline) currTask;
                 if (d.getDateTime().toLocalDate().equals(date)) {
-                    System.out.println(index + ". " + Ui.getTaskUserFormat(currTask));
+                    UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
                     index++;
                 }
                 break;
             case EVENT:
                 Event e = (Event) currTask;
                 if (e.getStartTime().toLocalDate().equals(date)) {
-                    System.out.println(index + ". " + Ui.getTaskUserFormat(currTask));
+                    UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
                     index++;
                 }
                 break;
@@ -130,7 +146,7 @@ public class Ui {
             }
         }
         
-        System.out.println(Ui.HORIZONTAL_LINE + "\n");
+        UiBuffer.append(Ui.HORIZONTAL_LINE + "\n");
     }
     
     /**
@@ -141,15 +157,15 @@ public class Ui {
      */
     public static void printSearchTasks(String searchWord) {
         int index = 1;
-        System.out.print(Ui.HORIZONTAL_LINE);
-        System.out.printf("Here are the tasks which contain the phrase '%s' :\n%n", searchWord);
+        UiBuffer.append(Ui.HORIZONTAL_LINE);
+        UiBuffer.append(String.format("Here are the tasks which contain the phrase '%s' :", searchWord));
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
             if (Commands.hasPhrase(currTask, searchWord)) {
-                System.out.println(index + ". " + Ui.getTaskUserFormat(currTask));
+                UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
             }
         }
-        System.out.print(Ui.HORIZONTAL_LINE + "\n");
+        UiBuffer.append(Ui.HORIZONTAL_LINE + "\n");
     }
     
     /**
@@ -188,8 +204,8 @@ public class Ui {
      * @param currTask The task that was marked completed.
      */
     public static void printMarked(Task currTask) {
-        System.out.println(Ui.HORIZONTAL_LINE + "Gotcha! You have finished the following task!");
-        System.out.println(Ui.getTaskUserFormat(currTask) + "\n" + Ui.HORIZONTAL_LINE + "\n");
+        UiBuffer.append(Ui.HORIZONTAL_LINE + "Gotcha! You have finished the following task!");
+        UiBuffer.append(Ui.getTaskUserFormat(currTask) + "\n" + Ui.HORIZONTAL_LINE + "\n");
         
     }
     
@@ -199,8 +215,8 @@ public class Ui {
      * @param currTask The task that was unmarked.
      */
     public static void printUnmarked(Task currTask) {
-        System.out.println(Ui.HORIZONTAL_LINE + "Aight. I have unmarked the task. Get on it soon...");
-        System.out.println(Ui.getTaskUserFormat(currTask) + "\n" + Ui.HORIZONTAL_LINE + "\n");
+        UiBuffer.append(Ui.HORIZONTAL_LINE + "Aight. I have unmarked the task. Get on it soon...");
+        UiBuffer.append(Ui.getTaskUserFormat(currTask) + "\n" + Ui.HORIZONTAL_LINE + "\n");
     }
     
     /**
@@ -209,9 +225,9 @@ public class Ui {
      * @param errorMessage The details of the error message.
      */
     public static void showError(String errorMessage) {
-        System.out.print(Ui.HORIZONTAL_LINE);
-        System.out.println("Ohh NOO!! " + errorMessage);
-        System.out.println(Ui.HORIZONTAL_LINE);
+        UiBuffer.append(Ui.HORIZONTAL_LINE);
+        UiBuffer.append("Ohh NOO!! " + errorMessage);
+        UiBuffer.append(Ui.HORIZONTAL_LINE);
     }
     
     /**
@@ -220,7 +236,7 @@ public class Ui {
      * @param currTask The task that was deleted.
      */
     public static void printDeletedMessage(Task currTask) {
-        System.out.println( Ui.HORIZONTAL_LINE + "As you wish!! I have deleted this task from inputList \n"
+        UiBuffer.append( Ui.HORIZONTAL_LINE + "As you wish!! I have deleted this task from inputList \n"
                 + Ui.getTaskUserFormat(currTask) + "\n"
                 + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
                 + Ui.HORIZONTAL_LINE + "\n");

@@ -6,6 +6,7 @@ import baymax.task.TaskType;
 import baymax.task.ToDo;
 import baymax.task.Deadline;
 import baymax.task.Event;
+import baymax.ui.UiBuffer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -73,7 +74,7 @@ public class StoreData {
             fw.close();
             
         } catch (IOException e) {
-            System.out.println("Something went wrong :( - " + e.getMessage());
+            UiBuffer.append("Something went wrong :( - " + e.getMessage());
         }
     }
     
@@ -138,7 +139,7 @@ public class StoreData {
                 
             }
         } catch (IOException | BaymaxException e) {
-            System.out.println("Something went wrong :(  : " + e.getMessage());
+            UiBuffer.append("Something went wrong :(  : " + e.getMessage());
         }
     }
 }

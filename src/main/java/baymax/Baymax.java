@@ -22,4 +22,5 @@ public class Baymax {
         //Closing
         Ui.printClosingMessage();
     }
+    
 }
