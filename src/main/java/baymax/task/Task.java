@@ -16,6 +16,7 @@ public class Task {
      * @param isDone True is completed, false otherwise.
      */
     public Task(String description, boolean isDone) {
+        assert description != null : "Task description cannot be null";
         this.description = description;
         this.isDone = isDone;
     }
@@ -28,6 +29,7 @@ public class Task {
      * @param description The description of the task.
      */
     public Task(String description) {
+        assert description != null : "Task description cannot be null";
         this.description = description;
         this.isDone = false;
     }
@@ -47,6 +49,7 @@ public class Task {
      * @param description The new description of the task.
      */
     public void setDescription(String description) {
+        assert description != null : "Task description cannot be null";
         this.description = description;
     }
     
@@ -89,6 +92,7 @@ public class Task {
         } else if(this instanceof Event) {
             return "[E][" + mark + "] ";
         } else {
+            assert false : "getStatusIcon called on an unknown or pure Task object";
             return "[ ][ ] ";
         }
     }
@@ -107,6 +111,7 @@ public class Task {
         } else if(this instanceof Event) {
             return TaskType.EVENT;
         } else {
+            assert false : "getTaskType called on an unknown or pure Task object";
             return TaskType.UNKNOWN;
         }
     }
