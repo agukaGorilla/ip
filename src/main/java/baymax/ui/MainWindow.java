@@ -14,6 +14,12 @@ import javafx.scene.layout.VBox;
  * for the main window of the Baymax application.
  */
 public class MainWindow extends AnchorPane {
+    
+    private static final String USER_IMAGE_PATH = "/images/UserImage.png";
+    private static final String BAYMAX_IMAGE_PATH = "/images/BaymaxImage.png";
+    private static final String EXIT_COMMAND = "bye";
+    private static final double EXIT_DELAY_SECONDS = 1.8;
+    
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -25,8 +31,8 @@ public class MainWindow extends AnchorPane {
     
     private Baymax baymax;
     
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/UserImage.png"));
-    private Image baymaxImage = new Image(this.getClass().getResourceAsStream("/images/BaymaxImage.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream(USER_IMAGE_PATH));
+    private Image baymaxImage = new Image(this.getClass().getResourceAsStream(BAYMAX_IMAGE_PATH));
     
     /**
      * Initializes the controller class. This method is automatically called
@@ -78,8 +84,18 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
         
-        if (input.trim().equalsIgnoreCase("bye")) {
-            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.8));
+        checkAndExit(input);
+    }
+    
+    /**
+     * Checks if the user provided the exit command, and if so, triggers a delayed application closure.
+     *
+     * @param input The raw string input from the user.
+     */
+    private void checkAndExit(String input) {
+        if (input.trim().equalsIgnoreCase(EXIT_COMMAND)) {
+            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(
+                    javafx.util.Duration.seconds(EXIT_DELAY_SECONDS));
             delay.setOnFinished(event -> javafx.application.Platform.exit());
             delay.play();
         }
