@@ -12,15 +12,14 @@ public class Baymax {
     * Loads data from table, reads user input and closes the application.
     * */
     public static void main(String[] args){
-
-        //Opening Message
-        Ui.printOpeningMessage();
-
+        
         //Trigger to read input from user
         Ui.readInput();
 
         //Closing
         Ui.printClosingMessage();
     }
+    
+    
     
 }

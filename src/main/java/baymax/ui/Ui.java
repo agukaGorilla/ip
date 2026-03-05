@@ -39,6 +39,9 @@ public class Ui {
         //First Load previous messages
         TaskData.loadTasks();
         
+        //Opening Message
+        Ui.printOpeningMessage();
+        
         Scanner sc = new Scanner(System.in);
         boolean isExit = false;
         
@@ -57,14 +60,12 @@ public class Ui {
      *
      * @param currInput The input given by user
      */
-    public static void handleGuiInput(String currInput) {
+    public static boolean handleGuiInput(String currInput) {
         try {
-            boolean isExit = Parser.handleInput(currInput);
-            if (isExit) {
-                javafx.application.Platform.exit(); //If user said "bye" forcefully exit
-            }
+            return Parser.handleInput(currInput);
         } catch (BaymaxException e) {
-            UiBuffer.append(e.getMessage());
+            UiBuffer.append("OHH NOO!!" + e.getMessage());
+            return false;
         }
     }
     
