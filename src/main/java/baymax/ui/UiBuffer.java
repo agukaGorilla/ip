@@ -19,7 +19,7 @@ public class UiBuffer {
      */
     public static String getAndClear() {
         String finalResponse = response.toString();
-        response.setLength(0); // Empties the bucket for the next command
+        response.setLength(0);
         return finalResponse;
     }
 }

@@ -14,13 +14,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
- * Handles all interaction between user and the application.
- * Responsible for reading user input and displaying all messages to user.
+ * Handles all interaction between the user and the application.
+ * Responsible for reading user input and formatting messages for the user.
  */
 public class Ui {
-    
-    private static final String HORIZONTAL_LINE =
-            "____________________________________________________________________\n";
     
     private static final DateTimeFormatter DEADLINE_DATE_FORMAT =
             DateTimeFormatter.ofPattern("'[Due on ' MMM dd yy ', at ' h:mm a']'");
@@ -31,15 +28,11 @@ public class Ui {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd yy");
     
     /**
-     * Reads user inputs and triggers parsing functions.
-     * Initially loads task to internal list from hard disk before starting input loop.
+     * Reads user inputs and triggers parsing functions for the CLI version.
+     * Initially loads tasks to the internal list from the hard disk before starting the input loop.
      */
     public static void readInput() {
-        
-        //First Load previous messages
         TaskData.loadTasks();
-        
-        //Opening Message
         Ui.printOpeningMessage();
         
         Scanner sc = new Scanner(System.in);
@@ -56,21 +49,22 @@ public class Ui {
     }
     
     /**
-     * Reads user input from GUI and triggers parsing function
+     * Reads user input from the GUI and triggers the parsing function.
      *
-     * @param currInput The input given by user
+     * @param currInput The input string given by the user.
+     * @return True if the user issued the exit command, false otherwise.
      */
     public static boolean handleGuiInput(String currInput) {
         try {
             return Parser.handleInput(currInput);
         } catch (BaymaxException e) {
-            UiBuffer.append("OHH NOO!! " + e.getMessage());
+            Ui.showError(e.getMessage());
             return false;
         }
     }
     
     /**
-     * Displays the welcome message to user.
+     * Appends the welcome message to the UI buffer.
      */
     public static void printOpeningMessage() {
         UiBuffer.append("""
@@ -80,7 +74,7 @@ public class Ui {
     }
     
     /**
-     * Displays the closing message to user.
+     * Appends the closing message to the UI buffer.
      */
     public static void printClosingMessage() {
         UiBuffer.append("""
@@ -89,7 +83,7 @@ public class Ui {
     }
     
     /**
-     * Displays a confirmation message when a task is added.
+     * Appends a confirmation message when a task is successfully added.
      *
      * @param currTask The task that was added.
      */
@@ -100,7 +94,7 @@ public class Ui {
     }
     
     /**
-     * Prints all tasks in the list.
+     * Iterates through the task list and appends all tasks to the UI buffer.
      */
     public static void printTasks() {
         int index = 1;
@@ -122,75 +116,76 @@ public class Ui {
         UiBuffer.append("Here are the tasks on " + date.format(DATE_FORMAT) + " :\n");
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
-            TaskType type = currTask.getTaskType();
-            
-            switch (type) {
-            case DEADLINE:
-                Deadline d = (Deadline) currTask;
-                if (d.getDateTime().toLocalDate().equals(date)) {
-                    UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
-                    index++;
-                }
-                break;
-            case EVENT:
-                Event e = (Event) currTask;
-                if (e.getStartTime().toLocalDate().equals(date)) {
-                    UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
-                    index++;
-                }
-                break;
-            default:
-                break;
+            if (isTaskOnDate(currTask, date)) {
+                UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
+                index++;
             }
         }
-        
     }
     
     /**
-     * Prints tasks which contain given word/phrase in task description.
-     * Searches the task list for tasks which contain the given phrase in description.
+     * Helper method to determine if a specific task falls on a given date.
      *
-     * @param searchWord The search word.
+     * @param currTask The task to evaluate.
+     * @param date The date to check against.
+     * @return True if the task has a date that matches the target date, false otherwise.
+     */
+    private static boolean isTaskOnDate(Task currTask, LocalDate date) {
+        TaskType type = currTask.getTaskType();
+        switch (type) {
+        case DEADLINE:
+            Deadline d = (Deadline) currTask;
+            return d.getDateTime().toLocalDate().equals(date);
+        case EVENT:
+            Event e = (Event) currTask;
+            return e.getStartTime().toLocalDate().equals(date);
+        default:
+            return false;
+        }
+    }
+    
+    /**
+     * Searches the task list for tasks which contain the given phrase in their description.
+     * Appends matching tasks to the UI buffer.
+     *
+     * @param searchWord The phrase or word to search for.
      */
     public static void printSearchTasks(String searchWord) {
         int index = 1;
-        UiBuffer.append(String.format("Here are the tasks which contain the phrase '%s' :", searchWord));
+        UiBuffer.append(String.format("Here are the tasks which contain the phrase '%s' :\n", searchWord));
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
             if (Commands.hasPhrase(currTask, searchWord)) {
                 UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
+                index++;
             }
         }
     }
     
     /**
-     * Formats a task to human-readable string.
+     * Formats a task into a human-readable string based on its specific subclass properties.
      *
      * @param currTask The task to format.
-     * @return A formatted string representing the task's status and details.
+     * @return A formatted string representing the task's status and date details.
      */
-    public static String getTaskUserFormat(Task currTask){
+    public static String getTaskUserFormat(Task currTask) {
         TaskType currType = currTask.getTaskType();
-        String userString = "";
-
+        
         switch (currType) {
         case TODO:
-            userString = currTask.getStatusIcon() + currTask.getDescription() + "\n";
-            break;
+            return currTask.getStatusIcon() + currTask.getDescription() + "\n";
         case DEADLINE:
             Deadline d = (Deadline) currTask;
-            userString = currTask.getStatusIcon() + currTask.getDescription() +
+            return currTask.getStatusIcon() + currTask.getDescription() +
                     "\n" + d.getDateTime().format(DEADLINE_DATE_FORMAT) + "\n";
-            break;
         case EVENT:
             Event e = (Event) currTask;
-            userString = currTask.getStatusIcon() + currTask.getDescription() + " \n[Starts" +
+            return currTask.getStatusIcon() + currTask.getDescription() + " \n[Starts" +
                     e.getStartTime().format(EVENT_TIME_FORMAT) + " and ends" +
                     e.getEndTime().format(EVENT_TIME_FORMAT) + "]\n";
-            break;
+        default:
+            return "";
         }
-        
-        return userString;
     }
     
     /**
@@ -199,9 +194,8 @@ public class Ui {
      * @param currTask The task that was marked completed.
      */
     public static void printMarked(Task currTask) {
-        UiBuffer.append("Gotcha! You have finished the following task!");
+        UiBuffer.append("Gotcha! You have finished the following task!\n");
         UiBuffer.append(Ui.getTaskUserFormat(currTask) + "\n");
-        
     }
     
     /**
@@ -210,21 +204,21 @@ public class Ui {
      * @param currTask The task that was unmarked.
      */
     public static void printUnmarked(Task currTask) {
-        UiBuffer.append("Aight. I have unmarked the task. Get on it soon...");
+        UiBuffer.append("Aight. I have unmarked the task. Get on it soon...\n");
         UiBuffer.append(Ui.getTaskUserFormat(currTask) + "\n");
     }
     
     /**
-     * Displays error message to user in standard form.
+     * Formats and displays standard error messages to the user.
      *
      * @param errorMessage The details of the error message.
      */
     public static void showError(String errorMessage) {
-        UiBuffer.append("Ohh NOO!! " + errorMessage);
+        UiBuffer.append("Ohh NOO!! " + errorMessage + "\n");
     }
     
     /**
-     * Displays a confirmation message when a task is deleted.
+     * Displays a confirmation message when a task is successfully deleted.
      *
      * @param currTask The task that was deleted.
      */
