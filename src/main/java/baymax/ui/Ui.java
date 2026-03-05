@@ -64,7 +64,7 @@ public class Ui {
         try {
             return Parser.handleInput(currInput);
         } catch (BaymaxException e) {
-            UiBuffer.append("OHH NOO!!" + e.getMessage());
+            UiBuffer.append("OHH NOO!! " + e.getMessage());
             return false;
         }
     }

@@ -38,6 +38,9 @@ public class StoreData {
             for (int i = 0; i < TaskData.getTotalTasks(); i++) {
                 
                 Task currTask = TaskData.getTask(i);
+                // ASSERTION: Task retrieved from list should not be null
+                assert currTask != null : "Task retrieved for saving should not be null";
+                
                 TaskType taskType = currTask.getTaskType();
                 int num = (currTask.getIsDone() ? 1 : 0);
                 
@@ -62,13 +65,20 @@ public class StoreData {
                     String time1 = startTime.format(dateTimeFormat);
                     
                     LocalDateTime endTime = e.getEndTime();
-                    String time2 = startTime.format(dateTimeFormat);
+                    // BUG FIX: Changed startTime to endTime here!
+                    String time2 = endTime.format(dateTimeFormat);
                     
                     toWrite = String.format(" E | %d | %s | %s | %s \n", num, currTask.getDescription(),
                             time1, time2);
                     break;
                 default:
+                    // ASSERTION (Control-Flow): We should never hit an unknown task type when saving
+                    assert false : "Unknown task type encountered during save: " + taskType;
                 }
+                
+                // ASSERTION (Postcondition): toWrite should have been populated by the switch statement
+                assert !toWrite.isEmpty() : "String to write to file cannot be empty";
+                
                 fw.write(toWrite);
             }
             fw.close();
@@ -94,11 +104,20 @@ public class StoreData {
             
             while (sc.hasNextLine()) {
                 String currLine = sc.nextLine();
+                // ASSERTION: The line read from the file should not be null or entirely blank
+                assert currLine != null && !currLine.trim().isEmpty() : "Read line from data file should not be empty";
+                
                 String[] lineWords = currLine.split("\\|");
+                
+                // ASSERTION: A properly formatted saved task must have at least Type, Status, and Description
+                assert lineWords.length >= 3 : "Corrupted line in data file, missing basic task components: " + currLine;
                 
                 String taskType = lineWords[0].trim();
                 
                 int num = Integer.parseInt(lineWords[1].trim());
+                // ASSERTION: The boolean conversion relies on this being exactly 0 or 1
+                assert num == 0 || num == 1 : "Saved task completion status in file must be exactly 0 or 1";
+                
                 boolean isDone = (num == 1 ? true : false);
                 
                 String taskDescription = lineWords[2].trim();
@@ -106,22 +125,21 @@ public class StoreData {
                 try {
                     switch (taskType) {
                     case "T":
-                        
                         ToDo todoTask = new ToDo(taskDescription, isDone);
                         TaskData.addTask(todoTask);
-                        
                         break;
                     case "D":
-                        
+                        // ASSERTION: Deadlines must have a 4th component (the date)
+                        assert lineWords.length >= 4 : "Deadline in data file is missing its date component";
                         String dTime = lineWords[3].trim();
                         LocalDateTime time = LocalDateTime.parse(dTime, dateTimeFormat);
                         
                         Deadline dTask = new Deadline(taskDescription, isDone, time);
                         TaskData.addTask(dTask);
-                        
                         break;
                     case "E":
-                        
+                        // ASSERTION: Events must have 5 components (Start and End times)
+                        assert lineWords.length >= 5 : "Event in data file is missing time components";
                         String sTime = lineWords[3].trim();
                         LocalDateTime time1 = LocalDateTime.parse(sTime, dateTimeFormat);
                         
@@ -130,8 +148,10 @@ public class StoreData {
                         
                         Event eTask = new Event(taskDescription, isDone, time1, time2);
                         TaskData.addTask(eTask);
-                        
                         break;
+                    default:
+                        // ASSERTION: The file shouldn't contain weird types like "Z" or "X"
+                        assert false : "Unknown task type identifier in data file: " + taskType;
                     }
                 } catch (Exception e) {
                     throw new BaymaxException("File corrupted :(. Couldn't load some previous tasks");
