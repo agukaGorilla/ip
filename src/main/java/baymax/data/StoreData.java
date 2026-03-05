@@ -149,7 +149,7 @@ public class StoreData {
                 TaskData.addTask(dTask);
                 break;
             case "E":
-                // ASSERTION: Events must have 5 components (Start and End times)
+                // ASSERTION: Events must have 5 components
                 assert lineWords.length >= 5 : "Event in data file is missing time components";
                 
                 String sTime = lineWords[3].trim();
