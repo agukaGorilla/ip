@@ -73,19 +73,19 @@ public class Ui {
      * Displays the welcome message to user.
      */
     public static void printOpeningMessage() {
-        UiBuffer.append(Ui.HORIZONTAL_LINE + """
+        UiBuffer.append("""
                  Hello! I'm Baymax
                  It's been so long since I last saw you!!
-                 What can I do for you? \n""" + Ui.HORIZONTAL_LINE);
+                 What can I do for you? \n""");
     }
     
     /**
      * Displays the closing message to user.
      */
     public static void printClosingMessage() {
-        UiBuffer.append(Ui.HORIZONTAL_LINE + """
+        UiBuffer.append("""
                 Bye. Hope to see you soon again!
-                I must recharge now. \n""" + Ui.HORIZONTAL_LINE);
+                I must recharge now. \n""");
     }
     
     /**
@@ -94,10 +94,9 @@ public class Ui {
      * @param currTask The task that was added.
      */
     public static void printAddedMessage(Task currTask) {
-        UiBuffer.append(Ui.HORIZONTAL_LINE + "Fire!! I have added this task : \n"
+        UiBuffer.append("Fire!! I have added this task : \n"
                 + Ui.getTaskUserFormat(currTask)+ "\n"
-                + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
-                + Ui.HORIZONTAL_LINE);
+                + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n");
     }
     
     /**
@@ -105,14 +104,12 @@ public class Ui {
      */
     public static void printTasks() {
         int index = 1;
-        UiBuffer.append(Ui.HORIZONTAL_LINE);
         UiBuffer.append("Here are the tasks in your list :\n");
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
             UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
             index++;
         }
-        UiBuffer.append(Ui.HORIZONTAL_LINE + "\n");
     }
     
     /**
@@ -122,7 +119,7 @@ public class Ui {
      */
     public static void printOnDate(LocalDate date) {
         int index = 1;
-        UiBuffer.append(Ui.HORIZONTAL_LINE + "Here are the tasks on " + date.format(DATE_FORMAT) + " :\n");
+        UiBuffer.append("Here are the tasks on " + date.format(DATE_FORMAT) + " :\n");
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
             TaskType type = currTask.getTaskType();
@@ -147,7 +144,6 @@ public class Ui {
             }
         }
         
-        UiBuffer.append(Ui.HORIZONTAL_LINE + "\n");
     }
     
     /**
@@ -158,7 +154,6 @@ public class Ui {
      */
     public static void printSearchTasks(String searchWord) {
         int index = 1;
-        UiBuffer.append(Ui.HORIZONTAL_LINE);
         UiBuffer.append(String.format("Here are the tasks which contain the phrase '%s' :", searchWord));
         for (int i = 0; i < TaskData.getTotalTasks(); i++) {
             Task currTask = TaskData.getTask(i);
@@ -166,7 +161,6 @@ public class Ui {
                 UiBuffer.append(index + ". " + Ui.getTaskUserFormat(currTask));
             }
         }
-        UiBuffer.append(Ui.HORIZONTAL_LINE + "\n");
     }
     
     /**
@@ -205,8 +199,8 @@ public class Ui {
      * @param currTask The task that was marked completed.
      */
     public static void printMarked(Task currTask) {
-        UiBuffer.append(Ui.HORIZONTAL_LINE + "Gotcha! You have finished the following task!");
-        UiBuffer.append(Ui.getTaskUserFormat(currTask) + "\n" + Ui.HORIZONTAL_LINE + "\n");
+        UiBuffer.append("Gotcha! You have finished the following task!");
+        UiBuffer.append(Ui.getTaskUserFormat(currTask) + "\n");
         
     }
     
@@ -216,8 +210,8 @@ public class Ui {
      * @param currTask The task that was unmarked.
      */
     public static void printUnmarked(Task currTask) {
-        UiBuffer.append(Ui.HORIZONTAL_LINE + "Aight. I have unmarked the task. Get on it soon...");
-        UiBuffer.append(Ui.getTaskUserFormat(currTask) + "\n" + Ui.HORIZONTAL_LINE + "\n");
+        UiBuffer.append("Aight. I have unmarked the task. Get on it soon...");
+        UiBuffer.append(Ui.getTaskUserFormat(currTask) + "\n");
     }
     
     /**
@@ -226,9 +220,7 @@ public class Ui {
      * @param errorMessage The details of the error message.
      */
     public static void showError(String errorMessage) {
-        UiBuffer.append(Ui.HORIZONTAL_LINE);
         UiBuffer.append("Ohh NOO!! " + errorMessage);
-        UiBuffer.append(Ui.HORIZONTAL_LINE);
     }
     
     /**
@@ -237,9 +229,8 @@ public class Ui {
      * @param currTask The task that was deleted.
      */
     public static void printDeletedMessage(Task currTask) {
-        UiBuffer.append( Ui.HORIZONTAL_LINE + "As you wish!! I have deleted this task from inputList \n"
+        UiBuffer.append("As you wish!! I have deleted this task from inputList \n"
                 + Ui.getTaskUserFormat(currTask) + "\n"
-                + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n"
-                + Ui.HORIZONTAL_LINE + "\n");
+                + "Now you have " + TaskData.getTotalTasks() + " tasks in the list.\n");
     }
 }

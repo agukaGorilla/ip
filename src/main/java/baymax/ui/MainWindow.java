@@ -57,7 +57,7 @@ public class MainWindow extends AnchorPane {
         // ------------------ NEW EXIT LOGIC ------------------
         if (input.trim().equalsIgnoreCase("bye")) {
             // Wait 1.5 seconds so the user can read the goodbye message
-            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
+            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(2.0));
             delay.setOnFinished(event -> javafx.application.Platform.exit());
             delay.play();
         }
