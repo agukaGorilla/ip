@@ -79,7 +79,7 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
         
         if (input.trim().equalsIgnoreCase("bye")) {
-            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(2.0));
+            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.8));
             delay.setOnFinished(event -> javafx.application.Platform.exit());
             delay.play();
         }
