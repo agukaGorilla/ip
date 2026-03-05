@@ -38,7 +38,15 @@ public class StoreData {
             FileWriter fw = new FileWriter(f);
             for (int i = 0; i < TaskData.getTotalTasks(); i++) {
                 Task currTask = TaskData.getTask(i);
+                
+                // ASSERTION: Task retrieved from list should not be null
+                assert currTask != null : "Task retrieved for saving should not be null";
+                
                 String toWrite = formatTaskToString(currTask);
+                
+                // ASSERTION: toWrite should have been populated by the helper method
+                assert !toWrite.isEmpty() : "String to write to file cannot be empty";
+                
                 fw.write(toWrite);
             }
             fw.close();
@@ -70,9 +78,11 @@ public class StoreData {
         case EVENT:
             Event e = (Event) currTask;
             String time1 = e.getStartTime().format(DATE_TIME_FORMAT);
-            String time2 = e.getEndTime().format(DATE_TIME_FORMAT); // Bug fixed here!
+            String time2 = e.getEndTime().format(DATE_TIME_FORMAT);
             return String.format(" E | %d | %s | %s | %s \n", num, description, time1, time2);
         default:
+            // ASSERTION: We should never hit an unknown task type when saving
+            assert false : "Unknown task type encountered during save: " + taskType;
             return "";
         }
     }
@@ -105,11 +115,21 @@ public class StoreData {
      * @throws BaymaxException If the line is corrupted or missing necessary delimited components.
      */
     private static void parseAndAddTask(String currLine) throws BaymaxException {
+        // ASSERTION: The line read from the file should not be null or entirely blank
+        assert currLine != null && !currLine.trim().isEmpty() : "Read line from data file should not be empty";
+        
         try {
             String[] lineWords = currLine.split(SPLIT_DELIMITER);
             
+            // ASSERTION: A properly formatted saved task must have at least Type, Status, and Description
+            assert lineWords.length >= 3 : "Corrupted line in data file, missing basic task components: " + currLine;
+            
             String taskType = lineWords[0].trim();
             int num = Integer.parseInt(lineWords[1].trim());
+            
+            // ASSERTION: The boolean conversion relies on this being exactly 0 or 1
+            assert num == 0 || num == 1 : "Saved task completion status in file must be exactly 0 or 1";
+            
             boolean isDone = (num == 1);
             String taskDescription = lineWords[2].trim();
             
@@ -119,6 +139,9 @@ public class StoreData {
                 TaskData.addTask(todoTask);
                 break;
             case "D":
+                // ASSERTION: Deadlines must have a 4th component (the date)
+                assert lineWords.length >= 4 : "Deadline in data file is missing its date component";
+                
                 String dTime = lineWords[3].trim();
                 LocalDateTime time = LocalDateTime.parse(dTime, DATE_TIME_FORMAT);
                 
@@ -126,6 +149,9 @@ public class StoreData {
                 TaskData.addTask(dTask);
                 break;
             case "E":
+                // ASSERTION: Events must have 5 components (Start and End times)
+                assert lineWords.length >= 5 : "Event in data file is missing time components";
+                
                 String sTime = lineWords[3].trim();
                 LocalDateTime time1 = LocalDateTime.parse(sTime, DATE_TIME_FORMAT);
                 
@@ -136,6 +162,8 @@ public class StoreData {
                 TaskData.addTask(eTask);
                 break;
             default:
+                // ASSERTION: The file shouldn't contain weird types
+                assert false : "Unknown task type identifier in data file: " + taskType;
                 throw new BaymaxException("Unknown task type identifier found in file.");
             }
         } catch (Exception e) {

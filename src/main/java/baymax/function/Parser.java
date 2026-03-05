@@ -27,8 +27,14 @@ public class Parser {
      * @throws BaymaxException If the input by the user is invalid, missing parameters, or in an incorrect form.
      */
     public static boolean handleInput(String currInput) throws BaymaxException {
+        // ASSERTION 1 (Precondition): The input passed to the parser should never be null
+        assert currInput != null : "Input string passed to Parser should not be null";
         
         String[] commandParts = currInput.trim().split(" ", 2);
+        
+        // ASSERTION 2 (Internal Invariant): The split command should always yield 1 or 2 parts
+        assert commandParts.length > 0 && commandParts.length <= 2 : "Command array must have exactly 1 or 2 parts";
+        
         CommandType command;
         
         try {
@@ -36,6 +42,9 @@ public class Parser {
         } catch (IllegalArgumentException e) {
             command = CommandType.UNKNOWN;
         }
+        
+        // ASSERTION 3 (Internal Invariant): The command object should be successfully instantiated
+        assert command != null : "CommandType should be successfully parsed or default to UNKNOWN";
         
         switch (command) {
         case BYE:
@@ -71,6 +80,8 @@ public class Parser {
             throw new BaymaxException("I do not know what that means! \n" +
                     "Try telling me something I understand!");
         default:
+            // ASSERTION 4 (Control-Flow Invariant): Catch unhandled enums
+            assert false : "Execution should not reach here. Unhandled command type: " + command;
             throw new BaymaxException("An unexpected command was encountered.");
         }
         
